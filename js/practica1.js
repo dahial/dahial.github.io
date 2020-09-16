@@ -74,7 +74,7 @@ function click(evento, gl, canvas, coordenadas){
 	// Inserta las coordenadas de los puntos como atributos y los
 	// dibuja uno a uno
 	
-	for( var i = 0; i < puntos.length; i += 2;){
+	for( var i = 0; i < puntos.length; i += 2){
 		gl.vertexAttrib3f( coordenadas, puntos[i], puntos[i+1], 0.0 );
 		gl.drawArrays( gl.POINTS, 0, 1);
 	}
