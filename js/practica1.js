@@ -6,6 +6,7 @@
 // SHADER VERTICES
 var VSHADER_SOURCE =
 'attribute vec4 posicion;		\n' +
+'attribute vec4 colorpunto;		\n' +
 'void main(){					\n' +
 '	gl_Position = posicion;		\n' +
 '	gl_PointSize = 10.0;		\n' +
@@ -46,21 +47,29 @@ function main()
 	// se borra el canvas
 	gl.clear(gl.COLOR_BUFFER_BIT);
 	
-	// Localiza el atributo en el shader de vértices
+	// Localiza los atributos en el shader de vértices
 	var coordenadas = gl.getAttribLocation( gl.program, 'posicion' );
+	var color = gl.getAttribLocation( gl.program, 'colorpunto' );
 	
-	// Registrar el evento
+	
+	// Crea el buffer, lo activa y enlaza con coordenadas
+	var bufferVertices = gl.createBuffer();
+	gl.bindBuffer( gl.ARRAY_BUFFER, bufferVertices );
+	gl.vertexAttribPointer( coordenadas, 3, gl.FLOAT, false, 0, 0 );
+	gl.enableVertexAttribArray( coordenadas );
+	
+	// Registrar el evento del click
 	canvas.onmousedown = function( evento ){ click( evento, gl, canvas, coordenadas ); };
 }
 
-var puntos = []; // array de puntos
+var clicks = [];
 function click(evento, gl, canvas, coordenadas){
 	
 	console.log("click registrado");
 	
 	// Procesar la coordenada del click
 	var x = evento.clientX;
-	var y = evento.clienty;
+	var y = evento.clientY;
 	var rect = evento.target.getBoundingClientRect();
 	
 	// Conversion de coordenadasx=
@@ -68,17 +77,14 @@ function click(evento, gl, canvas, coordenadas){
 	y = (canvas.height/2 - (y-rect.top)) * 2/canvas.height;
 	
 	// Guardar el puntos
-	puntos.push(x); puntos.push(y);
+	clicks.push(x); clicks.push(y); clicks.push(0.0);
+	var puntos = new Float32Array(clicks); // Arary de puntos
 	
 	// Borrar el canvas
 	gl.clear( gl.COLOR_BUFFER_BIT );
 	
-	// Inserta las coordenadas de los puntos como atributos y los
-	// dibuja uno a uno
-	
-	for( var i = 0; i < puntos.length; i += 2){
-		gl.vertexAttrib3f( coordenadas, puntos[i], puntos[i+1], 0.0 );
-		gl.drawArrays( gl.POINTS, 0, 1);
-	}
+	// Rellena el BO con las coordenadas y lo manda a proceso
+	gl.BufferData( gl.ARRAY_BUFFER, puntos, gl.STATIC_DRAW );
+	gl.drawArrays( gl.POINTS, 0, puntos.length/3 );
 
 }
