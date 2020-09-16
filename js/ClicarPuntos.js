@@ -58,7 +58,7 @@ function click(evento, gl, canvas, coordenadas){
 	
 	// Procesar la coordenada del click
 	var x = evento.clientX;
-	var y = evento.clienty;
+	var y = evento.clientY;
 	var rect = evento.target.getBoundingClientRect();
 	
 	// Conversion de coordenadas
