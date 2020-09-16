@@ -77,6 +77,7 @@ function click(evento, gl, canvas, coordenadas){
 	// dibuja uno a uno
 	
 	for( var i = 0; i < puntos.length; i += 2){
+		console.log("Un punto dibujado");
 		gl.vertexAttrib3f( coordenadas, puntos[i], puntos[i+1], 0.0 );
 		gl.drawArrays( gl.POINTS, 0, 1);
 	}
