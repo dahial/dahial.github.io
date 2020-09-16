@@ -56,16 +56,17 @@ function main()
 var puntos = []; // array de puntos
 function click(evento, gl, canvas, coordenadas){
 	
-	console.log("click registrado");
-	
 	// Procesar la coordenada del click
 	var x = evento.clientX;
 	var y = evento.clienty;
 	var rect = evento.target.getBoundingClientRect();
 	
-	// Conversion de coordenadasx=
-	x = ((x-rect.left) - canvas.width/2) * 2/canvas.width;
-	y = (canvas.height/2 - (y-rect.top)) * 2/canvas.height;
+	// Conversion de coordenadas
+	x = ((x - rect.left) - canvas.width/2) * 2/canvas.width;
+	y = (canvas.height/2 - (y - rect.top)) * 2/canvas.height;
+	
+	console.log("x = " + x);
+	console.log("y = " + y);
 	
 	// Guardar el puntos
 	puntos.push(x); puntos.push(y);
