@@ -41,7 +41,7 @@ function main()
 	}
 	
 	// fija el color de borrado del canvas
-	gl.clearColor(0.1,0.1,0.1,1.0);
+	gl.clearColor(0.0,0.0,0.3,1.0);
 	
 	// se borra el canvas
 	gl.clear(gl.COLOR_BUFFER_BIT);
@@ -77,7 +77,6 @@ function click(evento, gl, canvas, coordenadas){
 	// dibuja uno a uno
 	
 	for( var i = 0; i < puntos.length; i += 2){
-		console.log("Un punto dibujado");
 		gl.vertexAttrib3f( coordenadas, puntos[i], puntos[i+1], 0.0 );
 		gl.drawArrays( gl.POINTS, 0, 1);
 	}
