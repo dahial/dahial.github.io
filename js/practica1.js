@@ -42,7 +42,7 @@ function main()
 	}
 	
 	// fija el color de borrado del canvas
-	gl.clearColor(0.1,0.1,0.1,1.0);
+	gl.clearColor(0.0,0.0,0.3,1.0);
 	
 	// se borra el canvas
 	gl.clear(gl.COLOR_BUFFER_BIT);
@@ -84,7 +84,7 @@ function click(evento, gl, canvas, coordenadas){
 	gl.clear( gl.COLOR_BUFFER_BIT );
 	
 	// Rellena el BO con las coordenadas y lo manda a proceso
-	gl.BufferData( gl.ARRAY_BUFFER, puntos, gl.STATIC_DRAW );
+	gl.bufferData( gl.ARRAY_BUFFER, puntos, gl.STATIC_DRAW );
 	gl.drawArrays( gl.POINTS, 0, puntos.length/3 );
 
 }
