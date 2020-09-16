@@ -65,8 +65,6 @@ function main()
 var clicks = [];
 function click(evento, gl, canvas, coordenadas){
 	
-	console.log("click registrado");
-	
 	// Procesar la coordenada del click
 	var x = evento.clientX;
 	var y = evento.clientY;
