@@ -47,23 +47,27 @@ function loadScene() {
 	
 	// Objetos
 	var cubo = new THREE.Mesh( geocubo, material );
+	var esfera = new THREE.Mesh( geoesfera, material);
 	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
 	cubo.position.x = -1;
 	cubo.rotation.y = Math.PI/4;
-	var esfera = new THREE.Mesh( geoesfera, material);
 	esfera.position.x = 1;
 
+	esferacubo = new THREE.Object3D();
+	esferacubo.position.y = 0.5;
+	esferacubo.rotation.y = angulo;
 
 	// Organizacion de la escena
-	scene.add(cubo);
-	scene.add(esfera);
+	esferacubo.add(cubo);
+	esferacubo.add(esfera);
+	scene.add(esferacubo);
 	scene.add (new THREE.AxisHelper(3) );
 
 }
 
 function update() {
 	// Variación de la escena entre frames
-
+	angulo += Math.Pi/100;
 }
 
 function render() {
