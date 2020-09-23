@@ -49,6 +49,7 @@ function loadScene() {
 
 	// Organizacion de la escena
 	scene.add(cubo);
+	scene.add (new THREE.AxisHelper(3) );
 
 }
 
