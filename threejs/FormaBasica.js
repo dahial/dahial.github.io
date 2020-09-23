@@ -43,15 +43,20 @@ function loadScene() {
 
 	// Geometrias
 	var geocubo = new THREE.BoxGeometry(2,2,2);
+	var geoesfera = new THREE.SphereGeometry(1,30,30);
 	
 	// Objetos
 	var cubo = new THREE.Mesh( geocubo, material );
 	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
 	cubo.position.x = -1;
 	cubo.rotation.y = Math.PI/4;
+	var esfera = new THREE.Mesh( geoesfera, material);
+	esfera.position.x = 1;
+
 
 	// Organizacion de la escena
 	scene.add(cubo);
+	scene.add(esfera);
 	scene.add (new THREE.AxisHelper(3) );
 
 }
