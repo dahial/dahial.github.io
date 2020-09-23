@@ -77,7 +77,7 @@ function loadScene() {
 
 function update() {
 	// Variación de la escena entre frames
-	angulo += Math.Pi/100;
+	angulo += Math.PI/100;
 	esferacubo.rotation.y = angulo;
 }
 
