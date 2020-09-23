@@ -46,6 +46,9 @@ function loadScene() {
 	
 	// Objetos
 	var cubo = new THREE.Mesh( geocubo, material );
+	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
+	cubo.position.x = -1;
+	cubo.rotation.y = Math.PI/4;
 
 	// Organizacion de la escena
 	scene.add(cubo);
