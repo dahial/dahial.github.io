@@ -31,7 +31,7 @@ function init() {
 	var ar = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
 	scene.add(camera);
-	camera.position.set(0.5, 2, 5);
+	camera.position.set(0.5, 3, 9);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
 }
 
@@ -53,12 +53,22 @@ function loadScene() {
 	cubo.rotation.y = Math.PI/4;
 	esfera.position.x = 1;
 
+	// Objeto contenedor
 	esferacubo = new THREE.Object3D();
 	esferacubo.position.y = 0.5;
 	esferacubo.rotation.y = angulo;
 
+	// Modelo externo
+	var loader = new THREE.ObjectLoader();
+	loader.load( 'models/soldado/soldado.json',
+				function(obj){
+					obj.position.set(0,1,0);
+					cubo.add(obj);
+				});
+
 	// Organizacion de la escena
 	esferacubo.add(cubo);
+	cubo.add(new THREE.AxisHelper(1));
 	esferacubo.add(esfera);
 	scene.add(esferacubo);
 	scene.add (new THREE.AxisHelper(3) );
