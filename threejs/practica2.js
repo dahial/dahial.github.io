@@ -177,7 +177,7 @@ function loadScene() {
 	// Organizacion de la escena
 	scene.add(suelo);
 	scene.add(robot);
-	scene.add(new THREE.AxisHelper(3) );
+	scene.add(new THREE.AxesHelper(5) );
 
 }
 
