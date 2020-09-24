@@ -50,7 +50,7 @@ function loadScene() {
 
 	var geo_eje = new THREE.CylinderGeometry(20, 20, 18, 30);
 	var geo_esparrago = new THREE.BoxGeometry(18, 120, 12);
-	var geo_rotula = new THREE.SphereGeometry(20, 25, 25);
+	var geo_rotula = new THREE.SphereGeometry(20, 15, 15);
 
 	var geo_disco = new THREE.CylinderGeometry(22, 22, 6, 30);
 	var geo_nervio = new THREE.BoxGeometry(4,80,4);
@@ -158,6 +158,7 @@ function loadScene() {
 	// BRAZO
 	antebrazo.position.y = 120;
 	rotula.position.y = 120;
+	esparrago.position.y = 60;
 
 	brazo.attach(antebrazo);
 	brazo.attach(rotula);
