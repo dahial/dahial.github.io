@@ -182,7 +182,7 @@ function loadScene() {
 
 function update() {
 	// Variación de la escena entre frames
-	angulo += Math.PI/240;
+	angulo += Math.PI/600;
 	robot.rotation.y = angulo;
 }
 
