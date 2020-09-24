@@ -124,7 +124,7 @@ function loadScene() {
 
 	//// Transformaciones y creación del grafo de escena
 	//// (Diseño bottom-up aprovechando transformaciones de padres)
-	plano.rotation.x = Math.PI/2;
+	suelo.rotation.x = Math.PI/2;
 
 	// MANO
 	pinzaIz.position.x = -15;
