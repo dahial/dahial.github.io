@@ -141,13 +141,13 @@ function loadScene() {
 
 	// NERVIOS
 	nervio1.position = new THREE.Vector3(-100, 0, -100);
-	nervio2.position = new THREE.Vector3(-100, 0, 100);
-	nervio3.position = new THREE.Vector3(100, 0, 100);
-	nervio4.position = new THREE.Vector3(100, 0, -100);
+	//nervio2.position = new THREE.Vector3(-100, 0, 100);
+	//nervio3.position = new THREE.Vector3(100, 0, 100);
+	//nervio4.position = new THREE.Vector3(100, 0, -100);
 	nervio.attach(nervio1);
-	nervio.attach(nervio2);
-	nervio.attach(nervio3);
-	nervio.attach(nervio4);
+	//nervio.attach(nervio2);
+	//nervio.attach(nervio3);
+	//nervio.attach(nervio4);
 	nervio.position.y = 43;
 
 	// ANTEBRAZO
