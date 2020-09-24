@@ -141,9 +141,9 @@ function loadScene() {
 
 	// NERVIOS
 	nervio1.position.set(-10,0,-10);
-	nervio2.position.set(-100, 0, 100);
-	nervio3.position.set(100, 0, 100);
-	nervio4.position.set(100, 0, -100);
+	nervio2.position.set(-10, 0, 10);
+	nervio3.position.set(10, 0, 10);
+	nervio4.position.set(10, 0, -10);
 	nervio.attach(nervio1);
 	nervio.attach(nervio2);
 	nervio.attach(nervio3);
