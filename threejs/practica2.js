@@ -101,7 +101,7 @@ function loadScene() {
 
 	// Objetos
 
-	suelo = new THREE.Mesh(geo_plano, material_suelo);
+	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
 	var pinzaIz = new THREE.Mesh(geo_pinza, material);
