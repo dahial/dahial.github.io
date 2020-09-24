@@ -108,7 +108,8 @@ function loadScene() {
 
 	plano = new THREE.Mesh( geo_plano, material_suelo);
 
-	pinza = new THREE.Mesh( geo_pinza, material);
+	var pinzaIz = new THREE.Mesh( geo_pinza, material);
+	var pinzaDe = pinzaIz.clone();
 
 
 
@@ -121,6 +122,11 @@ function loadScene() {
 
 	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
 	plano.rotation.x = Math.PI/2;
+
+	pinzaIz.position.x = -15;
+	pinzaDe.position.x = 15;
+	pinza.de.rotation.z = Math.PI;
+
 	//cubo.position.x = -1;
 	//cubo.rotation.y = Math.PI/4;
 	//esfera.position.x = 1;
