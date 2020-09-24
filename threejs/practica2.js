@@ -37,8 +37,8 @@ function init() {
 	var ar = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 1000  );
 	scene.add(camera);
-	camera.position.set(300, 300, 300);
-	camera.lookAt( new THREE.Vector3(0,200,0) );
+	camera.position.set(100, 100, 100);
+	camera.lookAt( new THREE.Vector3(0,0,0) );
 }
 
 function loadScene() {
@@ -133,9 +133,7 @@ function loadScene() {
 	// Organizacion de la escena
 
 
-	scene.add (plano);
 	scene.add (pinza);
-	pinza.position.x = 200;
 	scene.add (new THREE.AxisHelper(3) );
 
 }
