@@ -140,10 +140,10 @@ function loadScene() {
 	mano.position.y = 83;
 
 	// NERVIOS
-	nervio1.position = new THREE.Vector3(-10, 0, -10);
-	nervio2.position = new THREE.Vector3(-10, 0, 10);
-	nervio3.position = new THREE.Vector3(10, 0, 10);
-	nervio4.position = new THREE.Vector3(10, 0, -10);
+	nervio1.position = new THREE.Vector3(-100, 0, -10);
+	nervio2.position = new THREE.Vector3(-100, 0, 10);
+	nervio3.position = new THREE.Vector3(100, 0, 10);
+	nervio4.position = new THREE.Vector3(100, 0, -10);
 	nervio.attach(nervio1);
 	nervio.attach(nervio2);
 	nervio.attach(nervio3);
