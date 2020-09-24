@@ -111,7 +111,7 @@ function loadScene() {
 	var pinzaIz = new THREE.Mesh( geo_pinza, material);
 	var pinzaDe = pinzaIz.clone();
 
-
+	var mano = new THREE.Mesh( geo_mano, material );
 
 
 	var antebrazo = new THREE.Object3D();
@@ -125,13 +125,17 @@ function loadScene() {
 
 	pinzaIz.position.x = -15;
 	pinzaDe.position.x = 15;
-	pinza.de.rotation.z = Math.PI;
+	pinzaDe.rotation.z = Math.PI;
+
+	mano.rotation.z = Math.PI/2;
 
 	//cubo.position.x = -1;
 	//cubo.rotation.y = Math.PI/4;
 	//esfera.position.x = 1;
 
 	// Objeto contenedor
+	mano.add(pinzaIz);
+	mano.add(pinzaDe);
 	//esferacubo = new THREE.Object3D();
 	//esferacubo.position.y = 0.5;
 	//esferacubo.rotation.y = angulo;
@@ -139,7 +143,7 @@ function loadScene() {
 	// Organizacion de la escena
 
 	scene.add(plano);
-	scene.add (pinza);
+	scene.add (mano);
 	scene.add (new THREE.AxisHelper(3) );
 
 }
