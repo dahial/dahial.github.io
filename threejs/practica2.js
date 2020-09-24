@@ -133,8 +133,8 @@ function loadScene() {
 
 	mano.rotation.z = Math.PI/2;
 
-	mano.attach(pinzaIz);
-	mano.attach(pinzaDe);
+	mano.add(pinzaIz);
+	mano.add(pinzaDe);
 
 	mano.position.y = 83;
 
