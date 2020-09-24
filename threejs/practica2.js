@@ -140,14 +140,15 @@ function loadScene() {
 	mano.position.y = 83;
 
 	// NERVIOS
-	nervio1.translate(-10, 0, -10);
-	nervio2.translate(-100, 0, 100);
-	nervio3.translate(100, 0, 100);
-	nervio4.translate(100, 0, -100);
+	nervio1.position = (-10,0,10);
+	//nervio1.translate(-10, 0, -10);
+	//nervio2.translate(-100, 0, 100);
+	//nervio3.translate(100, 0, 100);
+	//nervio4.translate(100, 0, -100);
 	nervio.attach(nervio1);
-	nervio.attach(nervio2);
-	nervio.attach(nervio3);
-	nervio.attach(nervio4);
+	//nervio.attach(nervio2);
+	//nervio.attach(nervio3);
+	//nervio.attach(nervio4);
 	nervio.position.y = 43;
 
 	// ANTEBRAZO
