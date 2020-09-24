@@ -112,15 +112,19 @@ function loadScene() {
 	var pinzaDe = pinzaIz.clone();
 
 	var mano = new THREE.Mesh( geo_mano, material );
-
+	var nervio1 = new THREE.Mesh( geo_nervio, material);
+	var nervio2 = nervio1.clone();
+	var nervio3 = nervio2.clone();
+	var nervio4 = nervio3.clone();
+	var nervio = new THREE.Object3D();
+	var disco = new THREE.Mesh(geo_disco, material);
 
 	var antebrazo = new THREE.Object3D();
-
 	var brazo = new THREE.Object3D();
 
 
 
-	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
+	/// Transformaciones y creación del grafo de escena
 	plano.rotation.x = Math.PI/2;
 
 	pinzaIz.position.x = -15;
@@ -129,13 +133,32 @@ function loadScene() {
 
 	mano.rotation.z = Math.PI/2;
 
+	mano.attach(pinzaIz);
+	mano.attach(pinzaDe);
+
+	mano.position.y = 83;
+
+	nervio1.position = new THREE.Vector3(-10, 0, -10);
+	nervio2.position = new THREE.Vector3(-10, 0, 10);
+	nervio3.position = new THREE.Vector3(10, 0, 10);
+	nervio4.position = new THREE.Vector3(10, 0, -10);
+	nervio.attach(nervio1);
+	nervio.attach(nervio2);
+	nervio.attach(nervio3);
+	nervio.attach(nervio4);
+	nervio.position.y = 43;
+
+	antebrazo.attach(disco);
+	antebrazo.attach(nervio);
+	antebrazo.attach(mano);
+
+
+
 	//cubo.position.x = -1;
 	//cubo.rotation.y = Math.PI/4;
 	//esfera.position.x = 1;
 
 	// Objeto contenedor
-	scene.add(pinzaIz);
-	scene.add(pinzaDe);
 	//esferacubo = new THREE.Object3D();
 	//esferacubo.position.y = 0.5;
 	//esferacubo.rotation.y = angulo;
@@ -143,7 +166,7 @@ function loadScene() {
 	// Organizacion de la escena
 
 	scene.add(plano);
-	scene.add (mano);
+	scene.add (antebrazo);
 	scene.add (new THREE.AxisHelper(3) );
 
 }
