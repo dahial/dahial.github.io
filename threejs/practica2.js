@@ -13,11 +13,6 @@ var renderer, scene, camera;
 var angulo = 0;
 var suelo, robot;
 
-var base, brazo;
-var eje, esparrago, rotula, antebrazo;
-var disco, nervios, mano;
-var pinzaIz, pinzaDe;
-
 // Acciones
 init();
 loadScene();
@@ -50,7 +45,7 @@ function loadScene() {
 	var material_suelo = new THREE.MeshBasicMaterial({color:'gray', wireframe:true});
 
 	// Geometrías
-	var geo_plano = new THREE.PlaneGeometry(1000,1000,20,20);
+	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
 
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
 
@@ -107,27 +102,32 @@ function loadScene() {
 
 	// Objetos
 
-	plano = new THREE.Mesh( geo_plano, material_suelo);
+	suelo = new THREE.Mesh(geo_plano, material_suelo);
+	robot = new THREE.Object3D();
 
-	var pinzaIz = new THREE.Mesh( geo_pinza, material);
+	var pinzaIz = new THREE.Mesh(geo_pinza, material);
 	var pinzaDe = pinzaIz.clone();
 
-	var mano = new THREE.Mesh( geo_mano, material );
-	var nervio1 = new THREE.Mesh( geo_nervio, material);
+	var mano = new THREE.Mesh(geo_mano, material );
+	var nervio1 = new THREE.Mesh(geo_nervio, material);
 	var nervio2 = nervio1.clone();
 	var nervio3 = nervio2.clone();
 	var nervio4 = nervio3.clone();
 	var nervio = new THREE.Object3D();
 	var disco = new THREE.Mesh(geo_disco, material);
 
+	var rotula = new THREE.Mesh(geo_rotula, material);
+	var esparrago = new THREE.Mesh(geo_esparrago, material);
+	var eje = new THREE.Mesh(geo_eje, material);
+
 	var antebrazo = new THREE.Object3D();
 	var brazo = new THREE.Object3D();
 
-
-
-	/// Transformaciones y creación del grafo de escena
+	//// Transformaciones y creación del grafo de escena
+	//// (Diseño bottom-up aprovechando transformaciones de padres)
 	plano.rotation.x = Math.PI/2;
 
+	// MANO
 	pinzaIz.position.x = -15;
 	pinzaDe.position.x = 15;
 	pinzaDe.rotation.z = Math.PI;
@@ -136,9 +136,9 @@ function loadScene() {
 
 	mano.attach(pinzaIz);
 	mano.attach(pinzaDe);
-
 	mano.position.y = 83;
 
+	// NERVIOS
 	nervio1.position = new THREE.Vector3(-10, 0, -10);
 	nervio2.position = new THREE.Vector3(-10, 0, 10);
 	nervio3.position = new THREE.Vector3(10, 0, 10);
@@ -149,33 +149,39 @@ function loadScene() {
 	nervio.attach(nervio4);
 	nervio.position.y = 43;
 
-	antebrazo.attach(disco);
-	antebrazo.attach(nervio);
+	// ANTEBRAZO
 	antebrazo.attach(mano);
+	antebrazo.attach(nervio);
+	antebrazo.attach(disco);
 
+	// BRAZO
+	antebrazo.position.y = 120;
+	rotula.position.y = 120;
 
+	brazo.attach(antebrazo);
+	brazo.attach(rotula);
+	brazo.attach(esparrago);
+	brazo.attach(eje);
 
-	//cubo.position.x = -1;
-	//cubo.rotation.y = Math.PI/4;
-	//esfera.position.x = 1;
+	// BASE
+	brazo.position.y = 3;
+	base.attach(brazo);
 
-	// Objeto contenedor
-	//esferacubo = new THREE.Object3D();
-	//esferacubo.position.y = 0.5;
-	//esferacubo.rotation.y = angulo;
+	// ROBOT
+	base.position.y = 7.5;
+	robot.attach(base);
 
 	// Organizacion de la escena
-
-	scene.add(plano);
-	scene.add(antebrazo);
+	scene.add(suelo);
+	scene.add(robot);
 	scene.add(new THREE.AxisHelper(3) );
 
 }
 
 function update() {
 	// Variación de la escena entre frames
-	//angulo += Math.PI/240;
-	//pinza.rotation.y = angulo;
+	angulo += Math.PI/240;
+	robot.rotation.y = angulo;
 }
 
 function render() {
