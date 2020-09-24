@@ -57,9 +57,9 @@ function loadScene() {
 	var geo_esparrago = new THREE.BoxGeometry(18, 120, 12);
 	var geo_rotula = new THREE.SphereGeometry(20, 25, 25);
 
-	var geo_disco = new THREE.CylinderGeometry();
+	var geo_disco = new THREE.CylinderGeometry(22, 22, 6, 50);
 	var geo_nervio = new THREE.BoxGeometry(4,80,4);
-	var geo_mano = new THREE.CylinderGeometry();
+	var geo_mano = new THREE.CylinderGeometry(15, 15, 40, 50);
 
 	// Geometría personalizada para las pinzas
 	var geo_pinza = new THREE.Geometry();
