@@ -134,8 +134,8 @@ function loadScene() {
 	//esfera.position.x = 1;
 
 	// Objeto contenedor
-	mano.add(pinzaIz);
-	mano.add(pinzaDe);
+	scene.add(pinzaIz);
+	scene.add(pinzaDe);
 	//esferacubo = new THREE.Object3D();
 	//esferacubo.position.y = 0.5;
 	//esferacubo.rotation.y = angulo;
