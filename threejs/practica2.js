@@ -37,7 +37,7 @@ function init() {
 	var ar = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 1000  );
 	scene.add(camera);
-	camera.position.set(100, 100, 100);
+	camera.position.set(300, 300, 300);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
 }
 
@@ -121,6 +121,7 @@ function loadScene() {
 
 
 	/// Orden de las transformaciones: TRS (De derecha a izquierda: Scale 1st, Rotation 2nd, Translation 3rd)
+	plano.rotation.x = Math.PI/2;
 	//cubo.position.x = -1;
 	//cubo.rotation.y = Math.PI/4;
 	//esfera.position.x = 1;
@@ -140,8 +141,8 @@ function loadScene() {
 
 function update() {
 	// Variación de la escena entre frames
-	angulo += Math.PI/240;
-	pinza.rotation.y = angulo;
+	//angulo += Math.PI/240;
+	//pinza.rotation.y = angulo;
 }
 
 function render() {
