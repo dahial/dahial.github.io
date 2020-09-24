@@ -32,9 +32,8 @@ function init() {
 	var ar = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 2000  );
 	scene.add(camera);
-	camera.position.set(-50, 0, 50);
-	//camera.position.set(-300, 250, 300);
-	camera.lookAt( new THREE.Vector3(0,0,0) );
+	camera.position.set(-300, 250, 300);
+	camera.lookAt( new THREE.Vector3(0,100,0) );
 }
 
 function loadScene() {
