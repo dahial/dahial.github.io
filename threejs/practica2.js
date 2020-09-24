@@ -140,7 +140,7 @@ function loadScene() {
 	mano.position.y = 83;
 
 	// NERVIOS
-	nervio1.position = (-10,0,10);
+	nervio1.position = mano.position;
 	//nervio1.translate(-10, 0, -10);
 	//nervio2.translate(-100, 0, 100);
 	//nervio3.translate(100, 0, 100);
