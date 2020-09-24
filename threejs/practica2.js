@@ -122,6 +122,8 @@ function loadScene() {
 	var antebrazo = new THREE.Object3D();
 	var brazo = new THREE.Object3D();
 
+	var base = new THREE.Mesh(geo_base, material);
+
 	//// Transformaciones y creación del grafo de escena
 	//// (Diseño bottom-up aprovechando transformaciones de padres)
 	suelo.rotation.x = Math.PI/2;
