@@ -49,7 +49,7 @@ function loadScene() {
 	var material_suelo = new THREE.MeshBasicMaterial({color:'gray', wireframe:true});
 
 	// Geometrías
-	var geo_plano = new THREE.PlaneGeometry(0,1000,1000);
+	var geo_plano = new THREE.PlaneGeometry(0,200,200);
 
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 50);
 
@@ -132,7 +132,7 @@ function loadScene() {
 
 	// Organizacion de la escena
 
-
+	scene.add(plano);
 	scene.add (pinza);
 	scene.add (new THREE.AxisHelper(3) );
 
