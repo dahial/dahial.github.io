@@ -5,8 +5,6 @@
 *
 */
 
-use strict;
-
 // Variables de consenso
 // Motor, escena y cámara
 var renderer, scene, camera;
