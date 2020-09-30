@@ -31,8 +31,10 @@ function init() {
 
 	// Cámara
 	var ar = window.innerWidth / window.innerHeight;
-	//camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
-	camera = new THREE.OrthographicCamera( l, r, t, b, -20, 20  );
+	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
+	//camera = new THREE.OrthographicCamera( l, r, t, b, -20, 20  );
+	updateAspectRatio();
+
 	scene.add(camera);
 	camera.position.set(0.5, 3, 9);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
@@ -90,7 +92,8 @@ function updateAspectRatio() {
 	// Razón de aspecto
 	var ar = window.innerWidth / window.innerHeight;
 	
-	if(ar > 1){
+	// Cámara ortográfica
+	/*if(ar > 1){
 		camera.left = -4*ar;
 		camera.right = 4*ar;
 		camera.bottom = -4;
@@ -101,7 +104,10 @@ function updateAspectRatio() {
 		camera.right = 4;
 		camera.bottom = -4/ar;
 		camera.top = 4/ar;
-	}
+	}*/
+
+	// Cámara perspectiva
+	camera.aspect = ar;
 
 	camera.updateProjectionMatrix();
 	
