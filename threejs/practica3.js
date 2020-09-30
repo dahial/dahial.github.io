@@ -304,7 +304,7 @@ function render() {
 	renderer.render( scene, camera );
 
 	// Renderizar la vista en miniatura en la esquina superior izquierda
-	renderer.setViewport(0,window.innerHeight,
+	renderer.setViewport(0,4*window.innerHeight/5,
 						 window.innerWidth/5,window.innerHeight/5);
 	renderer.render( scene, planta );
 	
