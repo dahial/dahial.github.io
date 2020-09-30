@@ -189,13 +189,8 @@ function setCameras(ar) {
 	// Construye las camaras planta, alzado, perfil y perspectiva
 	var origen = new THREE.Vector3(0,0,0);
 
-	if( ar > 1 )
-		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 1000 );
-	else
-		var camaraOrtografica = new THREE.OrthographicCamera( l, r, t/ar, b/ar, -20, 1000 );
-
-	// Camara ortográfica
-	planta = camaraOrtografica.clone();
+	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
+	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
 	planta.position.set(0,500,0);
 	planta.lookAt(origen);
 	planta.up = new THREE.Vector3(0,0,-1);
