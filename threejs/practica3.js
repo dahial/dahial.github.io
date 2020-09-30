@@ -3,7 +3,7 @@ var renderer, scene, camera;
 
 // Variables globales
 var suelo, robot;
-var l = b = -4;
+var l = b = -25;
 var r = t = -l;
 var cameraControls;
 var planta;
