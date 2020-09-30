@@ -32,7 +32,7 @@ function init() {
 	// Cámara
 	var ar = window.innerWidth / window.innerHeight;
 	//camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
-	camera = new THREE.OrthographicCamera( l, r, t, b, -10, 10  );
+	camera = new THREE.OrthographicCamera( l, r, t, b, -20, 20  );
 	scene.add(camera);
 	camera.position.set(0.5, 3, 9);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
