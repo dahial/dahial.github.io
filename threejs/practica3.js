@@ -38,9 +38,9 @@ function init() {
 	setCameras(ar);
 
 	// Controlador de cámara
-	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	cameraControls.target.set(0,0,0);
-	cameraControls.nokeys = true;
+	//cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
+	//cameraControls.target.set(0,0,0);
+	//cameraControls.nokeys = true;
 
 	// Captura de eventos
 	window.addEventListener('resize', updateAspectRatio);
@@ -160,12 +160,32 @@ function rotate(event) {
 	var x = event.clientX;
 	var y = event.clientY;
 
+	var derecha = false, abajo = false;
+	var cam = null;
+
+	if(x > window.innerWidth/2){
+		x -= window.innerWidth/2;
+		derecha = true;
+	};
+
+	if (y > window.innerHeight/2){
+		y -= window.innerHeight;
+		abajo = true;
+	};
+
+	if(derecha)
+		if(abajo) cam = camera;
+		else cam = perfil;
+	else
+		if(abajo) cam = planta;
+		else cam = alzado;
+
 	// Transformación a cuadrado de 2x2
-	x = (x / window.innerWidth) * 2 - 1;
-	y = -(y / window.innerHeight) * 2 + 1;
+	x = (2*x / window.innerWidth) * 2 - 1;
+	y = -(2*y / window.innerHeight) * 2 + 1;
 
 	var rayo = new THREE.Raycaster();
-	rayo.setFromCamera( new THREE.Vector2(x,y), camera);
+	rayo.setFromCamera( new THREE.Vector2(x,y), cam);
 
 	var interseccion = rayo.intersectObjects( scene.children, true );
 
