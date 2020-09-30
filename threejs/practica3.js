@@ -21,7 +21,7 @@ function init() {
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth,window.innerHeight);
 	renderer.setClearColor( new THREE.Color(0x0000AA) );
-	renderer.autoClear = false; 
+	//renderer.autoClear = false; 
 	document.getElementById('container').appendChild(renderer.domElement);
 
 	// Escena
