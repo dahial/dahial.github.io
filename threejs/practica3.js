@@ -6,7 +6,7 @@ var suelo, robot;
 var l = b = -4;
 var r = t = -l;
 var cameraControls;
-var alzado, planta, perfil;
+var planta;
 
 // Acciones
 init();
@@ -190,32 +190,24 @@ function setCameras(ar) {
 	var origen = new THREE.Vector3(0,0,0);
 
 	if( ar > 1 )
-		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 20 );
+		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 1000 );
 	else
-		var camaraOrtografica = new THREE.OrthographicCamera( l, r, t/ar, b/ar, -20, 20 );
+		var camaraOrtografica = new THREE.OrthographicCamera( l, r, t/ar, b/ar, -20, 1000 );
 
-	// Camaras ortograficas
-	alzado = camaraOrtografica.clone();
-	alzado.position.set(0,0,4);
-	alzado.lookAt(origen);
-	perfil = camaraOrtografica.clone();
-	perfil.position.set(4,0,0);
-	perfil.lookAt(origen);
+	// Camara ortográfica
 	planta = camaraOrtografica.clone();
-	planta.position.set(0,4,0);
+	planta.position.set(0,500,0);
 	planta.lookAt(origen);
 	planta.up = new THREE.Vector3(0,0,-1);
 
 	// Camara perspectiva
-	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,50);
-	camaraPerspectiva.position.set( 1,2,10 );
+	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,2000);
+	camaraPerspectiva.position.set(-300, 250, 300);
 	camaraPerspectiva.lookAt(origen);
 
 	camera = camaraPerspectiva.clone();
 
-	scene.add(alzado);
 	scene.add(planta);
-	scene.add(perfil);
 	scene.add(camera);
 
 }
@@ -256,8 +248,7 @@ function rotate(event) {
 	rayo.setFromCamera( new THREE.Vector2(x,y), cam );
 
 	var interseccion = rayo.intersectObjects( scene.children, true );
-	    console.log( 'objs: ' + scene.children.length );
-		console.log( 'int: ' + interseccion.length);
+	
 	if( interseccion.length > 0 ) {
 
 		interseccion[0].object.rotation.y += Math.PI / 4;
@@ -304,23 +295,17 @@ function update() {
 function render() {
 	// Dibujar cada frame 
 	requestAnimationFrame(render);
-
 	update();
-
 	renderer.clear();
 
-	// Para cada render debo indicar el viewport
-
-	renderer.setViewport(window.innerWidth/2,0,
-						 window.innerWidth/2,window.innerHeight/2);
-	renderer.render( scene, perfil );
-	renderer.setViewport(0,0,
-						 window.innerWidth/2,window.innerHeight/2);	
-	renderer.render( scene, alzado );
-	renderer.setViewport(0,window.innerHeight/2,
-						 window.innerWidth/2,window.innerHeight/2);
-	renderer.render( scene, planta );
+	// Renderizar la cámara perspectiva en la totalidad del canvas
 	renderer.setViewport(window.innerWidth/2,window.innerHeight/2,
 						 window.innerWidth/2,window.innerHeight/2);
 	renderer.render( scene, camera );
+
+	// Renderizar la vista en miniatura en la esquina superior izquierda
+	renderer.setViewport(0,0,
+						 window.innerWidth/5,window.innerHeight/5);
+	renderer.render( scene, planta );
+	
 }
