@@ -90,6 +90,14 @@ function updateAspectRatio() {
 	// Razón de aspecto
 	var ar = window.innerWidth / window.innerHeight;
 	
+	if(ar > 1){
+		camera.left = -4*ar;
+		camera.right = 4*ar;
+	}
+	else{
+		camera.bottom = -4/ar;
+		camera.top = 4/ar;
+	}
 	
 }
 
