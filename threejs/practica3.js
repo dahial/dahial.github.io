@@ -3,7 +3,7 @@ var renderer, scene, camera;
 
 // Variables globales
 var suelo, robot;
-var l = b = -30;
+var l = b = -50;
 var r = t = -l;
 var cameraControls;
 var planta;
@@ -183,6 +183,8 @@ function loadScene() {
 	scene.add(robot);
 	scene.add(new THREE.AxesHelper(5) );
 
+	var helper = new THREE.CameraHelper( camera );
+	scene.add( helper );
 }
 
 function setCameras(ar) {
