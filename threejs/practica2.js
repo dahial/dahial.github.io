@@ -40,8 +40,8 @@ function loadScene() {
 	// Construir el grafo de escena
 
 	// Materiales
-	var material = new THREE.MeshBasicMaterial({color:'white', wireframe:false});
-	var material_suelo = new THREE.MeshBasicMaterial({color:'gray', wireframe:false});
+	var material = new THREE.MeshBasicMaterial({color:'white', wireframe:true});
+	var material_suelo = new THREE.MeshBasicMaterial({color:'gray', wireframe:true});
 
 	// Geometrías
 	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
