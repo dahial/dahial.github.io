@@ -7,7 +7,7 @@ var l = b = -150;
 var r = t = -l;
 var cameraControls;
 var planta;
-var poi = new THREE.Vector3(0,200,0);
+var init_poi = new THREE.Vector3(0,100,0);
 
 // Acciones
 init();
@@ -36,7 +36,7 @@ function init() {
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
-	cameraControls.target = poi;
+	cameraControls.target = init_poi;
 	cameraControls.update();
 
 	// Captura de eventos
@@ -196,7 +196,7 @@ function setCameras(ar) {
 	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
 	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
 	planta.position.set(0,500,0);
-	planta.lookAt(poi);
+	planta.lookAt(init_poi);
 	planta.up = new THREE.Vector3(0,0,-1);
 
 	// Camara perspectiva
@@ -205,7 +205,7 @@ function setCameras(ar) {
 	camaraPerspectiva.lookAt(poi);
 
 	camera = camaraPerspectiva.clone();
-	camera.lookAt(poi);
+	camera.lookAt(init_poi);
 
 	scene.add(planta);
 	scene.add(camera);
