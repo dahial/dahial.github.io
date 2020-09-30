@@ -18,7 +18,7 @@ var FSHADER_SOURCE =
 'vec2 point = vec2(gl_FragCoord[0], gl_FragCoord[1]) ; 			\n'	+
 'vec2 centerPoint = vec2(0.5, 0.5); 					\n'	+
 'float dist = distance(point, centerPoint); 		\n'	+
-'	gl_FragColor = vec4(dist, dist, dist, 1.0);	\n' +
+'	gl_FragColor = vec4(dist, 0.0, 0.0, 1.0);	\n' +
 '}								\n' ;
 
 function main()

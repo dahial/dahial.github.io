@@ -14,6 +14,7 @@ var esferaCubo, angulo = 0;
 var b, l = -4;
 var t, r = 4;
 var cameraControls;
+var alzado, planta, perfil;
 
 // Acciones
 init();
@@ -32,13 +33,7 @@ function init() {
 
 	// Cámara
 	var ar = window.innerWidth / window.innerHeight;
-	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
-	//camera = new THREE.OrthographicCamera( l, r, t, b, -20, 20  );
-
-
-	scene.add(camera);
-	camera.position.set(0.5, 3, 9);
-	camera.lookAt( new THREE.Vector3(0,0,0) );
+	setCameras(ar);
 
 
 	// Controlador de cámara
@@ -49,6 +44,15 @@ function init() {
 	// Captura de eventos
 	window.addEventListener('resize', updateAspectRatio);
 	renderer.domElement.addEventListener('dblclick', rotate);
+}
+
+function setCameras(ar) {
+	// Construye las cámaras planta, alzado, perfil y perspectiva
+
+	if(ar > 1)
+		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 20);
+	else
+		var camaraOrtografica = new THREE.OrthographicCamera( l, r, t/ar, b/ar, -20, 20);
 }
 
 function loadScene() {
