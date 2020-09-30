@@ -56,10 +56,12 @@ function main()
 	var bufferVertices = gl.createBuffer();
 	gl.bindBuffer( gl.ARRAY_BUFFER, bufferVertices );
 	gl.vertexAttribPointer( coordenadas, 3, gl.FLOAT, false, 0, 0 );
+	//gl.vertexAttribPointer( color, 3, gl.FLOAT, false, 0, 0 );
 	gl.enableVertexAttribArray( coordenadas );
+	//gl.enableVertexAttribArray( color );
 	
 	// Registrar el evento del click
-	canvas.onmousedown = function( evento ){ click( evento, gl, canvas, coordenadas ); };
+	canvas.onmousedown = function( evento ){ click( evento, gl, canvas, coordenadas, color ); };
 }
 
 var clicks = [];
@@ -84,5 +86,6 @@ function click(evento, gl, canvas, coordenadas){
 	// Rellena el BO con las coordenadas y lo manda a proceso
 	gl.bufferData( gl.ARRAY_BUFFER, puntos, gl.STATIC_DRAW );
 	gl.drawArrays( gl.POINTS, 0, puntos.length/3 );
+	gl.drawArrays( gl.LINE_STRIP, 0, puntos.length/3 );
 
 }
