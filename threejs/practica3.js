@@ -26,6 +26,8 @@ function init() {
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x0000AA));
+	renderer.autoClear = false;
+
 	document.getElementById("container").appendChild(renderer.domElement);
 
 	// Escena
@@ -34,7 +36,6 @@ function init() {
 	// Cámara
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
-
 
 	// Controlador de cámara
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -49,10 +50,38 @@ function init() {
 function setCameras(ar) {
 	// Construye las cámaras planta, alzado, perfil y perspectiva
 
+	var origen = THREE.Vector3(0,0,0);
+
 	if(ar > 1)
 		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 20);
 	else
 		var camaraOrtografica = new THREE.OrthographicCamera( l, r, t/ar, b/ar, -20, 20);
+
+	// Camaras ortograficas
+	alzado = camaraOrtografica.clone();
+	alzado.position.set (0, 0, 4);
+	alzado.lookAt(origen);
+
+	perfil = camaraOrtografica.clone();
+	perfil.position.set (4, 0, 0);
+	perfil.lookAt(origen);
+
+	planta = camaraOrtografica.clone();
+	planta.position.set (0, 4, 0);
+	planta.lookAt(origen);
+	planta.up = new THREE.Vector3(0, 0, 1);
+
+	// Camara perspectiva
+	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, 50);
+	camaraPerspectiva.position.set(1, 2, 10);
+	camaraPerspectiva.lookAt(origen);
+
+	camara = camaraPerspectiva.clone();
+
+	scene.add(alzado);
+	scene.add(perfil);
+	scene.add(planta);
+	scene.add(camera);
 }
 
 function loadScene() {
@@ -151,6 +180,24 @@ function update() {
 function render() {
 	// Construir el frame y mostrarlo
 	requestAnimationFrame( render );
+
 	update();
+
+	// Para cada render debo indicar el viewport
+
+	renderer.setViewPort(window.innerWidth/2, window.innerHeight/2,
+		window.innerWidth/2, window.innerHeight/2)
+	renderer.render( scene, perfil );
+
+	renderer.setViewPort(0, window.innerHeight/2,
+		window.innerWidth/2, window.innerHeight/2)
+	renderer.render( scene, alzado );
+
+	renderer.setViewPort(0, 0,
+		window.innerWidth/2, window.innerHeight/2)
+	renderer.render( scene, planta );
+
+	renderer.setViewPort(window.innerWidth/2, 0,
+		window.innerWidth/2, window.innerHeight/2)
 	renderer.render( scene, camera );
 }
