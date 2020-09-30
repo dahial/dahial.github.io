@@ -17,7 +17,7 @@ var FSHADER_SOURCE =
 'precision mediump float; \n'+
 'void main(){									\n' +
 'vec2 point = (gl_FragCoord[0], gl_FragCoord[1]) ; 			\n'	+
-'vec2 centerPoint = vec2(0.5); 					\n'	+
+'vec2 centerPoint = vec2(0.5, 0.5); 					\n'	+
 'float dist = length(distance(point, centerPoint)); 		\n'	+
 '	gl_FragColor = vec4(dist, dist, dist, 1.0);	\n' +
 '}								\n' ;

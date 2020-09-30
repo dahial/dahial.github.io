@@ -11,8 +11,8 @@ var renderer, scene, camera;
 
 // Otras globales
 var esferaCubo, angulo = 0;
-var t = 4.5, b = -4.5;
-var l = -8, r = 8;
+var b, l = -4;
+var t, r = 4;
 
 // Acciones
 init();
