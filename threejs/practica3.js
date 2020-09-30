@@ -3,7 +3,7 @@ var renderer, scene, camera;
 
 // Variables globales
 var suelo, robot;
-var l = b = -25;
+var l = b = -30;
 var r = t = -l;
 var cameraControls;
 var planta;
@@ -21,7 +21,7 @@ function init() {
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth,window.innerHeight);
 	renderer.setClearColor( new THREE.Color(0x0000AA) );
-	//renderer.autoClear = false; 
+	renderer.autoClear = false; 
 	document.getElementById('container').appendChild(renderer.domElement);
 
 	// Escena
@@ -303,9 +303,9 @@ function render() {
 						 window.innerWidth,window.innerHeight);
 	renderer.render( scene, camera );
 
-	// Renderizar la vista en miniatura en la esquina superior izquierda
+	// Renderizar la vista en miniatura en la esquina superior izquierda, basada en la altura del contenedor
 	renderer.setViewport(0,4*window.innerHeight/5,
-						 window.innerWidth/5,window.innerHeight/5);
+						 window.innerHeight/5, window.innerHeight/5);
 	renderer.render( scene, planta );
 	
 }
