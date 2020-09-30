@@ -93,8 +93,12 @@ function updateAspectRatio() {
 	if(ar > 1){
 		camera.left = -4*ar;
 		camera.right = 4*ar;
+		camera.bottom = -4;
+		camera.top = 4;
 	}
 	else{
+		camera.left = -4;
+		camera.right = 4;
 		camera.bottom = -4/ar;
 		camera.top = 4/ar;
 	}
