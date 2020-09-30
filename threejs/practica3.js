@@ -48,7 +48,7 @@ function init() {
 
 	// Captura de eventos
 	window.addEventListener('resize', updateAspectRatio);
-	renderer.domElement.addEventListener('dbclick', rotate);
+	renderer.domElement.addEventListener('dblclick', rotate);
 }
 
 function loadScene() {
