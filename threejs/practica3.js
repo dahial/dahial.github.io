@@ -122,6 +122,9 @@ function updateAspectRatio() {
 }
 
 function rotate(event) {
+
+	print("Double click");
+	
 	// Gira el objeto señalado 45 grados
 	var x = event.clientX;
 	var y = event.clientY;
