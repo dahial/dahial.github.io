@@ -205,19 +205,19 @@ function render() {
 
 	// Para cada render debo indicar el viewport
 
-	renderer.setViewPort(window.innerWidth/2, window.innerHeight/2,
+	renderer.setViewport(window.innerWidth/2, window.innerHeight/2,
 		window.innerWidth/2, window.innerHeight/2)
 	renderer.render( scene, perfil );
 
-	renderer.setViewPort(0, window.innerHeight/2,
+	renderer.setViewport(0, window.innerHeight/2,
 		window.innerWidth/2, window.innerHeight/2)
 	renderer.render( scene, alzado );
 
-	renderer.setViewPort(0, 0,
+	renderer.setViewport(0, 0,
 		window.innerWidth/2, window.innerHeight/2)
 	renderer.render( scene, planta );
 
-	renderer.setViewPort(window.innerWidth/2, 0,
+	renderer.setViewport(window.innerWidth/2, 0,
 		window.innerWidth/2, window.innerHeight/2)
 	renderer.render( scene, camera );
 }
