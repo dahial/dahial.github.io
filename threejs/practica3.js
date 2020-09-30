@@ -36,6 +36,9 @@ function init() {
 	scene.add(camera);
 	camera.position.set(0.5, 3, 9);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
+
+	// Captura de eventos
+	window.addEventListener('resize', updateAspectRatio);
 }
 
 function loadScene() {
@@ -76,6 +79,18 @@ function loadScene() {
 	scene.add(esferacubo);
 	scene.add (new THREE.AxisHelper(3) );
 
+}
+
+function updateAspectRatio() {
+	// Renueva la relación de aspecto de la cámara
+
+	// Ajustar el tamaño del canvas
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	// Razón de aspecto
+	var ar = window.innerWidth / window.innerHeight;
+	
+	
 }
 
 function update() {
