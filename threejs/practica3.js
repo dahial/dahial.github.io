@@ -5,6 +5,8 @@
 *
 */
 
+use strict;
+
 // Variables de consenso
 // Motor, escena y cámara
 var renderer, scene, camera;
@@ -13,6 +15,7 @@ var renderer, scene, camera;
 var esferaCubo, angulo = 0;
 var b, l = -4;
 var t, r = 4;
+var cameraControls;
 
 // Acciones
 init();
@@ -33,11 +36,16 @@ function init() {
 	var ar = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 50, ar, 0.1, 100  );
 	//camera = new THREE.OrthographicCamera( l, r, t, b, -20, 20  );
-	updateAspectRatio();
+
 
 	scene.add(camera);
 	camera.position.set(0.5, 3, 9);
 	camera.lookAt( new THREE.Vector3(0,0,0) );
+
+
+	// Controlador de cámara
+	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
+	cameraControls.target.set(0,0,0);
 
 	// Captura de eventos
 	window.addEventListener('resize', updateAspectRatio);
