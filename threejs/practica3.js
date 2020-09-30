@@ -44,9 +44,11 @@ function init() {
 	// Controlador de cámara
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
 	cameraControls.target.set(0,0,0);
+	cameraControls.nokeys = true;
 
 	// Captura de eventos
 	window.addEventListener('resize', updateAspectRatio);
+	renderer.domElement.addEventListener('dbclick', rotate);
 }
 
 function loadScene() {
@@ -117,6 +119,24 @@ function updateAspectRatio() {
 
 	camera.updateProjectionMatrix();
 	
+}
+
+function rotate(event) {
+	// Gira el objeto señalado 45 grados
+	var x = event.clientX;
+	var y = event.clientY;
+
+	// Transformación a cuadrado de 2x2
+	x = (x / window.innerWidth) * 2 - 1;
+	y = -(y / window.innerHeight) * 2 + 1;
+
+	var rayo = new THREE.Raycaster();
+	rayo.setFromCamera( new THREE.vector2(x,y), camera);
+
+	var interseccion = rayo.intersectObject( scene.children );
+
+	if(interseccion.length > 0)
+		interseccion[0].object.rotation.y += Math.PI / 4;
 }
 
 function update() {
