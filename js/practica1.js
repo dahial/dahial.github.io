@@ -14,8 +14,11 @@ var VSHADER_SOURCE =
 
 // SHADER FRAGMENTOS
 var FSHADER_SOURCE =
-'void main(){					\n' +
-'	gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);		\n' +
+'void main(){									\n' +
+'vec2 uv = gl_FragCoord / iResolution; 			\n'	+
+'vec2 centerPoint = vec2(0.5); 					\n'	+
+'float dist = distance(uv, centerPoint); 		\n'	+
+'	gl_FragColor = vec4(dist, dist, dist, 1.0);	\n' +
 '}								\n' ;
 
 function main()
@@ -61,18 +64,18 @@ function main()
 	//gl.enableVertexAttribArray( color );
 	
 	// Registrar el evento del click
-	canvas.onmousedown = function( evento ){ click( evento, gl, canvas, coordenadas, color ); };
+	canvas.onmousedown = function( evento ){ click( evento, gl, canvas, coordenadas ); };
 }
 
 var clicks = [];
-function click(evento, gl, canvas, coordenadas){
+function click(evento, gl, canvas, coordenadas ){
 	
 	// Procesar la coordenada del click
 	var x = evento.clientX;
 	var y = evento.clientY;
 	var rect = evento.target.getBoundingClientRect();
 	
-	// Conversion de coordenadasx=
+	// Conversion de coordenadas
 	x = ((x-rect.left) - canvas.width/2) * 2/canvas.width;
 	y = (canvas.height/2 - (y-rect.top)) * 2/canvas.height;
 	
