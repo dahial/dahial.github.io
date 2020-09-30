@@ -134,7 +134,7 @@ function rotate(event) {
 	y = -(y / window.innerHeight) * 2 + 1;
 
 	var rayo = new THREE.Raycaster();
-	rayo.setFromCamera( new THREE.vector2(x,y), camera);
+	rayo.setFromCamera( new THREE.Vector2(x,y), camera);
 
 	var interseccion = rayo.intersectObjects( scene.children );
 
