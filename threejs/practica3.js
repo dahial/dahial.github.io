@@ -37,6 +37,7 @@ function init() {
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
 	cameraControls.target = poi;
+	cameraControls.update();
 
 	// Captura de eventos
 	window.addEventListener('resize',updateAspectRatio);
