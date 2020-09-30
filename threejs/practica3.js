@@ -189,7 +189,7 @@ function loadScene() {
 
 function setCameras(ar) {
 	// Construye las camaras planta, alzado, perfil y perspectiva
-	var poi = new THREE.Vector3(0,200,0);
+	var poi = new THREE.Vector3(0,150,0);
 
 	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
 	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
