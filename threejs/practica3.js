@@ -203,6 +203,7 @@ function setCameras(ar) {
 	camaraPerspectiva.lookAt(poi);
 
 	camera = camaraPerspectiva.clone();
+	camera.lookAt(poi);
 
 	scene.add(planta);
 	scene.add(camera);
