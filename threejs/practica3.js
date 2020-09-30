@@ -102,6 +102,8 @@ function updateAspectRatio() {
 		camera.bottom = -4/ar;
 		camera.top = 4/ar;
 	}
+
+	camera.updateProjectionMatrix();
 	
 }
 
