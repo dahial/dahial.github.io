@@ -123,8 +123,6 @@ function updateAspectRatio() {
 
 function rotate(event) {
 
-	console.log("Double click");
-
 	// Gira el objeto señalado 45 grados
 	var x = event.clientX;
 	var y = event.clientY;
@@ -136,7 +134,7 @@ function rotate(event) {
 	var rayo = new THREE.Raycaster();
 	rayo.setFromCamera( new THREE.Vector2(x,y), camera);
 
-	var interseccion = rayo.intersectObjects( scene.children );
+	var interseccion = rayo.intersectObjects( scene.children, true );
 
 	if(interseccion.length > 0)
 		interseccion[0].object.rotation.y += Math.PI / 4;
