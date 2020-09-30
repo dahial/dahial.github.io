@@ -11,7 +11,7 @@ var renderer, scene, camera;
 
 // Otras globales
 var esferaCubo, angulo = 0;
-var t = -4.5, b = 4.5;
+var t = 4.5, b = -4.5;
 var l = -8, r = 8;
 
 // Acciones
@@ -80,8 +80,6 @@ function loadScene() {
 
 function update() {
 	// Variación de la escena entre frames
-	angulo += Math.PI/240;
-	esferacubo.rotation.y = angulo;
 }
 
 function render() {
