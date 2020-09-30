@@ -133,7 +133,7 @@ function rotate(event) {
 	var rayo = new THREE.Raycaster();
 	rayo.setFromCamera( new THREE.vector2(x,y), camera);
 
-	var interseccion = rayo.intersectObject( scene.children );
+	var interseccion = rayo.intersectObjects( scene.children );
 
 	if(interseccion.length > 0)
 		interseccion[0].object.rotation.y += Math.PI / 4;
