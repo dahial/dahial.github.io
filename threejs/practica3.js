@@ -50,7 +50,7 @@ function init() {
 function setCameras(ar) {
 	// Construye las cámaras planta, alzado, perfil y perspectiva
 
-	var origen = THREE.Vector3(0,0,0);
+	var origen = new THREE.Vector3(0,0,0);
 
 	if(ar > 1)
 		var camaraOrtografica = new THREE.OrthographicCamera( l*ar, r*ar, t, b, -20, 20);
