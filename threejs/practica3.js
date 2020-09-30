@@ -189,18 +189,18 @@ function loadScene() {
 
 function setCameras(ar) {
 	// Construye las camaras planta, alzado, perfil y perspectiva
-	var origen = new THREE.Vector3(0,0,0);
+	var poi = new THREE.Vector3(0,200,0);
 
 	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
 	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
 	planta.position.set(0,500,0);
-	planta.lookAt(origen);
+	planta.lookAt(poi);
 	planta.up = new THREE.Vector3(0,0,-1);
 
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,2000);
 	camaraPerspectiva.position.set(-300, 250, 300);
-	camaraPerspectiva.lookAt(origen);
+	camaraPerspectiva.lookAt(poi);
 
 	camera = camaraPerspectiva.clone();
 
@@ -260,22 +260,6 @@ function updateAspectRatio() {
 
 	// Razon de aspecto
 	var ar = window.innerWidth/window.innerHeight;
-
-
-	/* Camara ortografica 
-	if( ar > 1 ){
-		camera.left = -4*ar;
-		camera.right = 4*ar;
-		camera.bottom = -4;
-		camera.top = 4;
-	}
-	else {
-		camera.top = 4/ar;
-		camera.bottom = -4/ar;
-		camera.left = -4;
-		camera.right = 4;
-	}
-	*/
 
 	// Camara perspectiva
 	camera.aspect = ar;
