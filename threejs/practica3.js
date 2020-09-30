@@ -2,7 +2,7 @@
 var renderer, scene, camera;
 
 // Variables globales
-var esferacubo, cubo, angulo = 0;
+var suelo, robot;
 var l = b = -4;
 var r = t = -l;
 var cameraControls;
@@ -12,6 +12,178 @@ var alzado, planta, perfil;
 init();
 loadScene();
 render();
+
+
+function init() {
+	// Crear el motor, la escena y la camara
+
+	// Motor de render
+	renderer = new THREE.WebGLRenderer();
+	renderer.setSize(window.innerWidth,window.innerHeight);
+	renderer.setClearColor( new THREE.Color(0x0000AA) );
+	renderer.autoClear = false; 
+	document.getElementById('container').appendChild(renderer.domElement);
+
+	// Escena
+	scene = new THREE.Scene();
+
+	// Camara
+	var ar = window.innerWidth / window.innerHeight;
+	setCameras(ar);
+
+	// Controlador de camara
+	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
+	cameraControls.target.set(0,0,0);
+	cameraControls.noKeys = true;
+
+	// Captura de eventos
+	window.addEventListener('resize',updateAspectRatio);
+	renderer.domElement.addEventListener('dblclick', rotate );
+}
+
+function loadScene() {
+	// Construir el grafo de escena
+
+	// Materiales
+	var material = new THREE.MeshBasicMaterial({color:'white', wireframe:true});
+	var material_suelo = new THREE.MeshBasicMaterial({color:'gray', wireframe:true});
+
+	// Geometrías
+	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
+
+	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
+
+	var geo_eje = new THREE.CylinderGeometry(20, 20, 18, 30);
+	var geo_esparrago = new THREE.BoxGeometry(18, 120, 12);
+	var geo_rotula = new THREE.SphereGeometry(20, 15, 15);
+
+	var geo_disco = new THREE.CylinderGeometry(22, 22, 6, 30);
+	var geo_nervio = new THREE.BoxGeometry(4,80,4);
+	var geo_mano = new THREE.CylinderGeometry(15, 15, 40, 30);
+
+	// Geometría personalizada para las pinzas
+	var geo_pinza = new THREE.Geometry();
+
+	geo_pinza.vertices.push(
+		new THREE.Vector3(-2, 10, 0),	//0
+		new THREE.Vector3(2, 10, 0),	//1
+		new THREE.Vector3(2, -10, 0),	//2
+		new THREE.Vector3(-2, -10, 0),	//3
+		new THREE.Vector3(-2, 10, 19),	//4
+		new THREE.Vector3(2, 10, 19),	//5
+		new THREE.Vector3(2, -10, 19),	//6
+		new THREE.Vector3(-2, -10, 19),	//7
+		new THREE.Vector3(-2, 5, 38),	//8
+		new THREE.Vector3(0, 5, 38),	//9
+		new THREE.Vector3(0, -5, 38),	//10
+		new THREE.Vector3(-2, -5, 38)	//11
+	);
+
+	geo_pinza.faces.push(
+		new THREE.Face3(0,1,2),
+		new THREE.Face3(0,2,3),
+		new THREE.Face3(0,4,7),
+		new THREE.Face3(0,3,7),
+		new THREE.Face3(5,2,1),
+		new THREE.Face3(5,2,6),
+		new THREE.Face3(0,1,4),
+		new THREE.Face3(5,1,4),
+		new THREE.Face3(3,2,7),
+		new THREE.Face3(2,7,6),
+
+		new THREE.Face3(4,5,8),
+		new THREE.Face3(5,8,9),
+		new THREE.Face3(4,8,7),
+		new THREE.Face3(8,7,11),
+		new THREE.Face3(5,9,6),
+		new THREE.Face3(9,6,10),
+		new THREE.Face3(8,9,11),
+		new THREE.Face3(10,9,11),
+		new THREE.Face3(7,6,11),
+		new THREE.Face3(6,11,10)
+	);
+
+
+	// Objetos
+
+	suelo = new THREE.Mesh(geo_suelo, material_suelo);
+	robot = new THREE.Object3D();
+
+	var pinzaIz = new THREE.Mesh(geo_pinza, material);
+	var pinzaDe = pinzaIz.clone();
+
+	var mano = new THREE.Mesh(geo_mano, material );
+	var nervio1 = new THREE.Mesh(geo_nervio, material);
+	var nervio2 = nervio1.clone();
+	var nervio3 = nervio2.clone();
+	var nervio4 = nervio3.clone();
+	var nervio = new THREE.Object3D();
+	var disco = new THREE.Mesh(geo_disco, material);
+
+	var rotula = new THREE.Mesh(geo_rotula, material);
+	var esparrago = new THREE.Mesh(geo_esparrago, material);
+	var eje = new THREE.Mesh(geo_eje, material);
+
+	var antebrazo = new THREE.Object3D();
+	var brazo = new THREE.Object3D();
+
+	var base = new THREE.Mesh(geo_base, material);
+
+	//// Transformaciones y creación del grafo de escena
+	//// (Diseño bottom-up aprovechando transformaciones de padres)
+	suelo.rotation.x = Math.PI/2;
+
+	// MANO
+	pinzaIz.position.x = -15;
+	pinzaDe.position.x = 15;
+	pinzaDe.rotation.z = Math.PI;
+
+	mano.rotation.z = Math.PI/2;
+
+	mano.attach(pinzaIz);
+	mano.attach(pinzaDe);
+	mano.position.y = 83;
+
+	// NERVIOS
+	nervio1.position.set(-10,0,-10);
+	nervio2.position.set(-10, 0, 10);
+	nervio3.position.set(10, 0, 10);
+	nervio4.position.set(10, 0, -10);
+	nervio.attach(nervio1);
+	nervio.attach(nervio2);
+	nervio.attach(nervio3);
+	nervio.attach(nervio4);
+	nervio.position.y = 43;
+
+	// ANTEBRAZO
+	antebrazo.attach(mano);
+	antebrazo.attach(nervio);
+	antebrazo.attach(disco);
+
+	// BRAZO
+	antebrazo.position.y = 120;
+	rotula.position.y = 120;
+	esparrago.position.y = 60;
+
+	brazo.attach(antebrazo);
+	brazo.attach(rotula);
+	brazo.attach(esparrago);
+	brazo.attach(eje);
+
+	// BASE
+	brazo.position.y = 3;
+	base.attach(brazo);
+
+	// ROBOT
+	base.position.y = 7.5;
+	robot.attach(base);
+
+	// Organizacion de la escena
+	scene.add(suelo);
+	scene.add(robot);
+	scene.add(new THREE.AxesHelper(5) );
+
+}
 
 function setCameras(ar) {
 	// Construye las camaras planta, alzado, perfil y perspectiva
@@ -45,69 +217,6 @@ function setCameras(ar) {
 	scene.add(planta);
 	scene.add(perfil);
 	scene.add(camera);
-
-}
-function init() {
-	// Crear el motor, la escena y la camara
-
-	// Motor de render
-	renderer = new THREE.WebGLRenderer();
-	renderer.setSize(window.innerWidth,window.innerHeight);
-	renderer.setClearColor( new THREE.Color(0x0000AA) );
-	renderer.autoClear = false; 
-	document.getElementById('container').appendChild(renderer.domElement);
-
-	// Escena
-	scene = new THREE.Scene();
-
-	// Camara
-	var ar = window.innerWidth / window.innerHeight;
-	setCameras(ar);
-
-	// Controlador de camara
-	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
-	cameraControls.target.set(0,0,0);
-	cameraControls.noKeys = true;
-
-	// Captura de eventos
-	window.addEventListener('resize',updateAspectRatio);
-	renderer.domElement.addEventListener('dblclick', rotate );
-}
-
-function loadScene() {
-	// Cargar la escena con objetos
-
-	// Materiales
-	var material = new THREE.MeshBasicMaterial({color:'yellow',wireframe:true});
-
-	// Geometrias
-	var geocubo = new THREE.BoxGeometry(2,2,2);
-	var geoesfera = new THREE.SphereGeometry(1, 30, 30);
-
-	// Objetos
-	cubo = new THREE.Mesh( geocubo, material );
-	cubo.position.x = -1;
-
-	var esfera = new THREE.Mesh( geoesfera, material );
-	esfera.position.x = 1;
-
-	esferacubo = new THREE.Object3D();
-	esferacubo.position.y = 1;
-
-	// Modelo importado
-	var loader = new THREE.ObjectLoader();
-	loader.load( 'models/soldado/soldado.json' , 
-		         function(obj){
-		         	obj.position.y = 1;
-		         	cubo.add(obj);
-		         });
-
-	// Construir la escena
-	esferacubo.add(cubo);
-	esferacubo.add(esfera);
-	scene.add(esferacubo);
-	//cubo.add(new THREE.AxisHelper(1));
-	//scene.add( new THREE.AxisHelper(3) );
 
 }
 
@@ -164,6 +273,7 @@ function updateAspectRatio() {
 	// Razon de aspecto
 	var ar = window.innerWidth/window.innerHeight;
 
+
 	/* Camara ortografica 
 	if( ar > 1 ){
 		camera.left = -4*ar;
@@ -183,6 +293,7 @@ function updateAspectRatio() {
 	camera.aspect = ar;
 
 	camera.updateProjectionMatrix();
+
 }
 
 function update() {
