@@ -248,7 +248,7 @@ function rotate(event) {
 	rayo.setFromCamera( new THREE.Vector2(x,y), cam );
 
 	var interseccion = rayo.intersectObjects( scene.children, true );
-	
+
 	if( interseccion.length > 0 ) {
 
 		interseccion[0].object.rotation.y += Math.PI / 4;
@@ -299,12 +299,12 @@ function render() {
 	renderer.clear();
 
 	// Renderizar la cámara perspectiva en la totalidad del canvas
-	renderer.setViewport(window.innerWidth/2,window.innerHeight/2,
-						 window.innerWidth/2,window.innerHeight/2);
+	renderer.setViewport(0,0,
+						 window.innerWidth,window.innerHeight);
 	renderer.render( scene, camera );
 
 	// Renderizar la vista en miniatura en la esquina superior izquierda
-	renderer.setViewport(0,0,
+	renderer.setViewport(0,window.innerHeight,
 						 window.innerWidth/5,window.innerHeight/5);
 	renderer.render( scene, planta );
 	
