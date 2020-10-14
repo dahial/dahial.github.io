@@ -265,7 +265,7 @@ function setupGui()
 // Recomputa la posición del Brazo Robot
 function updateRobot(){
 
-	Console.log("updateRobot");
+	console.log("updateRobot");
 	//var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
 	//giro.repeat(Infinity);
 	//giro.start();
