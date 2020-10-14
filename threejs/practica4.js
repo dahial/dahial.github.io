@@ -15,7 +15,7 @@ var antes = Date.now();
 init();
 loadScene();
 setupGui();
-updateRobot();
+//updateRobot();
 render();
 
 function init()
@@ -123,8 +123,7 @@ function setupGui()
 
 // Recomputa la posición del Brazo Robot
 function updateRobot(){
-	
-	
+
 	var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
 	giro.repeat(Infinity);
 	giro.start();
