@@ -15,6 +15,7 @@ var l = b = -150;
 var r = t = -l;
 var planta;
 var init_poi = new THREE.Vector3(0,100,0);
+var velX = velZ = 0.1;
 
 // Acciones a realizar
 init();
@@ -54,6 +55,7 @@ function init()
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
+	window.addEventListener('keydown', onKeyDown );
 
 }
 
@@ -295,6 +297,23 @@ function updateAspectRatio()
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	camera.aspect = window.innerWidth/window.innerHeight;
 	camera.updateProjectionMatrix();
+}
+
+function onKeyDown(event)
+{
+	var keyCode = event.key;
+
+	if(keyCode == "ArrowLeft")
+		robot.position.x -= velX;
+	else if(keyCode == "ArrowRight")
+		robot.position.x += velX;
+
+	if(keyCode == "ArrowDown")
+		robot.position.z -= velZ;
+	else if(keyCode == "ArrowUp")
+		robot.position.z += velZ;
+
+
 }
 
 function update()
