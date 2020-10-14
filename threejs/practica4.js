@@ -262,6 +262,9 @@ function updateRobot(){
 	//var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
 	//giro.repeat(Infinity);
 	//giro.start();
+
+	scene.getObjectByName("base", true).rotation.y = effectController.giroBase * Math.PI / 180;
+
 }
 
 function resetRobot(){
