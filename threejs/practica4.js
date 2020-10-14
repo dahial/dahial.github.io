@@ -271,8 +271,12 @@ function updateRobot(){
 function resetRobot(){
 
 
-	gui.__controllers.forEach(controller => controller.setValue(controller.initialValue));
+	//gui.__controllers.forEach(controller => controller.setValue(controller.initialValue));
 
+	for (var i = 0; i < gui.__controllers.length; i++) {
+        gui.__controllers[i].setValue(0);
+    }
+    
 	//effectController.giroBase = 0;
 	//effectController.giroBrazo = 0;
 	//effectController.giroAntebrazoY = 0;
