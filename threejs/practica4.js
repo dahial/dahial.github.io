@@ -34,13 +34,16 @@ function init()
 	// Crear el grafo de escena
 	scene = new THREE.Scene();
 
-	// Crear y situar la camara
-	var aspectRatio = window.innerWidth / window.innerHeight;
-	camera = new THREE.PerspectiveCamera( 75, aspectRatio , 0.1, 100 );
-	camera.position.set( 1,2,10 );
-	// Control de camara
+	// Camara
+	var ar = window.innerWidth / window.innerHeight;
+	setCameras(ar);
+
+	// Controlador de camara
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.target.set(0,0,0);
+	cameraControls.noKeys = true;
+	cameraControls.target = init_poi;
+	cameraControls.update();
 
 	// STATS --> stats.update() en update()
 	stats = new Stats();
@@ -52,6 +55,27 @@ function init()
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
+
+}
+
+function setCameras(ar) {
+	// Construye las camaras planta, alzado, perfil y perspectiva
+
+	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
+	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
+	planta.position.set(0,500,0);
+	planta.lookAt(init_poi);
+	planta.up = new THREE.Vector3(0,0,-1);
+
+	// Camara perspectiva
+	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,2000);
+	camaraPerspectiva.position.set(-300, 250, 300);
+	camaraPerspectiva.lookAt(init_poi);
+
+	camera = camaraPerspectiva.clone();
+
+	scene.add(planta);
+	scene.add(camera);
 
 }
 
