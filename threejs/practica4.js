@@ -250,7 +250,7 @@ function setupGui()
 	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo").onChange(function() {updateRobot()});
 	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y").onChange(function() {updateRobot()});
 	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z").onChange(function() {updateRobot()});
-	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza").onChange(function() {updateRobot()});
+	h.add(effectController, "giroPinza", -40, 220, 1).name("Giro Pinza").onChange(function() {updateRobot()});
 	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza").onChange(function() {updateRobot()});
 	h.add(effectController, "reiniciar").name("Reiniciar");
 }
@@ -264,6 +264,11 @@ function updateRobot(){
 	//giro.start();
 
 	scene.getObjectByName("base", true).rotation.y = effectController.giroBase * Math.PI / 180;
+	scene.getObjectByName("brazo", true).rotation.x = effectController.giroBrazo * Math.PI / 180;
+	scene.getObjectByName("antebrazo", true).rotation.y = effectController.giroAntebrazoY * Math.PI / 180;
+	scene.getObjectByName("antebrazo", true).rotation.z = effectController.giroAntebrazoZ * Math.PI / 180;
+	scene.getObjectByName("mano", true).rotation.x = effectController.giroPinza * Math.PI / 180;
+
 
 }
 

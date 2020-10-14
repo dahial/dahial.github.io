@@ -159,6 +159,7 @@ function loadScene() {
 	antebrazo.position.y = 120;
 	rotula.position.y = 120;
 	esparrago.position.y = 60;
+	eje.rotation.z = Math.PI/2;
 
 	brazo.attach(antebrazo);
 	brazo.attach(rotula);
