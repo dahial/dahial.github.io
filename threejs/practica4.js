@@ -258,14 +258,17 @@ function setupGui()
 	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza");
 	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza");
 	h.add(effectController, "reiniciar").name("Reiniciar");
+
+	h.onChange( updateRobot() );
 }
 
 // Recomputa la posición del Brazo Robot
 function updateRobot(){
 
-	var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
-	giro.repeat(Infinity);
-	giro.start();
+	Console.log("updateRobot");
+	//var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
+	//giro.repeat(Infinity);
+	//giro.start();
 }
 
 function updateAspectRatio()
