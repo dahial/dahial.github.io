@@ -41,7 +41,6 @@ function init() {
 
 	// Captura de eventos
 	window.addEventListener('resize',updateAspectRatio);
-	renderer.domElement.addEventListener('dblclick', rotate );
 }
 
 function loadScene() {
@@ -210,49 +209,6 @@ function setCameras(ar) {
 	scene.add(planta);
 	scene.add(camera);
 
-}
-
-function rotate(event) {
-	// Gira el objeto senyalado 45 grados
-
-	var x = event.clientX;
-	var y = event.clientY;
-
-	var derecha = false, abajo = false;
-	var cam = null;
-
-	// Cuadrante para la x,y?
-	if(x>window.innerWidth/2){
-		x -= window.innerWidth/2;
-		derecha = true;
-	};
-	if(y>window.innerHeight/2){
-		y -= window.innerHeight/2;
-		abajo = true;
-	};
-
-	if( derecha )
-		if( abajo ) cam = camera;
-	    else cam = perfil;
-	else
-		if( abajo ) cam = planta;
-	    else cam = alzado;
-
-	// Transformacion a cuadrado de 2x2
-	x = ( 2*x/window.innerWidth ) * 2 - 1;
-	y = -( 2*y/window.innerHeight ) * 2 + 1;
-
-	console.log( x + ',' + y );
-
-	var rayo = new THREE.Raycaster();
-	rayo.setFromCamera( new THREE.Vector2(x,y), cam );
-
-	var interseccion = rayo.intersectObjects( scene.children, true );
-
-	if( interseccion.length > 0 ) {
-
-		interseccion[0].object.rotation.y += Math.PI / 4;
-	}
 }
 
 function updateAspectRatio() {
