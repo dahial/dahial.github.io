@@ -6,6 +6,7 @@ var cameraControls;
 var stats;
 // Global GUI
 var effectController;
+var gui;
 // Objetos y tiempo
 var antes = Date.now();
 
@@ -242,7 +243,7 @@ function setupGui()
 	};
 
 	// Creacion interfaz
-	var gui = new dat.GUI();
+	gui = new dat.GUI();
 
 	// Construccion del menu
 	var h = gui.addFolder("Control Brazo")
@@ -269,14 +270,19 @@ function updateRobot(){
 
 function resetRobot(){
 
-	effectController.giroBase = 0;
-	effectController.giroBrazo = 0;
-	effectController.giroAntebrazoY = 0;
-	effectController.giroAntebrazoZ = 0;
-	effectController.giroPinza = 0;
-	effectController.separacionPinza = 15;
+
+	gui.__controllers.forEach(controller => controller.setValue(controller.initialValue));
+
+	//effectController.giroBase = 0;
+	//effectController.giroBrazo = 0;
+	//effectController.giroAntebrazoY = 0;
+	//effectController.giroAntebrazoZ = 0;
+	//effectController.giroPinza = 0;
+	//effectController.separacionPinza = 15;
 
 	updateRobot();
+
+
 }
 
 function updateAspectRatio()
