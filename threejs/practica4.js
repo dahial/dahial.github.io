@@ -158,11 +158,11 @@ function loadScene()
 	var nervio = new THREE.Object3D();
 	var disco = new THREE.Mesh(geo_disco, material);
 
-	var rotula = new THREE.Mesh(geo_rotula, material); rotula.name = "rotula";
+	var rotula = new THREE.Mesh(geo_rotula, material);
 	var esparrago = new THREE.Mesh(geo_esparrago, material);
 	var eje = new THREE.Mesh(geo_eje, material);
 
-	var antebrazo = new THREE.Object3D();
+	var antebrazo = new THREE.Object3D(); antebrazo.name = "antebrazo"
 	var brazo = new THREE.Object3D();
 
 	var base = new THREE.Mesh(geo_base, material); base.name = "base";
