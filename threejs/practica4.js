@@ -271,25 +271,10 @@ function updateRobot(){
 
 function resetRobot(){
 
-
 	h.__controllers.forEach(controller => controller.setValue(controller.initialValue));
-
-	//for (var i = 0; i < h.__controllers.length; i++) {
-    //    h.__controllers[i].setValue(0);
-    //}
-
-    console.log(h.__controllers.length);
-
-	//effectController.giroBase = 0;
-	//effectController.giroBrazo = 0;
-	//effectController.giroAntebrazoY = 0;
-	//effectController.giroAntebrazoZ = 0;
-	//effectController.giroPinza = 0;
-	//effectController.separacionPinza = 15;
-
 	updateRobot();
 
-
+	robot.position.x = robot.position.z = 0;
 }
 
 function updateAspectRatio()
