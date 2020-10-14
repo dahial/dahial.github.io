@@ -311,7 +311,7 @@ function update()
 	// Control de camara
 	cameraControls.update();
 	// Actualiza los FPS
-	stats.update();
+	//stats.update();
 	// Actualiza interpoladores
 	TWEEN.update();
 }
