@@ -237,7 +237,7 @@ function setupGui()
 		giroAntebrazoZ: 0,
 		giroPinza: 0,
 		separacionPinza: 15,
-		reiniciar: resetRobot(),
+		reiniciar: function(){resetRobot();},
 		sombras: true,
 	};
 
