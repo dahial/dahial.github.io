@@ -1,3 +1,12 @@
+/**
+ * Seminario GPC #4: Animacion e interaccion
+ * Ejemplo de peonza con interpolacion de trayectoria y giro
+ * 
+ * @requires three.min_r96.js, coordinates.js, orbitControls.js, dat.gui.js, tween.min.js, stats.min.js
+ * @author rvivo / http://personales.upv.es/rvivo
+ * @date 2020
+ */
+
 "use strict";
 
 // Globales convenidas
@@ -9,13 +18,15 @@ var stats;
 // Global GUI
 var effectController;
 // Objetos y tiempo
+var peonza,eje;
+var angulo = 0;
 var antes = Date.now();
 
 // Acciones a realizar
 init();
 loadScene();
 setupGui();
-updateRobot();
+startAnimation();
 render();
 
 function init()
@@ -92,35 +103,26 @@ function setupGui()
 {
 	// Definicion de los controles
 	effectController = {
-		giroBase = 0,
-		giroBrazo = 0,
-		giroAntebrazoY = 0,
-		giroAntebrazoZ = 0,
-		giroPinza = 0,
-		separacionPinza = 15,
+		mensaje: 'Interfaz',
+		velang: 1,
 		reiniciar: function(){
 			TWEEN.removeAll();
 			eje.position.set(-2.5,0,-2.5);
 			eje.rotation.set( 0, 0, 0 );
-			updateRobot();
+			startAnimation();
 		},
 		sombras: true,
+		color: "rgb(255,0,0)"
 	};
 
 	// Creacion interfaz
 	var gui = new dat.GUI();
 
 	// Construccion del menu
-	var h = gui.addFolder("Control Brazo");
-	h.add(effectController, "giroBase", -180, 180, 1).name("Giro Base");
-	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo");
-	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y");
-	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z");
-	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza");
-	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza");
+	var h = gui.addFolder("Control peonza");
+	h.add(effectController, "mensaje").name("Peonza");
+	h.add(effectController, "velang", 0, 5, 0.5).name("Vueltas/sg");
 	h.add(effectController, "reiniciar").name("Reiniciar");
-
-
 	var sensorColor = h.addColor(effectController, "color").name("Color");
 	sensorColor.onChange( function(color){
 							peonza.traverse( function(hijo){
@@ -129,10 +131,38 @@ function setupGui()
 						  });
 }
 
-// Recomputa la posición del Brazo Robot
-function updateRobot(){
-	
-	
+function startAnimation(){
+	// Movimiento autonomo de la peonza mediante TWEEN
+	var mvtoDer = new TWEEN.Tween( eje.position ).to( {x: [-1.5, -2.5],
+													 y: [0, 0],
+													 z: [0, 2.5] }, 5000 );
+	var mvtoFrente = new TWEEN.Tween( eje.position ).to( {x: [0, 2.5],
+													 y: [0, 0],
+													 z: [0, 2.5] }, 5000 );
+	var mvtoIzq = new TWEEN.Tween( eje.position ).to( {x: [1.5, 2.5],
+													 y: [0, 0],
+													 z: [0, -2.5] }, 5000 );
+	var mvtoTras = new TWEEN.Tween( eje.position ).to( {x: [0, -2.5],
+													 y: [0, 0],
+													 z: [-1.5, -2.5] }, 5000 );
+
+	mvtoDer.easing(TWEEN.Easing.Bounce.Out);
+	mvtoDer.interpolation( TWEEN.Interpolation.Bezier );
+	mvtoFrente.easing(TWEEN.Easing.Bounce.Out);
+	mvtoFrente.interpolation( TWEEN.Interpolation.Bezier );
+	mvtoIzq.easing(TWEEN.Easing.Bounce.Out);
+	mvtoIzq.interpolation( TWEEN.Interpolation.Bezier );
+	mvtoTras.easing(TWEEN.Easing.Bounce.Out);
+	mvtoTras.interpolation( TWEEN.Interpolation.Bezier );
+
+	mvtoDer.chain( mvtoFrente );
+	mvtoFrente.chain( mvtoIzq );
+	mvtoIzq.chain( mvtoTras );
+	//mvto.repeat( 1 );
+	//mvto.yoyo( true );
+	mvtoDer.start();
+
+	// Giro de la peonza
 	var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
 	giro.repeat(Infinity);
 	giro.start();
