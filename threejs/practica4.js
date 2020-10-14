@@ -5,8 +5,7 @@ var cameraControls;
 // Monitor de recursos
 var stats;
 // Global GUI
-var effectController;
-var gui;
+var effectController; h;
 // Objetos y tiempo
 var antes = Date.now();
 
@@ -271,13 +270,13 @@ function updateRobot(){
 function resetRobot(){
 
 
-	//gui.__controllers.forEach(controller => controller.setValue(controller.initialValue));
+	h.__controllers.forEach(controller => controller.setValue(controller.initialValue));
 
-	for (var i = 0; i < gui.__controllers.length; i++) {
-        gui.__controllers[i].setValue(0);
-    }
+	//for (var i = 0; i < h.__controllers.length; i++) {
+    //    h.__controllers[i].setValue(0);
+    //}
 
-    console.log(gui.__controllers.length);
+    console.log(h.__controllers.length);
 
 	//effectController.giroBase = 0;
 	//effectController.giroBrazo = 0;
