@@ -274,7 +274,7 @@ function resetRobot(){
 	h.__controllers.forEach(controller => controller.setValue(controller.initialValue));
 	updateRobot();
 
-	robot.position.x = robot.position.z = 0;
+	robot.position.x = robot.position.z = planta.position.x = planta.position.z = 0;
 }
 
 function updateAspectRatio()
@@ -297,6 +297,9 @@ function onKeyDown(event)
 		robot.position.z -= velZ;
 	else if(keyCode == "ArrowDown")
 		robot.position.z += velZ;
+
+	planta.position.x = robot.position.x;
+	planta.position.z = robot.position.z;
 
 
 }
@@ -329,6 +332,7 @@ function render()
 	renderer.render( scene, camera );
 
 	// Renderizar la vista en miniatura en la esquina superior izquierda, basada en la altura del contenedor
+	// POR ALGÚN MOTIVO AL RENDERIZAR EN ESTE VIEWPORT REDUCIDO, TAMBIÉN SE SOBREESCRIBE EL RENDER ANTERIOR 
 	renderer.setViewport(0,3*window.innerHeight/4,
 						 window.innerHeight/4, window.innerHeight/4);
 	renderer.render( scene, planta );
