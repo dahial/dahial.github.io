@@ -15,7 +15,7 @@ var l = b = -150;
 var r = t = -l;
 var planta;
 var init_poi = new THREE.Vector3(0,100,0);
-var velX = velZ = 0.1;
+var velX = velZ = 2;
 
 // Acciones a realizar
 init();
@@ -308,9 +308,9 @@ function onKeyDown(event)
 	else if(keyCode == "ArrowRight")
 		robot.position.x += velX;
 
-	if(keyCode == "ArrowDown")
+	if(keyCode == "ArrowUp")
 		robot.position.z -= velZ;
-	else if(keyCode == "ArrowUp")
+	else if(keyCode == "ArrowDown")
 		robot.position.z += velZ;
 
 
