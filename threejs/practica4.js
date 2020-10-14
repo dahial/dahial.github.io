@@ -268,8 +268,8 @@ function updateRobot(){
 	scene.getObjectByName("antebrazo", true).rotation.y = effectController.giroAntebrazoY * Math.PI / 180;
 	scene.getObjectByName("antebrazo", true).rotation.x = effectController.giroAntebrazoZ * Math.PI / 180;
 	scene.getObjectByName("mano", true).rotation.x = - effectController.giroPinza * Math.PI / 180;
-	scene.getObjectByName("pinzaIz", true).position.x = - effectController.separacionPinza;
-	scene.getObjectByName("pinzaDe", true).position.x = effectController.separacionPinza;
+	scene.getObjectByName("pinzaIz", true).position.y = - effectController.separacionPinza;
+	scene.getObjectByName("pinzaDe", true).position.y = effectController.separacionPinza;
 
 
 }
