@@ -20,7 +20,6 @@ var init_poi = new THREE.Vector3(0,100,0);
 init();
 loadScene();
 setupGui();
-//updateRobot();
 render();
 
 function init()
@@ -148,10 +147,10 @@ function loadScene()
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
-	var pinzaIz = new THREE.Mesh(geo_pinza, material);
-	var pinzaDe = pinzaIz.clone();
+	var pinzaIz = new THREE.Mesh(geo_pinza, material); pinzaIz.name = "pinzaIz";
+	var pinzaDe = pinzaIz.clone(); pinzaDe.name = "pinzaDe";
 
-	var mano = new THREE.Mesh(geo_mano, material );
+	var mano = new THREE.Mesh(geo_mano, material ); mano.name = "mano";
 	var nervio1 = new THREE.Mesh(geo_nervio, material);
 	var nervio2 = nervio1.clone();
 	var nervio3 = nervio2.clone();
@@ -159,14 +158,14 @@ function loadScene()
 	var nervio = new THREE.Object3D();
 	var disco = new THREE.Mesh(geo_disco, material);
 
-	var rotula = new THREE.Mesh(geo_rotula, material);
+	var rotula = new THREE.Mesh(geo_rotula, material); rotula.name = "rotula";
 	var esparrago = new THREE.Mesh(geo_esparrago, material);
 	var eje = new THREE.Mesh(geo_eje, material);
 
 	var antebrazo = new THREE.Object3D();
 	var brazo = new THREE.Object3D();
 
-	var base = new THREE.Mesh(geo_base, material);
+	var base = new THREE.Mesh(geo_base, material); base.name = "base";
 
 	//// Transformaciones y creación del grafo de escena
 	//// (Diseño bottom-up aprovechando transformaciones de padres)
