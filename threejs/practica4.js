@@ -5,7 +5,7 @@ var cameraControls;
 // Monitor de recursos
 var stats;
 // Global GUI
-var effectController; h;
+var effectController, h;
 // Objetos y tiempo
 var antes = Date.now();
 
@@ -245,7 +245,7 @@ function setupGui()
 	gui = new dat.GUI();
 
 	// Construccion del menu
-	var h = gui.addFolder("Control Brazo")
+	h = gui.addFolder("Control Brazo")
 	h.add(effectController, "giroBase", -180, 180, 1).name("Giro Base").onChange(function() {updateRobot()});
 	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo").onChange(function() {updateRobot()});
 	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y").onChange(function() {updateRobot()});
