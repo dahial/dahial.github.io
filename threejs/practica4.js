@@ -41,7 +41,7 @@ function init()
 	// Controlador de camara
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.target.set(0,0,0);
-	cameraControls.noKeys = true;
+	cameraControls.enableKeys = false;
 	cameraControls.target = init_poi;
 	cameraControls.update();
 
