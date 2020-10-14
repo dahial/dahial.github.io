@@ -244,7 +244,7 @@ function setupGui()
 	var gui = new dat.GUI();
 
 	// Construccion del menu
-	var h = gui.addFolder("Control Brazo");
+	var h = gui.addFolder("Control Brazo").onChange(updateRobot());
 	h.add(effectController, "giroBase", -180, 180, 1).name("Giro Base").onChange(updateRobot());
 	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo").onChange(updateRobot());
 	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y").onChange(updateRobot());
