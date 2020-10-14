@@ -46,12 +46,12 @@ function init()
 	cameraControls.update();
 
 	// STATS --> stats.update() en update()
-	stats = new Stats();
-	stats.setMode( 0 );					// Muestra FPS
-	stats.domElement.style.position = 'absolute';		// Abajo izquierda
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.left = '0px';
-	document.getElementById( 'container' ).appendChild( stats.domElement );
+	//stats = new Stats();
+	//stats.setMode( 0 );					// Muestra FPS
+	//stats.domElement.style.position = 'absolute';		// Abajo izquierda
+	//stats.domElement.style.bottom = '0px';
+	//stats.domElement.style.left = '0px';
+	//document.getElementById( 'container' ).appendChild( stats.domElement );
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
