@@ -1,5 +1,3 @@
-"use strict";
-
 // Globales convenidas
 var renderer, scene, camera;
 // Control de camara
