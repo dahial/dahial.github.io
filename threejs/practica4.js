@@ -27,7 +27,7 @@ function init()
 	// Inicializar el motor con sombras
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.setClearColor( new THREE.Color(0x000000) );
+	renderer.setClearColor( new THREE.Color(0x000088) );
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 	// Crear el grafo de escena
@@ -258,11 +258,6 @@ function setupGui()
 // Recomputa la posición del Brazo Robot
 function updateRobot(){
 
-	console.log("updateRobot()");
-	//var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
-	//giro.repeat(Infinity);
-	//giro.start();
-
 	scene.getObjectByName("base", true).rotation.y = effectController.giroBase * Math.PI / 180;
 	scene.getObjectByName("brazo", true).rotation.x = effectController.giroBrazo * Math.PI / 180;
 	scene.getObjectByName("antebrazo", true).rotation.y = effectController.giroAntebrazoY * Math.PI / 180;
@@ -270,13 +265,18 @@ function updateRobot(){
 	scene.getObjectByName("mano", true).rotation.x = - effectController.giroPinza * Math.PI / 180;
 	scene.getObjectByName("pinzaIz", true).position.y = - effectController.separacionPinza;
 	scene.getObjectByName("pinzaDe", true).position.y = effectController.separacionPinza;
-
-
 }
 
 function resetRobot(){
-	console.log("resetRobot()");
 
+	effectController.giroBase = 0;
+	effectController.giroBrazo = 0;
+	effectController.giroAntebrazoY = 0;
+	effectController.giroAntebrazoZ = 0;
+	effectController.giroPinza = 0;
+	effectController.separacionPinza = 15;
+
+	updateRobot();
 }
 
 function updateAspectRatio()

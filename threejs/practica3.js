@@ -21,7 +21,7 @@ function init() {
 	// Motor de render
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth,window.innerHeight);
-	renderer.setClearColor( new THREE.Color(0x0000AA) );
+	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.autoClear = false; 
 	document.getElementById('container').appendChild(renderer.domElement);
 
