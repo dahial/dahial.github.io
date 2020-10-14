@@ -252,12 +252,14 @@ function setupGui()
 	// Construccion del menu
 	var h = gui.addFolder("Control Brazo");
 	h.add(effectController, "giroBase", -180, 180, 1).name("Giro Base").onChange(updateRobot());
-	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo");
-	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y");
-	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z");
-	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza");
-	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza");
-	h.add(effectController, "reiniciar").name("Reiniciar");
+	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo").onChange(updateRobot());
+	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y").onChange(updateRobot());
+	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z").onChange(updateRobot());
+	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza").onChange(updateRobot());
+	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza").onChange(updateRobot());
+	h.add(effectController, "reiniciar").name("Reiniciar").onChange(function() {
+		console.log("Reiniciar");
+	});
 }
 
 // Recomputa la posición del Brazo Robot
