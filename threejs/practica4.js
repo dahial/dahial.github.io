@@ -323,13 +323,15 @@ function render()
 	update();
 	renderer.clear();
 
-	// Renderizar la cámara perspectiva en la totalidad del canvas
-	renderer.setViewport(0,0,
-						 window.innerWidth,window.innerHeight);
-	renderer.render( scene, camera );
 
 	// Renderizar la vista en miniatura en la esquina superior izquierda, basada en la altura del contenedor
 	renderer.setViewport(0,3*window.innerHeight/4,
 						 window.innerHeight/4, window.innerHeight/4);
 	renderer.render( scene, planta );
+	
+	// Renderizar la cámara perspectiva en la totalidad del canvas
+	renderer.setViewport(0,0,
+						 window.innerWidth,window.innerHeight);
+	renderer.render( scene, camera );
+
 }
