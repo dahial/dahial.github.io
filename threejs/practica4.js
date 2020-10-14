@@ -253,15 +253,12 @@ function updateAspectRatio()
 
 function update()
 {
-	// Rotacion de la peonza ------------
+	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
-	angulo += effectController.velang * 2*Math.PI * (ahora-antes)/1000;			// Incrementar el angulo en 360º / sg
 	antes = ahora;									// Actualizar antes
-	peonza.rotation.y = angulo;
-	//eje.rotation.y = angulo/2;
 	// ---------------------------------
 
-	// Control de camra
+	// Control de camara
 	cameraControls.update();
 	// Actualiza los FPS
 	stats.update();
