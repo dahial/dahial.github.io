@@ -237,12 +237,7 @@ function setupGui()
 		giroAntebrazoZ: 0,
 		giroPinza: 0,
 		separacionPinza: 15,
-		reiniciar: function(){
-			TWEEN.removeAll();
-			eje.position.set(-2.5,0,-2.5);
-			eje.rotation.set( 0, 0, 0 );
-			updateRobot();
-		},
+		reiniciar: resetRobot(),
 		sombras: true,
 	};
 
@@ -257,18 +252,21 @@ function setupGui()
 	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z").onChange(updateRobot());
 	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza").onChange(updateRobot());
 	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza").onChange(updateRobot());
-	h.add(effectController, "reiniciar").name("Reiniciar").onChange(function() {
-		console.log("Reiniciar");
-	});
+	h.add(effectController, "reiniciar").name("Reiniciar");
 }
 
 // Recomputa la posición del Brazo Robot
 function updateRobot(){
 
-	console.log("updateRobot");
+	console.log("updateRobot()");
 	//var giro = new TWEEN.Tween( eje.rotation ).to( {x:0, y:-Math.PI*2, z:0}, 2000 );
 	//giro.repeat(Infinity);
 	//giro.start();
+}
+
+function resetRobot(){
+	console.log("resetRobot()");
+
 }
 
 function updateAspectRatio()
