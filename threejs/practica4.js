@@ -276,7 +276,9 @@ function resetRobot(){
 	for (var i = 0; i < gui.__controllers.length; i++) {
         gui.__controllers[i].setValue(0);
     }
-    
+
+    console.log(gui.__controllers.length);
+
 	//effectController.giroBase = 0;
 	//effectController.giroBrazo = 0;
 	//effectController.giroAntebrazoY = 0;
