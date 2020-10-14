@@ -162,8 +162,8 @@ function loadScene()
 	var esparrago = new THREE.Mesh(geo_esparrago, material);
 	var eje = new THREE.Mesh(geo_eje, material);
 
-	var antebrazo = new THREE.Object3D(); antebrazo.name = "antebrazo"
-	var brazo = new THREE.Object3D();
+	var antebrazo = new THREE.Object3D(); antebrazo.name = "antebrazo";
+	var brazo = new THREE.Object3D(); brazo.name = "brazo";
 
 	var base = new THREE.Mesh(geo_base, material); base.name = "base";
 
