@@ -92,12 +92,12 @@ function setupGui()
 {
 	// Definicion de los controles
 	effectController = {
-		giroBase = 0,
-		giroBrazo = 0,
-		giroAntebrazoY = 0,
-		giroAntebrazoZ = 0,
-		giroPinza = 0,
-		separacionPinza = 15,
+		giroBase: 0,
+		giroBrazo: 0,
+		giroAntebrazoY: 0,
+		giroAntebrazoZ: 0,
+		giroPinza: 0,
+		separacionPinza: 15,
 		reiniciar: function(){
 			TWEEN.removeAll();
 			eje.position.set(-2.5,0,-2.5);
@@ -119,14 +119,6 @@ function setupGui()
 	h.add(effectController, "giroBase", -40, 220, 1).name("Giro Pinza");
 	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza");
 	h.add(effectController, "reiniciar").name("Reiniciar");
-
-
-	var sensorColor = h.addColor(effectController, "color").name("Color");
-	sensorColor.onChange( function(color){
-							peonza.traverse( function(hijo){
-								if( hijo instanceof THREE.Mesh ) hijo.material.color = new THREE.Color(color);
-							})
-						  });
 }
 
 // Recomputa la posición del Brazo Robot
