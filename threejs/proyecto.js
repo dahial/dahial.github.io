@@ -86,7 +86,7 @@ function loadScene()
 
     // Luces y niebla
 
-	scene.add( new THREE.AmbientLight( 0x665577 ) );
+	scene.add( new THREE.AmbientLight( 0xbbaacc ) );
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
@@ -99,12 +99,12 @@ function loadScene()
 
 	var d = 300;
 
-	//light.shadow.camera.left = - d;
-	//light.shadow.camera.right = d;
-	//light.shadow.camera.top = d;
-	//light.shadow.camera.bottom = - d;
+	light.shadow.camera.left = - d;
+	light.shadow.camera.right = d;
+	light.shadow.camera.top = d;
+	light.shadow.camera.bottom = - d;
 
-	//light.shadow.camera.far = 1000;
+	light.shadow.camera.far = fogFar*4;
 
 	scene.add( light );
 
@@ -137,13 +137,13 @@ function loadScene()
     buildingSideTexture.repeat.set(75,35);
     buildingSideTexture.anisotropy = 16;
 
-    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
+    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
     var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
     building_a.receiveShadow;
 
     var building_a1 = building_a.clone();
-    building_a1.position.y = 2500;
+    building_a1.position.y = 2500.001;
 
     scene.add(building_a1);
 
