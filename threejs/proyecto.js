@@ -59,8 +59,8 @@ function setCameras(ar) {
 
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, cameraFar);
-	camaraPerspectiva.position.set(-300, 2000, 300);
-	camaraPerspectiva.lookAt(0, 1500, 0);
+	camaraPerspectiva.position.set(-300, 5000, 300);
+	camaraPerspectiva.lookAt(0, 5000, 0);
 
 	camera = camaraPerspectiva.clone();
 
@@ -119,7 +119,7 @@ function loadScene()
 
     var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
-    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture });
+    var groundMaterial = new THREE.MeshBasicMaterial( { map: groundTexture });
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
     var groundGeometry = new THREE.PlaneGeometry(20000, 20000, 200, 200);
 
