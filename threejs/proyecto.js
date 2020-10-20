@@ -60,7 +60,7 @@ function setCameras(ar) {
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, cameraFar);
 	camaraPerspectiva.position.set(-300, 1000, 300);
-	camaraPerspectiva.lookAt(new Three.Vector3(0, 1000, 0));
+	camaraPerspectiva.lookAt(new THREE.Vector3(0, 1000, 0));
 
 	camera = camaraPerspectiva.clone();
 
