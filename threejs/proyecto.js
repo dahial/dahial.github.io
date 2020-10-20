@@ -89,9 +89,12 @@ function loadScene()
     groundTexture.anisotropy = 16;
     groundTexture.encoding = THREE.sRGBEncoding;
 
-    var groundNormalMap = loader.load('https://dahial.github.io/images/proyecto/ground_normal.png');
+    //var groundNormalMap = loader.load('https://dahial.github.io/images/proyecto/ground_normal.png');
 
-    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
+    //var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
+
+
+    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture });
 
     var groundGeometry = new THREE.PlaneGeometry(2000, 2000, 200, 200);
     var ground = new THREE.Mesh(groundGeometry, groundMaterial);
