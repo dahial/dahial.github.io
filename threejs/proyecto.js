@@ -56,8 +56,8 @@ function setCameras(ar) {
 
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,10000);
-	camaraPerspectiva.position.set(-300, 250, 300);
-	camaraPerspectiva.lookAt(0, 0, 0);
+	camaraPerspectiva.position.set(-300, 2000, 300);
+	camaraPerspectiva.lookAt(0, 1500, 0);
 
 	camera = camaraPerspectiva.clone();
 
@@ -85,8 +85,9 @@ function loadScene()
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
 	var light = new THREE.DirectionalLight( 0xeee6ff, 1 );
-	light.position.set( 0, 0, 200 );
+	light.position.set( 0, 5000, 200 );
 	light.position.multiplyScalar( 1.3 );
+	light.lookAt(0,0,0);
 
 	light.castShadow = true;
 
