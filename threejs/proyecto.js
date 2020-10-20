@@ -10,7 +10,7 @@ var effectController, h;
 var antes = Date.now();
 
 var fogNear = 7500;
-var cameraFar = 10000;
+var fogFar = 10000;
 
 // Acciones a realizar
 init();
@@ -58,7 +58,7 @@ function init()
 function setCameras(ar) {
 
 	// Camara perspectiva
-	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, cameraFar);
+	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, fogFar*4);
 	camaraPerspectiva.position.set(-300, 1000, 300);
 	camaraPerspectiva.lookAt(new THREE.Vector3(0, 1000, 0));
 
@@ -88,7 +88,7 @@ function loadScene()
 
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
-	var light = new THREE.DirectionalLight( 0xeebbbb, 3 );
+	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
 	light.lookAt(0,0,0);
 
@@ -108,7 +108,7 @@ function loadScene()
 
 	scene.add( light );
 
-	scene.fog = new THREE.Fog(0xb4a2bb, fogNear, cameraFar);
+	scene.fog = new THREE.Fog(0xb4a2bb, fogNear, fogFar);
 
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
@@ -137,9 +137,9 @@ function loadScene()
     buildingSideTexture.repeat.set(75,35);
     buildingSideTexture.anisotropy = 16;
 
-    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 0.5, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
-    var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
-    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial]);
+    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
+    var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
+    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
     building_a.receiveShadow;
 
     var building_a1 = building_a.clone();
