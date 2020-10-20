@@ -31,13 +31,15 @@ render();
 
 function init()
 {
-	// Inicializar el motor con sombras
+	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.VSMShadowMap;
+	renderer.logarithmicDepthBuffer = true;
 	renderer.autoClear = false; 
+
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 	// Crear el grafo de escena
