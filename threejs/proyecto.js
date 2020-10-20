@@ -83,18 +83,15 @@ function loadScene()
     // Construir la escena
 
     // Construir el suelo
-    var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png',]);
+    var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.repeat.set(25,25);
     groundTexture.anisotropy = 16;
     groundTexture.encoding = THREE.sRGBEncoding;
 
-    //var groundNormalMap = loader.load('https://dahial.github.io/images/proyecto/ground_normal.png');
+    var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
-    //var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
-
-
-    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture });
+    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
 
     var groundGeometry = new THREE.PlaneGeometry(2000, 2000, 200, 200);
     var ground = new THREE.Mesh(groundGeometry, groundMaterial);
