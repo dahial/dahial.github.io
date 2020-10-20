@@ -35,7 +35,7 @@ function init()
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.target.set(0,0,0);
 	cameraControls.enableKeys = false;
-	cameraControls.target = init_poi;
+	cameraControls.target = new THREE.Vector3(0,0,0);
 	cameraControls.update();
 
 	// STATS --> stats.update() en update()
