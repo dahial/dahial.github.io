@@ -139,7 +139,7 @@ function loadScene()
 
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 0.5, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
-    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingTopMaterial]);
+    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial]);
     building_a.receiveShadow;
 
     var building_a1 = building_a.clone();
