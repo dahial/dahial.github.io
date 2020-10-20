@@ -111,6 +111,7 @@ function loadScene()
 
     // Construir el suelo
     var groundTexture = loader.load('https://dahial.github.io/images/proyecto/ground_diffuse.png');
+    groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     //groundTexture.repeat.set(2000,2000);
     //groundTexture.anisotropy = 16;
