@@ -104,10 +104,7 @@ function loadScene()
 	light.shadow.mapSize.width = 1024;
 	light.shadow.mapSize.height = 1024;
 	var d = 10000;
-	light.shadow.camera.left = - d;
-	light.shadow.camera.right = d;
-	light.shadow.camera.top = d;
-	light.shadow.camera.bottom = - d;
+	light.shadow.camera.near = 0.5;
 	light.shadow.camera.far = fogFar*4;
 
 	var directionalLight1 = light.clone();
