@@ -167,7 +167,7 @@ function generateBuildings(max_radius)
 	for(i=0; i < count_buildingA; i++){
 
     	var building = building_A.clone();
-    	building.position.y = 2500.1;
+    	building.position.y = 2500.5;
     	building.name = "building";
 
  		//Posicionar BuildingA en el radio
