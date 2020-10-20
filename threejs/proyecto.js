@@ -80,7 +80,29 @@ function loadScene()
     ]);
     scene.background = skyboxTexture;
 
-    // Construir la escena
+    // Posicionar luces
+
+	scene.add( new THREE.AmbientLight( 0x665577 ) );
+
+	var light = new THREE.DirectionalLight( 0xeee6ff, 1 );
+	light.position.set( 0, 0, 200 );
+	light.position.multiplyScalar( 1.3 );
+
+	light.castShadow = true;
+
+	light.shadow.mapSize.width = 1024;
+	light.shadow.mapSize.height = 1024;
+
+	var d = 300;
+
+	light.shadow.camera.left = - d;
+	light.shadow.camera.right = d;
+	light.shadow.camera.top = d;
+	light.shadow.camera.bottom = - d;
+
+	light.shadow.camera.far = 1000;
+
+	scene.add( light );
 
     // Construir el suelo
     var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
@@ -92,11 +114,12 @@ function loadScene()
     var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
-
     var groundGeometry = new THREE.PlaneGeometry(2000, 2000, 200, 200);
-    var ground = new THREE.Mesh(groundGeometry, groundMaterial);
 
-    ground.rotation.z = Math.PI / 2;
+    var ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = - 250;
+	ground.receiveShadow = true;
 
     scene.add(ground);
 
