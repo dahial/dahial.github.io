@@ -85,23 +85,23 @@ function loadScene()
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
 	var light = new THREE.DirectionalLight( 0xeee6ff, 1 );
-	light.position.set( 0, 5000, 200 );
+	light.position.set( 0, 400, 800 );
 	light.position.multiplyScalar( 1.3 );
 	light.lookAt(0,0,0);
 
-	light.castShadow = true;
+	//light.castShadow = true;
 
-	light.shadow.mapSize.width = 1024;
-	light.shadow.mapSize.height = 1024;
+	//light.shadow.mapSize.width = 1024;
+	//light.shadow.mapSize.height = 1024;
 
 	var d = 300;
 
-	light.shadow.camera.left = - d;
-	light.shadow.camera.right = d;
-	light.shadow.camera.top = d;
-	light.shadow.camera.bottom = - d;
+	//light.shadow.camera.left = - d;
+	//light.shadow.camera.right = d;
+	//light.shadow.camera.top = d;
+	//light.shadow.camera.bottom = - d;
 
-	light.shadow.camera.far = 1000;
+	//light.shadow.camera.far = 1000;
 
 	scene.add( light );
 
