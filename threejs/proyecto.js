@@ -85,7 +85,8 @@ function loadScene()
 
     // Luces y niebla
 
-	scene.add( new THREE.AmbientLight( 0x665577 ) );
+	//scene.add( new THREE.AmbientLight( 0x665577 ) );
+	//scene.add( new THREE.AmbientLight( 0xffffff ) );
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
@@ -110,7 +111,7 @@ function loadScene()
 	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
-    var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
+    var groundTexture = loader.load(['./images/proyecto/ground_diffuse.jpg']);
     groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     //groundTexture.repeat.set(2000,2000);
@@ -119,7 +120,7 @@ function loadScene()
 
     var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
-    var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff, shading: THREE.SmoothShading });
+    var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff});
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
 
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 100, 100), groundMaterial);
