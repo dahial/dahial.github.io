@@ -87,7 +87,7 @@ function loadScene()
 
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
-	var light = new THREE.DirectionalLight( 0xeee6ff, 1 );
+	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
 	light.position.multiplyScalar( 1.3 );
 	light.lookAt(0,0,0);
