@@ -111,7 +111,7 @@ function loadScene()
 	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
-    var groundTexture = loader.load(['./images/proyecto/ground_diffuse.jpg']);
+    var groundTexture = loader.load(['./images/proyecto/ground_diffuse.png']);
     groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     //groundTexture.repeat.set(2000,2000);
@@ -126,7 +126,7 @@ function loadScene()
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 100, 100), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
-	//ground.receiveShadow = true;
+	ground.receiveShadow = true;
 
     scene.add(ground);
 
