@@ -134,17 +134,19 @@ function loadScene()
     var buildingTopTexture = loader.load('./images/proyecto/skyscraper_top.png');
     buildingSideTexture.color = buildingTopTexture.color = 0xffddee;
     buildingSideTexture.wrapS = buildingSideTexture.wrapT = THREE.RepeatWrapping;
-    buildingSideTexture.repeat.set(50,20);
+    buildingSideTexture.repeat.set(75,35);
     buildingSideTexture.anisotropy = 16;
 
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 0.5, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
-    const building_a = new THREE.Mesh(new THREE.BoxGeometry(250, 5000, 250), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial]);
+    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingTopMaterial]);
+    building_a.receiveShadow;
 
     var building_a1 = building_a.clone();
     building_a1.position.y = 2500;
 
     scene.add(building_a1);
+
 
 
 }
