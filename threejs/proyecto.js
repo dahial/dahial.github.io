@@ -12,6 +12,11 @@ var antes = Date.now();
 var fogNear = 7500;
 var fogFar = 10000;
 
+var count_buildingA = 10;
+
+// Objetos prefabricados
+var building_A;
+
 // Acciones a realizar
 init();
 loadScene();
@@ -142,15 +147,29 @@ function loadScene()
 
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
-    var building_a = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
-    building_a.receiveShadow;
+    building_A = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
+    building_A.receiveShadow = true;
+}
 
-    var building_a1 = building_a.clone();
-    building_a1.position.y = 2500.01;
+function generateBuildings(max_radius)
+{
+	// BuildingA
+	for(i=0; i < count_buildingA; i++){
 
-    scene.add(building_a1);
+    	var building = building_A.clone();
+    	building.position.y = 2500.1;
+    	building.name = "building";
 
+ 		//Posicionar BuildingA en el radio
+ 		var r = max_radius * Math.random();
+  		theta = Math.random() * 2 * Math.PI;
 
+  		building.position.x = r * Math.cos(theta);
+  		building.position.z = r * Math.sin(theta);
+  		building.rotation.y = theta;
+
+    	scene.add(building);
+	}
 
 }
 
