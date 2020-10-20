@@ -14,7 +14,7 @@ var fogFar = 10000;
 
 // Parametros escena
 var scene_radius = 10000;
-var count_buildingA = 10;
+var count_buildingA = 25;
 
 // Objetos prefabricados
 var building_A;
