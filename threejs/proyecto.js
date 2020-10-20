@@ -88,23 +88,26 @@ function loadScene()
 
 	scene.add( new THREE.AmbientLight( 0xbbaacc ) );
 
-	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
-	light.position.set( 0, 400, 800 );
-	light.lookAt(0,0,0);
-
+	var light = new THREE.DirectionalLight( 0xeebbbb, 0.33 );
 	light.castShadow = true;
-
 	light.shadow.mapSize.width = 1024;
 	light.shadow.mapSize.height = 1024;
-
 	var d = 300;
-
 	light.shadow.camera.left = - d;
 	light.shadow.camera.right = d;
 	light.shadow.camera.top = d;
 	light.shadow.camera.bottom = - d;
-
 	light.shadow.camera.far = fogFar*4;
+
+	var directionalLight1 = light.clone();
+	var directionalLight2 = light.clone();
+	var directionalLight3 = light.clone();
+	directionalLight1.position.set( -200, 400, 800 );
+	directionalLight1.lookAt(0,0,0);
+	directionalLight2.position.set( 0, 400, 800 );
+	directionalLight2.lookAt(0,0,0);
+	directionalLight3.position.set( 200, 400, 800 );
+	directionalLight3.lookAt(0,0,0);
 
 	scene.add( light );
 
@@ -121,7 +124,7 @@ function loadScene()
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
 
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 100, 100), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.CircleGeometry(10000, 64, 100, 100), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
