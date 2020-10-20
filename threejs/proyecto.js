@@ -92,10 +92,10 @@ function loadScene()
 	light.position.set( 0, 400, 800 );
 	light.lookAt(0,0,0);
 
-	//light.castShadow = true;
+	light.castShadow = true;
 
-	//light.shadow.mapSize.width = 1024;
-	//light.shadow.mapSize.height = 1024;
+	light.shadow.mapSize.width = 1024;
+	light.shadow.mapSize.height = 1024;
 
 	var d = 300;
 
@@ -119,7 +119,7 @@ function loadScene()
 
     var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
 
-    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, envMap: skyboxTexture, reflectivity: 0.2, specular: 0x887788 });
+    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
 
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 100, 100), groundMaterial);
     
@@ -127,6 +127,24 @@ function loadScene()
 	ground.receiveShadow = true;
 
     scene.add(ground);
+
+    // Construir los edificios
+
+    var buildingSideTexture = loader.load('./images/proyecto/skyscraper_window.png');
+    var buildingTopTexture = loader.load('./images/proyecto/skyscraper_top.png');
+    buildingSideTexture.color = buildingTopTexture.color = 0xffddee;
+    buildingSideTexture.wrapS = buildingSideTexture.wrapT = THREE.RepeatWrapping;
+    buildingSideTexture.repeat.set(50,20);
+    buildingSideTexture.anisotropy = 16;
+
+    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 0.5, side: THREE.DoubleSide, shininess: 20, specular: 0x887788 });
+    var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
+    const building_a = new THREE.Mesh(new THREE.BoxGeometry(5000, 250, 250), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial]);
+
+    var building_a1 = building_a.clone();
+    building_a1.position.y = 2500;
+
+    scene.add(building_a1);
 
 
 }
