@@ -32,7 +32,7 @@ render();
 function init()
 {
 	// Inicializar el motor con sombras
-	renderer = new THREE.WebGLRenderer();
+	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.autoClear = false; 
