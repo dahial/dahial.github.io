@@ -116,7 +116,9 @@ function loadScene()
 	directionalLight2.shadow.mapSize.width = 1024;
 	directionalLight2.shadow.mapSize.height = 1024;
 	directionalLight2.shadow.camera.near = 0.5;
-	directionalLight2.shadow.camera.far = fogFar*4;
+	directionalLight2.shadow.camera.far = scene_radius * 2;
+	directionalLight2.shadow.camera.left = directionalLight2.shadow.camera.bottom = - scene_radius;
+	directionalLight2.shadow.camera.right = directionalLight2.shadow.camera.top = scene_radius;
 
 	scene.add( directionalLight1, directionalLight2, directionalLight3);
 
