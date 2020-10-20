@@ -109,9 +109,9 @@ function loadScene()
 	directionalLight3.position.set( 200, 400, 800 );
 	directionalLight3.lookAt(0,0,0);
 
-	scene.add( light );
+	scene.add( directionalLight1, directionalLight2, directionalLight3  );
 
-	scene.fog = new THREE.Fog(0xb4a2bb, fogNear, fogFar);
+	//scene.fog = new THREE.Fog(0xb4a2bb, fogNear, fogFar);
 
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
@@ -124,7 +124,7 @@ function loadScene()
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
 
-    var ground = new THREE.Mesh(new THREE.CircleGeometry(10000, 64, 100, 100), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.CircleGeometry(10000, 64), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
@@ -146,7 +146,7 @@ function loadScene()
     building_a.receiveShadow;
 
     var building_a1 = building_a.clone();
-    building_a1.position.y = 2500.001;
+    building_a1.position.y = 2500.01;
 
     scene.add(building_a1);
 
