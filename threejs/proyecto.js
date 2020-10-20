@@ -60,7 +60,7 @@ function setCameras(ar) {
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, cameraFar);
 	camaraPerspectiva.position.set(-300, 1000, 300);
-	camaraPerspectiva.lookAt(0, 5000, 0);
+	camaraPerspectiva.lookAt(new Three.Vector3(0, 1000, 0));
 
 	camera = camaraPerspectiva.clone();
 
@@ -111,14 +111,15 @@ function loadScene()
 	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
-    var groundTexture = new THREE.CubeTextureLoader().load(['./images/proyecto/ground_diffuse.png']);
+    var loader = new THREE.TextureLoader();
+    var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     //groundTexture.repeat.set(2000,2000);
     //groundTexture.anisotropy = 16;
     //groundTexture.encoding = THREE.sRGBEncoding;
 
-    var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
+    var groundNormalMap = loader.load('https://dahial.github.io/images/proyecto/ground_normal.png');
 
     var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff});
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
