@@ -80,7 +80,6 @@ function loadScene()
     ]);
     scene.background = skybox_texture;
 
-	scene.add(algo)
 
 }
 
