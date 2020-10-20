@@ -88,7 +88,7 @@ function loadScene()
 
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
-	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
+	var light = new THREE.DirectionalLight( 0xeebbbb, 3 );
 	light.position.set( 0, 400, 800 );
 	light.lookAt(0,0,0);
 
@@ -108,18 +108,18 @@ function loadScene()
 
 	scene.add( light );
 
-	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
+	scene.fog = new THREE.Fog(0xb4a2bb, fogNear, cameraFar);
 
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(2000,2000);
+    groundTexture.repeat.set(200,200);
     groundTexture.anisotropy = 16;
 
     var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
 
-    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide });
+    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, envMap: skyboxTexture, reflectivity: 0.2, specular: 0x887788 });
 
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 100, 100), groundMaterial);
     
