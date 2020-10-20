@@ -35,6 +35,8 @@ function init()
 	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.autoClear = false; 
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
