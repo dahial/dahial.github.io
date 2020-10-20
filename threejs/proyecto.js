@@ -70,10 +70,11 @@ function setCameras(ar) {
 function loadScene()
 {
 	// Cargador de texturas
-	const loader = new THREE.CubeTextureLoader();
+	const cubeloader = new THREE.CubeTextureLoader();
+	const loader = new THREE.TextureLoader();
 
 	// Construir la SkyBox
-    const skyboxTexture = loader.load([
+    const skyboxTexture = cubeloader.load([
       'https://dahial.github.io/images/proyecto/posX.png',
       'https://dahial.github.io/images/proyecto/negX.png',
       'https://dahial.github.io/images/proyecto/posY.png',
@@ -111,7 +112,6 @@ function loadScene()
 	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
-    loader = new THREE.TextureLoader();
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
