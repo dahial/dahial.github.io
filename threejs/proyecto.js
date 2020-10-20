@@ -91,7 +91,7 @@ function loadScene()
 
     var groundNormalMap = loader.load('images/proyecto/ground_normal.png');
 
-    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide });
+    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
 
     var groundGeometry = new THREE.PlaneGeometry(2000, 2000, 200, 200);
     var ground = new THREE.Mesh(groundGeometry, groundMaterial);
