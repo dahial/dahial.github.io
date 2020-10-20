@@ -111,7 +111,7 @@ function loadScene()
 	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
-    var loader = new THREE.TextureLoader();
+    loader = new THREE.TextureLoader();
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
