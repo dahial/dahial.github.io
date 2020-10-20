@@ -123,7 +123,7 @@ function loadScene()
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
     var groundGeometry = new THREE.PlaneGeometry(20000, 20000, 200, 200);
 
-    var ground = new THREE.Mesh(THREE.PlaneBufferGeometry(20000, 20000), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(20000, 20000), groundMaterial);
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
 
