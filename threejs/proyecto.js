@@ -119,7 +119,7 @@ function loadScene()
 
     var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
-    var groundMaterial = new THREE.MeshBasicMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff });
+    var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff, shading: THREE.SmoothShading });
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
 
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 100, 100), groundMaterial);
