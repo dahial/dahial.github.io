@@ -117,9 +117,7 @@ function loadScene()
 	directionalLight2.position.set( 0, 400, 800 );
 	directionalLight3.position.set( 200, 400, 800 );
 
-	scene.add( directionalLight1, directionalLight2, directionalLight3  );
-
-	//scene.fog = new THREE.Fog(0xb4a2bb, fogNear, fogFar);
+	//scene.add( directionalLight1, directionalLight2, directionalLight3);
 
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
