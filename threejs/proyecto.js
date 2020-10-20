@@ -104,26 +104,27 @@ function loadScene()
 	scene.add( new THREE.AmbientLight( 0xbbaacc ) );
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 0.33 );
-	light.castShadow = true;
-	light.shadow.mapSize.width = 1024;
-	light.shadow.mapSize.height = 1024;
-	light.shadow.camera.near = 0.5;
-	light.shadow.camera.far = fogFar*4;
 
 	var directionalLight1 = light.clone();
 	var directionalLight2 = light.clone();
 	var directionalLight3 = light.clone();
-	directionalLight1.position.set( -200, 400, 800 );
-	directionalLight2.position.set( 0, 400, 800 );
-	directionalLight3.position.set( 200, 400, 800 );
+	directionalLight1.position.set( -150, 250, 500 );
+	directionalLight2.position.set( 0, 250, 500 );
+	directionalLight3.position.set( 150, 250, 500 );
 
-	//scene.add( directionalLight1, directionalLight2, directionalLight3);
+	directionalLight2.castShadow = true;
+	directionalLight2.shadow.mapSize.width = 1024;
+	directionalLight2.shadow.mapSize.height = 1024;
+	directionalLight2.shadow.camera.near = 0.5;
+	directionalLight2.shadow.camera.far = fogFar*4;
+
+	scene.add( directionalLight1, directionalLight2, directionalLight3);
 
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(200,200);
+    groundTexture.repeat.set(75,75);
     groundTexture.anisotropy = 16;
 
     var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
