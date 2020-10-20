@@ -70,7 +70,7 @@ function loadScene()
 	const loader = new THREE.CubeTextureLoader();
 
 	// Construir la SkyBox
-    const skybox_texture = loader.load([
+    const skyboxTexture = loader.load([
       'https://dahial.github.io/images/proyecto/posX.png',
       'https://dahial.github.io/images/proyecto/negX.png',
       'https://dahial.github.io/images/proyecto/posY.png',
@@ -78,7 +78,27 @@ function loadScene()
       'https://dahial.github.io/images/proyecto/posZ.png',
       'https://dahial.github.io/images/proyecto/negZ.png',
     ]);
-    scene.background = skybox_texture;
+    scene.background = skyboxTexture;
+
+    // Construir la escena
+
+    // Construir el suelo
+    var groundTexture = loader.load('images/proyecto/ground_diffuse.png');
+    groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+    groundTexture.repeat.set(25,25);
+    groundTexture.anisotropy = 16;
+    groundTexture.encoding = THREE.sRGBEncoding;
+
+    var groundNormalMap = loader.load('images/proyecto/ground_normal.png');
+
+    var groundMaterial = THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
+
+    var groundGeometry = new THREE.PlaneGeometry(2000, 2000, 200, 200);
+    var ground = new THREE.Mesh(groundGeometry, groundMaterial);
+
+    ground.rotation.z = Math.PI / 2;
+
+    scene.add(ground);
 
 
 }
