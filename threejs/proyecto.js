@@ -36,7 +36,7 @@ function init()
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	renderer.shadowMap.type = THREE.VSMShadowMap;
 	renderer.autoClear = false; 
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
@@ -105,21 +105,15 @@ function loadScene()
 	light.castShadow = true;
 	light.shadow.mapSize.width = 1024;
 	light.shadow.mapSize.height = 1024;
-	var d = 10000;
 	light.shadow.camera.near = 0.5;
 	light.shadow.camera.far = fogFar*4;
-	light.shadowDarkness = 0.5;
-	light.shadowCameraVisibile = true;
 
 	var directionalLight1 = light.clone();
 	var directionalLight2 = light.clone();
 	var directionalLight3 = light.clone();
 	directionalLight1.position.set( -200, 400, 800 );
-	directionalLight1.lookAt(0,0,0);
 	directionalLight2.position.set( 0, 400, 800 );
-	directionalLight2.lookAt(0,0,0);
 	directionalLight3.position.set( 200, 400, 800 );
-	directionalLight3.lookAt(0,0,0);
 
 	scene.add( directionalLight1, directionalLight2, directionalLight3  );
 
