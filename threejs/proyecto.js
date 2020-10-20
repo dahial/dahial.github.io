@@ -9,7 +9,7 @@ var effectController, h;
 // Objetos y tiempo
 var antes = Date.now();
 
-var fogNear = 2000;
+var fogNear = 7500;
 var cameraFar = 10000;
 
 // Acciones a realizar
@@ -112,14 +112,14 @@ function loadScene()
 
     // Construir el suelo
     var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
-    groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(25,25);
-    groundTexture.anisotropy = 16;
+    //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+    //groundTexture.repeat.set(25,25);
+    //groundTexture.anisotropy = 16;
     //groundTexture.encoding = THREE.sRGBEncoding;
 
     var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
-    var groundMaterial = new THREE.MeshBasicMaterial( { map: groundTexture });
+    var groundMaterial = new THREE.MeshBasicMaterial( { map: groundTexture, });
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
     var groundGeometry = new THREE.PlaneGeometry(20000, 20000, 200, 200);
 
