@@ -9,6 +9,9 @@ var effectController, h;
 // Objetos y tiempo
 var antes = Date.now();
 
+var fogNear = 2000;
+var cameraFar = 10000;
+
 // Acciones a realizar
 init();
 loadScene();
@@ -55,7 +58,7 @@ function init()
 function setCameras(ar) {
 
 	// Camara perspectiva
-	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,10000);
+	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, cameraFar);
 	camaraPerspectiva.position.set(-300, 2000, 300);
 	camaraPerspectiva.lookAt(0, 1500, 0);
 
@@ -80,7 +83,7 @@ function loadScene()
     ]);
     scene.background = skyboxTexture;
 
-    // Posicionar luces
+    // Luces y niebla
 
 	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
@@ -104,6 +107,8 @@ function loadScene()
 	//light.shadow.camera.far = 1000;
 
 	scene.add( light );
+
+	scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
     var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
