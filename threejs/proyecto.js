@@ -103,7 +103,7 @@ function loadScene()
 	light.castShadow = true;
 	light.shadow.mapSize.width = 1024;
 	light.shadow.mapSize.height = 1024;
-	var d = 300;
+	var d = 10000;
 	light.shadow.camera.left = - d;
 	light.shadow.camera.right = d;
 	light.shadow.camera.top = d;
@@ -154,6 +154,7 @@ function loadScene()
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
     building_A = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
+    building_A.castShadow = true;
     building_A.receiveShadow = true;
 
     generateBuildings(scene_radius);
