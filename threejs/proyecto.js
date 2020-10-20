@@ -89,7 +89,6 @@ function loadScene()
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
-	light.position.multiplyScalar( 1.3 );
 	light.lookAt(0,0,0);
 
 	//light.castShadow = true;
@@ -108,24 +107,24 @@ function loadScene()
 
 	scene.add( light );
 
-	scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
+	//scene.fog = new THREE.Fog(0xeee6ff, fogNear, cameraFar);
 
     // Construir el suelo
     var groundTexture = loader.load(['https://dahial.github.io/images/proyecto/ground_diffuse.png']);
-    groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(2000,2000);
+    //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+    //groundTexture.repeat.set(2000,2000);
     //groundTexture.anisotropy = 16;
     //groundTexture.encoding = THREE.sRGBEncoding;
 
-    //var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
+    var groundNormalMap = loader.load(['https://dahial.github.io/images/proyecto/ground_normal.png']);
 
     var groundMaterial = new THREE.MeshBasicMaterial( { map: groundTexture, side: THREE.DoubleSide });
     //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
 
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 2000, 2000), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 100, 100), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
-	ground.receiveShadow = true;
+	//ground.receiveShadow = true;
 
     scene.add(ground);
 
