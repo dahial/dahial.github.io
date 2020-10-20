@@ -12,10 +12,16 @@ var antes = Date.now();
 var fogNear = 7500;
 var fogFar = 10000;
 
+// Parametros escena
+var scene_radius = 10000;
 var count_buildingA = 10;
 
 // Objetos prefabricados
 var building_A;
+var building_B;
+
+// Parametros usuario
+
 
 // Acciones a realizar
 init();
@@ -149,6 +155,8 @@ function loadScene()
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
     building_A = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
     building_A.receiveShadow = true;
+
+    generateBuildings(scene_radius);
 }
 
 function generateBuildings(max_radius)
