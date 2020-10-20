@@ -162,7 +162,7 @@ function generateBuildings(max_radius)
 
  		//Posicionar BuildingA en el radio
  		var r = max_radius * Math.random();
-  		theta = Math.random() * 2 * Math.PI;
+  		var theta = Math.random() * 2 * Math.PI;
 
   		building.position.x = r * Math.cos(theta);
   		building.position.z = r * Math.sin(theta);
