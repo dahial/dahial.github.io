@@ -75,19 +75,18 @@ function loadScene()
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
-      'https://dahial.github.io/images/proyecto/posX.png',
-      'https://dahial.github.io/images/proyecto/negX.png',
-      'https://dahial.github.io/images/proyecto/posY.png',
-      'https://dahial.github.io/images/proyecto/negY.png',
-      'https://dahial.github.io/images/proyecto/posZ.png',
-      'https://dahial.github.io/images/proyecto/negZ.png',
+      './images/proyecto/posX.png',
+      './images/proyecto/negX.png',
+      './images/proyecto/posY.png',
+      './images/proyecto/negY.png',
+      './images/proyecto/posZ.png',
+      './images/proyecto/negZ.png',
     ]);
     scene.background = skyboxTexture;
 
     // Luces y niebla
 
-	//scene.add( new THREE.AmbientLight( 0x665577 ) );
-	//scene.add( new THREE.AmbientLight( 0xffffff ) );
+	scene.add( new THREE.AmbientLight( 0x665577 ) );
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 1 );
 	light.position.set( 0, 400, 800 );
@@ -114,17 +113,15 @@ function loadScene()
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
-    //groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    //groundTexture.repeat.set(2000,2000);
-    //groundTexture.anisotropy = 16;
-    //groundTexture.encoding = THREE.sRGBEncoding;
+    groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+    groundTexture.repeat.set(2000,2000);
+    groundTexture.anisotropy = 16;
 
-    var groundNormalMap = loader.load('https://dahial.github.io/images/proyecto/ground_normal.png');
+    var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
 
-    var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture, side: THREE.DoubleSide, color: 0xffffff});
-    //var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap });
+    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide });
 
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 100, 100), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(20000, 20000, 100, 100), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
