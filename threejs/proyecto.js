@@ -134,7 +134,7 @@ function loadScene()
 
     var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
 
-    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
+    var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
     var ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
     
@@ -167,7 +167,7 @@ function generateBuildings(max_radius)
 	for(i=0; i < count_buildingA; i++){
 
     	var building = building_A.clone();
-    	building.position.y = 2500.5;
+    	building.position.y = 2501;
     	building.name = "building";
 
  		//Posicionar BuildingA en el radio
