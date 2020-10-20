@@ -108,6 +108,8 @@ function loadScene()
 	var d = 10000;
 	light.shadow.camera.near = 0.5;
 	light.shadow.camera.far = fogFar*4;
+	light.shadowDarkness = 0.5;
+	light.shadowCameraVisibile = true;
 
 	var directionalLight1 = light.clone();
 	var directionalLight2 = light.clone();
@@ -134,7 +136,7 @@ function loadScene()
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
 
-    var ground = new THREE.Mesh(new THREE.CircleGeometry(10000, 64), groundMaterial);
+    var ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
@@ -156,7 +158,7 @@ function loadScene()
     building_A.castShadow = true;
     building_A.receiveShadow = true;
 
-    generateBuildings(scene_radius);
+    generateBuildings(scene_radius - 500);
 }
 
 function generateBuildings(max_radius)
