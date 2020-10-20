@@ -9,11 +9,11 @@ var effectController, h;
 // Objetos y tiempo
 var antes = Date.now();
 
-var fogNear = 7500;
-var fogFar = 10000;
+var fogNear = 375;
+var fogFar = 500;
 
 // Parametros escena
-var scene_radius = 10000;
+var scene_radius = 500;
 var count_buildingA = 25;
 
 // Objetos prefabricados
@@ -150,11 +150,11 @@ function loadScene()
 
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
     var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
-    building_A = new THREE.Mesh(new THREE.BoxGeometry(500, 5000, 500), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
+    building_A = new THREE.Mesh(new THREE.BoxGeometry(25, 250, 25), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
     building_A.castShadow = true;
     building_A.receiveShadow = true;
 
-    generateBuildings(scene_radius - 500);
+    generateBuildings(scene_radius - 25);
 }
 
 function generateBuildings(max_radius)
@@ -163,7 +163,7 @@ function generateBuildings(max_radius)
 	for(i=0; i < count_buildingA; i++){
 
     	var building = building_A.clone();
-    	building.position.y = 2505;
+    	building.position.y = 125.5;
     	building.name = "building";
 
  		//Posicionar BuildingA en el radio
