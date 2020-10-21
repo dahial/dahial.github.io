@@ -116,7 +116,6 @@ function loadScene()
 
 	});
 	player.position = new THREE.Vector3(500,500,500);
-	scene.add(playerModel);
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
