@@ -326,7 +326,7 @@ function onKeyUp(event)
 function updatePlayerRotation()
 {
 
-	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	playerCurrentRotation.x = (currentKeys[1] - currentKeys[0]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
 	playerCurrentRotation.z = 0;
 
@@ -348,14 +348,11 @@ function applyPlayerMovement(delta)
 	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rotMult, 1 ).normalize();
 	player.quaternion.multiply( tmpQuaternion );
 
-	if (
-		//lastPosition.distanceToSquared( player.position ) > EPS ||
-		//8 * ( 1 - lastQuaternion.dot( player.quaternion ) ) > EPS
-		true
-	) {
-		lastQuaternion.copy( player.quaternion );
-		lastPosition.copy( player.position );
-	}
+	lastQuaternion.copy( player.quaternion );
+	lastPosition.copy( player.position );
+	
+	player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll
+	
 
 	player.getWorldDirection(playerDirection);
 
