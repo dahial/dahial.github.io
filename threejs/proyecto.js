@@ -98,14 +98,22 @@ function loadScene()
 	// called when the resource is loaded
 	function ( gltf ) {
 
+		var ship = new THREE.Object3D();
+
+		// Importar los meshes directamente al jugador
+		root = gltf.scene;
 		child = gltf.scene.children[0];
-		while (!child.isMesh)
-			child = child.children[0];
+		while (!child.isMesh){
+			root = child;
+			child = root.children[0];
+		}
+		for (i=0; i<root.length; i++)
+			ship.add(root.children[i]);
+
+		player.attach(ship);
+		
 		//child.rotation.x += Math.PI/2;
 		//child.rotation.z += Math.PI;
-		player.add(gltf.scene)
-		//player.add(child);
-		console.log(child.position)
 		//child.position.set(0,0,0);
 
 		player.position.set(500,500,500);
