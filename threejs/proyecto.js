@@ -1,5 +1,3 @@
-import {OBJLoader} from "../lib/OBJLoader.js"
-
 // Globales convenidas
 var renderer, scene, camera;
 // Control de camara
@@ -89,11 +87,11 @@ function loadScene()
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
-	const obj_loader = new OBJLoader();
+	const gltfloader = new THREE.GLTFLoader();
 
 	// Cargar jugador
-	var playerModel = obj_loader.load('./models/proyecto/spaceship.obj');
-	playerModel.position = new THREE.Vector3(500,500,500);
+	var player = loader.load('../models/proyecto/spaceship.gltf')
+	player.position = new THREE.Vector3(500,500,500);
 	scene.add(playerModel);
 
 	// Construir la SkyBox
