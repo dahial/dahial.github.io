@@ -1,4 +1,4 @@
-import {OBJLoader} from "./lib/OBJLoader.js"
+import {OBJLoader} from "../lib/OBJLoader.js"
 
 // Globales convenidas
 var renderer, scene, camera;
