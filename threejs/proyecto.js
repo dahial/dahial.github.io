@@ -350,22 +350,22 @@ function applyPlayerMovement(delta)
 
 	// Roll acceleration
 	if(currentKeys[4])
-		playerCurrentRoll[0] = min(playerCurrentRoll[0] + playerRollAcc, playerMaxRoll);
+		playerCurrentRoll[0] = Math.min(playerCurrentRoll[0] + playerRollAcc, playerMaxRoll);
 	else
-		playerCurrentRoll[0] = min(playerCurrentRoll[0] - playerRollAcc, 0);
+		playerCurrentRoll[0] = Math.max(playerCurrentRoll[0] - playerRollAcc, 0);
 
 	if(currentKeys[5])
-		playerCurrentRoll[1] = min(playerCurrentRoll[1] + playerRollAcc, playerMaxRoll);
+		playerCurrentRoll[1] = Math.min(playerCurrentRoll[1] + playerRollAcc, playerMaxRoll);
 	else
-		playerCurrentRoll[0] = min(playerCurrentRoll[1] - playerRollAcc, 0);
+		playerCurrentRoll[0] = Math.max(playerCurrentRoll[1] - playerRollAcc, 0);
 
 	var rollMult = (playerCurrentRoll[0] + playerCurrentRoll[1]) * delta;
 
 	// Move acceleration
 	if(playerBoost)
-		playerCurrentBoost = min(playerCurrentBoost + playerBoostAcceleration, playerMaxBoost);
+		playerCurrentBoost = Math.min(playerCurrentBoost + playerBoostAcceleration, playerMaxBoost);
 	else
-		playerCurrentBoost = max(playerCurrentBoost - playerBoostAcceleration, 1);
+		playerCurrentBoost = Math.max(playerCurrentBoost - playerBoostAcceleration, 1);
 
 	var moveMult = delta * playerSpeed * playerCurrentBoost;
 
