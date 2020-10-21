@@ -390,8 +390,8 @@ function update()
 			camera.position.addVectors(camera.position, cameraDiff.multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
 
 		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance))
-		camera.lookAt(cameraLookTarget);
 		camera.up.set(player.up.x, player.up.y, player.up.z);
+		camera.lookAt(cameraLookTarget);
 	}
 
 	// Actualiza los FPS
