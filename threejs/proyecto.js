@@ -163,7 +163,7 @@ function loadScene()
 
     warehouseSideTexture.color = 0xffddee;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
-    warehouseSideTexture.repeat.set(30,60);
+    warehouseSideTexture.repeat.set(10,20);
     warehouseSideTexture.anisotropy = 16;
 
     var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
