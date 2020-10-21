@@ -93,7 +93,6 @@ function loadScene()
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/');
 
 	// Cargar jugador
-	player = new THREE.Object3D();
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
