@@ -22,13 +22,13 @@ var building_B;
 // Parametros usuario
 var player = new THREE.Object3D();
 var playerActive = false;
-var playerScale = 0.05;
+var playerScale = 0.035;
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
 
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
-var playerRotationSpeed = Math.PI / 180;
+var playerRotationSpeed = Math.PI / 135;
 var playerRoll = Math.PI / 4;
 var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 
@@ -391,6 +391,7 @@ function update()
 
 		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance))
 		camera.lookAt(cameraLookTarget);
+		camera.up = player.up;
 	}
 
 	// Actualiza los FPS
