@@ -24,6 +24,7 @@ var building_B;
 // Parametros usuario
 var player;
 var playerScale = 0.01;
+var playerSpeed = 0.01;
 
 // Acciones a realizar
 init();
@@ -99,7 +100,7 @@ function loadScene()
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
 			child = child.children[0];
-		player.attach(child);
+		player.add(child);
 
 		player.position = new THREE.Vector3(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
@@ -288,6 +289,7 @@ function update()
 
 	// Control de camara
 	cameraControls.update();
+	player.position.x += playerSpeed;
 	// Actualiza los FPS
 	//stats.update();
 	// Actualiza interpoladores
