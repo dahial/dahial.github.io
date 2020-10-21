@@ -15,6 +15,7 @@ var fogFar = 500;
 // Parametros escena
 var scene_radius = 500;
 var count_buildingA = 25;
+var count_buildingB = 10
 
 // Objetos prefabricados
 var building_A;
@@ -142,11 +143,13 @@ function loadScene()
 
     // Construir los edificios
 
+    // Building A
     var buildingSideTexture = loader.load('./images/proyecto/skyscraper_window.png');
     var buildingTopTexture = loader.load('./images/proyecto/skyscraper_top.png');
+
     buildingSideTexture.color = buildingTopTexture.color = 0xffddee;
     buildingSideTexture.wrapS = buildingSideTexture.wrapT = THREE.RepeatWrapping;
-    buildingSideTexture.repeat.set(75,35);
+    buildingSideTexture.repeat.set(60,30);
     buildingSideTexture.anisotropy = 16;
 
     var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
@@ -154,6 +157,19 @@ function loadScene()
     building_A = new THREE.Mesh(new THREE.BoxGeometry(25, 250, 25), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
     building_A.castShadow = true;
     building_A.receiveShadow = true;
+
+    // Building B
+    var warehouseTexture = loader.load('./images/proyecto/warehouse_tile.png');
+
+    warehouseSideTexture.color = 0xffddee;
+    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
+    warehouseSideTexture.repeat.set(30,60);
+    warehouseSideTexture.anisotropy = 16;
+
+    var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
+    building_B = new THREE.Mesh(new THREE.BoxGeometry(100, 40, 60), warehouseMaterial);
+    building_B.castShadow = true;
+    building_B.receiveShadow = true;
 
     generateBuildings(scene_radius - 25);
 }
@@ -164,8 +180,12 @@ function generateBuildings(max_radius)
 	for(i=0; i < count_buildingA; i++){
 
     	var building = building_A.clone();
-    	building.position.y = 125.5;
-    	building.name = "building";
+
+    	var scale = 0.6 + Math.random()*0.4;
+    	building.position.y = 125.5 * scale;
+    	building.scale.y = scale;
+
+    	building.name = "skyscraper";
 
  		//Posicionar BuildingA en el radio
  		var r = max_radius * Math.random();
@@ -174,6 +194,28 @@ function generateBuildings(max_radius)
   		building.position.x = r * Math.cos(theta);
   		building.position.z = r * Math.sin(theta);
   		building.rotation.y = theta;
+
+    	scene.add(building);
+	}
+
+	// BuildingB
+	for(i=0; i < count_buildingB; i++){
+
+    	var building = building_B.clone();
+
+    	var scale = 0.5 + Math.random()*0.5;
+    	building.position.y = 20.5 * scale;
+    	building.scale = new THREE.Vector3(scale,scale,scale);
+
+    	building.name = "warehouse";
+
+ 		//Posicionar BuildingA en el radio
+ 		var r = max_radius * Math.random();
+  		var theta = Math.random() * 2 * Math.PI;
+
+  		building.position.x = r * Math.cos(theta);
+  		building.position.z = r * Math.sin(theta);
+  		building.rotation.y = Math.random() * 2 * Math.PI;
 
     	scene.add(building);
 	}
