@@ -298,6 +298,7 @@ function update()
 
 	// Camara sigue al usuario
 	camera.position = camera.position.lerp(player.position, 0.05);
+	camera.lookAt(player);
 
 	// Actualiza los FPS
 	//stats.update();
