@@ -1,9 +1,5 @@
-import {PointerLockControls} from '../lib/PointerLockControls.js'
-
 // Globales convenidas
 var renderer, scene, camera;
-// Controles
-var controls;
 // Monitor de recursos
 var stats;
 // Global GUI
@@ -33,6 +29,8 @@ var playerSpeed = 1 / 100;
 
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 720;
+var playerRoll = Math.PI / 4;
+var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 
 // Parametros camara
 var cameraTarget = new THREE.Vector3();
@@ -81,7 +79,7 @@ function init()
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
-	window.addEventListener('keyup', onKeyDown );
+	window.addEventListener('keyup', onKeyUp );
 
 }
 
@@ -126,6 +124,7 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 
 		scene.add( player );
+		player.lookAt(0,0,0);
 		playerActive = true;
 
 		console.log( 'Player model loaded' );
@@ -285,22 +284,49 @@ function updateAspectRatio()
 	camera.updateProjectionMatrix();
 }
 
+/* 
+currentKeys[0] = Up
+currentKeys[1] = Down
+currentKeys[2] = Left
+currentKeys[3] = Right
+*/
 function onKeyDown(event)
 {
 	var keyCode = event.key;
 
+	if(keyCode == "ArrowUp")
+		currentKeys[0] = true;
+	else if(keyCode == "ArrowDown")
+		currentKeys[1] = true;
+
 	if(keyCode == "ArrowLeft")
-		console.log("Left");
+		currentKeys[2] = true;
 	else if(keyCode == "ArrowRight")
-		console.log("Right");
+		currentKeys[3] = true;
+
+}
+
+function onKeyUp(event)
+{
+	var keyCode = event.key;
 
 	if(keyCode == "ArrowUp")
-		console.log("Up");
+		currentKeys[0] = false;
 	else if(keyCode == "ArrowDown")
-		console.log("Down");
+		currentKeys[1] = false;
+	
+	if(keyCode == "ArrowLeft")
+		currentKeys[2] = false;
+	else if(keyCode == "ArrowRight")
+		currentKeys[3] = false;
 
+}
 
-
+function updatePlayerDirection()
+{
+	player.rotation.x += (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
+	player.rotation.z = (currentKeys[2] - currentKeys[3]) * playerRoll;
 }
 
 function update()
@@ -313,9 +339,9 @@ function update()
 	// ---------------------------------
 
 	// Actualizar usuario
-	player.lookAt(0,0,0);
+	updatePlayerDirection();
 	player.getWorldDirection(playerDirection);
-	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
+	player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
 
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
