@@ -102,7 +102,6 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 
 		scene.add( player );
-		cameraControls.target = player.position;
 		console.log( 'Player model loaded' );
 
 	},
@@ -294,7 +293,7 @@ function update()
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 
 	// Camara sigue al usuario
-	cameraTarget = player.position - playerDirection.multiplyScalar(cameraDistance) // Objetivo de la cámara = detrás del usuario
+	cameraTarget = player.position - playerDirection * cameraDistance; // Objetivo de la cámara = detrás del usuario
 	cameraDiff = camera.position - cameraTarget;
 	if(cameraDiff.length() - 0.5)
 		camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
