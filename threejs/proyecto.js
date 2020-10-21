@@ -64,10 +64,6 @@ function init()
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
 
-	// Controles
-	controls = new PointerLockControls(player, document.body);
-	controls.addEventListener('change', mouseChange);
-
 	// STATS --> stats.update() en update()
 	stats = new Stats();
 	stats.setMode( 0 );					// Muestra FPS
