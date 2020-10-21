@@ -95,9 +95,14 @@ function loadScene()
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-		player.attach(gltf.scene.children[0]);
+		gltf.scene.traverse(
+			function ( child ) {
+				if ( child.isMesh )
+					player.attach(child);
+			} );
+
 		player.position = new THREE.Vector3(500,500,500);
-		player.scale = new THREE.Vector3(playerScale, playerScale, playerScale);
+		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
 
 
