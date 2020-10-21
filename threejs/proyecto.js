@@ -1,5 +1,7 @@
 // Globales convenidas
 var renderer, scene, camera;
+// Control de camara
+var cameraControls;
 // Monitor de recursos
 var stats;
 // Global GUI
@@ -50,6 +52,12 @@ function init()
 	// Camara
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
+
+	// Controlador de camara
+	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
+	cameraControls.enableKeys = false;
+	cameraControls.target.set(new THREE.Vector3(0,0,0));
+	cameraControls.update();
 
 	// STATS --> stats.update() en update()
 	stats = new Stats();
@@ -297,7 +305,7 @@ function update()
 	camera.lookAt(0,0,0);
 	//camera.lookAt( player.position + playerDirection * cameraDistance );
 
-
+	cameraControls.update();
 	// Actualiza los FPS
 	stats.update();
 
