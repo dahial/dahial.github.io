@@ -1,5 +1,7 @@
 // Globales convenidas
 var renderer, scene, camera;
+// Controles
+var controls;
 // Monitor de recursos
 var stats;
 // Global GUI
@@ -19,14 +21,20 @@ var count_buildingB = 10
 var building_A;
 var building_B;
 
-// Parametros usuario y cámara
+// Parametros usuario
 var player = new THREE.Object3D();
-var playerDirection = new THREE.Vector3(0,0,0);
-var playerScale = 0.075;
-var playerSpeed = 1 / 100;
 var playerActive = false;
+var playerScale = 0.075;
 
+var playerDirection = new THREE.Vector3(0,0,0);
+var playerSpeed = 1 / 100;
+
+var playerCurrentRotation = new THREE.Vector(0,0,0);
+var playerRotationSpeed = Math.PI / 720;
+
+// Parametros camara
 var cameraTarget = new THREE.Vector3();
+var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
@@ -56,6 +64,10 @@ function init()
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
 
+	// Controles
+	controls = new PointerLockControls(player, document.body);
+	controls.addEventListener('change', mouseChange);
+
 	// STATS --> stats.update() en update()
 	stats = new Stats();
 	stats.setMode( 0 );					// Muestra FPS
@@ -67,6 +79,12 @@ function init()
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
+	window.addEventListener('keyup', onKeyDown );
+
+}
+
+function mouseChange(event){
+	console.log("Mouse change");
 
 }
 
@@ -150,8 +168,8 @@ function loadScene()
 	directionalLight3.position.set( 150, 250, 500 );
 
 	directionalLight2.castShadow = true;
-	directionalLight2.shadow.mapSize.width = 4096;
-	directionalLight2.shadow.mapSize.height = 4096;
+	directionalLight2.shadow.mapSize.width = 1024;
+	directionalLight2.shadow.mapSize.height = 1024;
 	directionalLight2.shadow.camera.near = 0.5;
 	directionalLight2.shadow.camera.far = scene_radius * 2;
 	directionalLight2.shadow.camera.left = directionalLight2.shadow.camera.bottom = - scene_radius;
