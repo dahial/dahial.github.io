@@ -286,22 +286,19 @@ function update()
 
 	// ---------------------------------
 
-	// Parámetros usuario
+	// Actualizar usuario
 	player.lookAt(0,0,0);
 	player.getWorldDirection(playerDirection);
 
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
-	//player.position.x += playerSpeed;
-
-	// Control de camara
-	cameraControls.update();
 
 	// Camara sigue al usuario
 	camera.position = camera.position.lerp(player.position, 0.01) -  playerDirection * cameraDistance; // Coloca la cámara detrás del usuario
 	camera.lookAt( player.position + playerDirection * cameraDistance );
 
 	// Actualiza los FPS
-	//stats.update();
+	stats.update();
+	
 	// Actualiza interpoladores
 	TWEEN.update();
 }
