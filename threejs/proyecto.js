@@ -22,7 +22,8 @@ var building_A;
 var building_B;
 
 // Parametros usuario y cámara
-var player, playerDirection;
+var player;
+var playerDirection = new THREE.Vector3(0,0,0);
 var playerScale = 0.01;
 var playerSpeed = 0.01;
 var cameraDistance = 3;
