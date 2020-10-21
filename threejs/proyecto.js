@@ -285,12 +285,19 @@ function update()
 {
 	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
+	var deltaT = (ahora - antes) / 1000;			// Tiempo transcurrido en segundos
 	antes = ahora;									// Actualizar antes
+
 	// ---------------------------------
 
-	// Control de camara
-	cameraControls.update();
 	player.position.x += playerSpeed;
+
+	// Control de camara
+	//cameraControls.update();
+
+	// Camara sigue al usuario
+	camera.position = camera.position.lerp(player.position, 0.95);
+
 	// Actualiza los FPS
 	//stats.update();
 	// Actualiza interpoladores
