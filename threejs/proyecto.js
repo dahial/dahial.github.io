@@ -39,6 +39,11 @@ var cameraDiff = new THREE.Vector3();
 var cameraDistance = 30;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
+// Auxiliares de movimiento
+var moveVector = new THREE.Vector(0,0,1);
+var tmpQuaternion = new THREE.Quaternion();
+var EPS = 0.000001;
+
 // Acciones a realizar
 init();
 loadScene();
@@ -318,17 +323,49 @@ function onKeyUp(event)
 
 }
 
-function updatePlayerDirection()
+function updatePlayerRotation()
 {
 
-	player.rotateOnAxis(new THREE.Vector3(1,0,0).transformDirection(player.matrixWorld), (currentKeys[0] - currentKeys[1]) * playerRotationSpeed);
-	player.rotateOnAxis(new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld), (currentKeys[2] - currentKeys[3]) * playerRotationSpeed);
+	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
+	playerCurrentRotation.z = 0;
 
-	player.rotation.x += (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
-	player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	//player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
+}
+
+function applyPlayerMovement(delta)
+{
+
+	var lastQuaternion = new Quaternion();
+	var lastPosition = new Vector3();
+
+	var moveMult = delta * playerSpeed;
+	var rotMult = delta * playerRotationSpeed;
+
+	player.translateX( moveVector.x * moveMult );
+	player.translateY( moveVector.y * moveMult );
+	player.translateZ( moveVector.z * moveMult );
+
+	tmpQuaternion.set( rotationVector.x * rotMult, rotationVector.y * rotMult, rotationVector.z * rotMult, 1 ).normalize();
+	player.quaternion.multiply( tmpQuaternion );
+
+	if (
+		lastPosition.distanceToSquared( player.position ) > EPS ||
+		8 * ( 1 - lastQuaternion.dot( player.quaternion ) ) > EPS
+	) {
+		lastQuaternion.copy( player.quaternion );
+		lastPosition.copy( player.position );
+	}
 
 	player.getWorldDirection(playerDirection);
+
+	//player.rotateOnAxis(new THREE.Vector3(1,0,0).transformDirection(player.matrixWorld), (currentKeys[0] - currentKeys[1]) * playerRotationSpeed);
+	//player.rotateOnAxis(new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld), (currentKeys[2] - currentKeys[3]) * playerRotationSpeed);
+
+	//player.rotation.x += (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	//player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
+	///player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
+
+	//player.getWorldDirection(playerDirection);
 
 }
 
@@ -342,8 +379,9 @@ function update()
 	// ---------------------------------
 
 	// Actualizar usuario
-	updatePlayerDirection();
-	player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
+	updatePlayerRotation();
+	applyPlayerMovement();
+	//player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
 
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
