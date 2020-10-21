@@ -159,7 +159,7 @@ function loadScene()
     building_A.receiveShadow = true;
 
     // Building B
-    var warehouseTexture = loader.load('./images/proyecto/warehouse_tile.png');
+    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_tile.png');
 
     warehouseSideTexture.color = 0xffddee;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
