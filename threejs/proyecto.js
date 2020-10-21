@@ -29,7 +29,7 @@ var playerActive = false;
 var cameraTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
-var cameraSpeed = 2;
+var cameraSpeed = 2; // [1-10]
 
 // Acciones a realizar
 init();
@@ -302,7 +302,7 @@ function update()
 		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		console.log(cameraDiff);
-		if(cameraDiff.length() < 0.5)
+		if(cameraDiff.length() < 0.1)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
 			camera.position.addVectors(camera.position, cameraDiff.normalize().multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
