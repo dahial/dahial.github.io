@@ -82,10 +82,10 @@ function loadScene()
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
-	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/');
+	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/ship');
 
 	// Cargar jugador
-	gltfloader.load('ship/ship.gltf',
+	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
 
@@ -93,7 +93,6 @@ function loadScene()
 		while (!child.isMesh)
 			child = child.children[0];
 		//child.rotation.x += Math.PI/2;
-		//child.rotation.y += Math.PI/2;
 		//child.rotation.z += Math.PI;
 		player.add(child);
 		console.log(child.position)
