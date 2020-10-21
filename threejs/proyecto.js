@@ -24,7 +24,7 @@ var building_B;
 // Parametros usuario y cámara
 var player = new THREE.Object3D();
 var playerDirection = new THREE.Vector3(0,0,0);
-var playerScale = 10;
+var playerScale = 1;
 var playerSpeed = 0.01;
 var cameraDistance = 20;
 
@@ -110,7 +110,7 @@ function loadScene()
 		for (i=0; i<root.length; i++)
 			ship.attach(root.children[i]);
 
-		player.add(ship);
+		player.attach(ship);
 		player.add(new THREE.Mesh(new THREE.SphereGeometry(25,25), new THREE.MeshBasicMaterial({color:'red'})));
 		
 		//child.rotation.x += Math.PI/2;
@@ -120,7 +120,7 @@ function loadScene()
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
-
+		console.log(player.children.length);
 		console.log( 'Player model loaded' );
 
 	},
