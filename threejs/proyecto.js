@@ -24,7 +24,7 @@ var building_B;
 // Parametros usuario
 var player;
 var playerScale = 0.01;
-var playerSpeed = 0.01;
+var playerSpeed = 0.005;
 
 // Acciones a realizar
 init();
@@ -100,9 +100,10 @@ function loadScene()
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
 			child = child.children[0];
+		child.rotation.x += Math.PI/2;
 		player.add(child);
 
-		player.position = new THREE.Vector3(500,500,500);
+		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
 
