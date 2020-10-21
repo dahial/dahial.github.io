@@ -302,7 +302,7 @@ function update()
 
 	// Camara sigue al usuario
 	camera.position = camera.position.lerp(player.position, 0.01) -  playerDirection * cameraDistance; // Coloca la cámara detrás del usuario
-	camera.lookAt(0,0,0);
+	//camera.lookAt(0,0,0);
 	//camera.lookAt( player.position + playerDirection * cameraDistance );
 
 	cameraControls.update();
