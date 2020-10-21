@@ -91,13 +91,11 @@ function loadScene()
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/');
 
 	// Cargar jugador
-	gltfloader.set
-	var player = gltfloader.load('ship.gltf',
+	player = new THREE.Object3D();
+	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-		player = gltf.scene.children[0].children[0].children[0].children[0];
-		console.log(gltf.scene.children[0].children[0].children[0].children[0].children.length)
-		console.log(gltf.scene.children[0].children[0].children[0].children[0].children.length)
+		player.attach(ltf.scene.children[0]);
 		player.position = new THREE.Vector3(500,500,500);
 		player.scale = new THREE.Vector3(playerScale, playerScale, playerScale);
 		scene.add( player );
