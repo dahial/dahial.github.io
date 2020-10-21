@@ -36,8 +36,8 @@ var currentKeys = [false, false, false, false, false, false]; // [PitchUp, Pitch
 var cameraTarget = new THREE.Vector3();
 var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
-var cameraDistance = 20;
-var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
+var cameraDistance = 10;
+var cameraSpeed = 3 / 100; // 0: No se mueve - 1: Instantanea
 
 // Auxiliares de movimiento
 var moveVector = new THREE.Vector3(0,0,1);
@@ -325,9 +325,9 @@ function onKeyUp(event)
 function updatePlayerRotation()
 {
 
-	playerCurrentRotation.x = (currentKeys[1] - currentKeys[0]) * playerRotationSpeed;
+	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	playerCurrentRotation.z = (currentKeys[4] - currentKeys[5]) * playerRotationSpeed;
+	playerCurrentRotation.z = (currentKeys[5] - currentKeys[4]) * playerRotationSpeed;
 
 }
 
