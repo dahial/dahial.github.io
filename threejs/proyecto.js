@@ -351,9 +351,8 @@ function applyPlayerMovement(delta)
 	lastQuaternion.copy( player.quaternion );
 	lastPosition.copy( player.position );
 
-	player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll
+	//player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll
 	
-
 	player.getWorldDirection(playerDirection);
 
 	//player.rotateOnAxis(new THREE.Vector3(1,0,0).transformDirection(player.matrixWorld), (currentKeys[0] - currentKeys[1]) * playerRotationSpeed);
