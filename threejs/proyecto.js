@@ -352,13 +352,13 @@ function applyPlayerMovement(delta)
 	if(currentKeys[4])
 		playerCurrentRoll[0] += playerRollAcc;
 	else
-		playerCurrentRoll[0] -= playerRollAcc;
+		playerCurrentRoll[0] -= playerRollAcc * 3;
 	playerCurrentRoll[0] = THREE.MathUtils.clamp(playerCurrentRoll[0], 0, playerMaxRoll)
 
 	if(currentKeys[5])
 		playerCurrentRoll[1] += playerRollAcc;
 	else
-		playerCurrentRoll[1] -= playerRollAcc;
+		playerCurrentRoll[1] -= playerRollAcc * 3;
 	playerCurrentRoll[1] = THREE.MathUtils.clamp(playerCurrentRoll[1], 0, playerMaxRoll)
 
 	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * delta;
