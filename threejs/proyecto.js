@@ -22,7 +22,7 @@ var building_A;
 var building_B;
 
 // Parametros usuario y cámara
-var player;
+var player, playerDirection;
 var playerScale = 0.01;
 var playerSpeed = 0.01;
 var cameraDistance = 3;
@@ -294,7 +294,10 @@ function update()
 
 	// ---------------------------------
 
+	// Parámetros usuario
 	player.lookAt(0,0,0);
+	player.getWorldDirection(playerDirection);
+
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 	//player.position.x += playerSpeed;
 
@@ -302,7 +305,7 @@ function update()
 	cameraControls.update();
 
 	// Camara sigue al usuario
-	camera.position = camera.position.lerp(player.position, 0.01) - player.getWorldDirection() * cameraDistance; // Coloca la cámara detrás del usuario
+	camera.position = camera.position.lerp(player.position, 0.01) -  playerDirection * cameraDistance; // Coloca la cámara detrás del usuario
 	camera.lookAt(player);
 
 	// Actualiza los FPS
