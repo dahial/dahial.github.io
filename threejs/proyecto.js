@@ -297,12 +297,13 @@ function update()
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
 		cameraTarget = player.position.sub(playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
-		cameraDiff = camera.position.sub(cameraTarget);
+		var cameraDiff = new THREE.Vector3();
+		cameraDiff.subVectors(cameraTarget, camera.position);
 		console.log(cameraDiff);
 		if(cameraDiff.length() - 0.5)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
-			camera.position += cameraDiff.normalize() * cameraSpeed; // Si lejos del objetivo, avanzar hacia el objetivo
+			camera.position =  camera.position.add(cameraDiff.normalize() * cameraSpeed); // Si lejos del objetivo, avanzar hacia el objetivo
 	}
 
 	camera.lookAt(0,0,0);
