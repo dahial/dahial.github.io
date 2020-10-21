@@ -23,6 +23,7 @@ var building_B;
 
 // Parametros usuario
 var player;
+var playerScale = 0.01;
 
 // Acciones a realizar
 init();
@@ -96,13 +97,9 @@ function loadScene()
 	function ( gltf ) {
 		player = gltf.scene;
 		player.position = new THREE.Vector3(500,500,500);
-		scene.add( gltf.scene );
+		player.scale = new THREE.Vector3(playerScale, playerScale, playerScale);
+		scene.add( player );
 
-		gltf.animations; // Array<THREE.AnimationClip>
-		gltf.scene; // THREE.Group
-		gltf.scenes; // Array<THREE.Group>
-		gltf.cameras; // Array<THREE.Camera>
-		gltf.asset; // Object
 
 	},
 	// called while loading is progressing
