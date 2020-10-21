@@ -93,6 +93,7 @@ function loadScene()
 		while (!child.isMesh)
 			child = child.children[0];
 		child.rotation.x += Math.PI/2;
+		child.rotation.y += Math.PI/2;
 		child.rotation.z += Math.PI;
 		player.add(child);
 		console.log(child.position)
