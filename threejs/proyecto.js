@@ -95,8 +95,7 @@ function loadScene()
 	var player = gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-		player = gltf.scene;
-		console.log(gltf.scene.children.length);
+		player = gltf.scene.children[0];
 		player.position = new THREE.Vector3(500,500,500);
 		player.scale = new THREE.Vector3(playerScale, playerScale, playerScale);
 		scene.add( player );
@@ -262,14 +261,14 @@ function onKeyDown(event)
 	var keyCode = event.key;
 
 	if(keyCode == "ArrowLeft")
-		print("Left");
+		console.log("Left");
 	else if(keyCode == "ArrowRight")
-		print("Right");
+		console.log("Right");
 
 	if(keyCode == "ArrowUp")
-		print("Up");
+		console.log("Up");
 	else if(keyCode == "ArrowDown")
-		print("Down");
+		console.log("Down");
 
 
 
