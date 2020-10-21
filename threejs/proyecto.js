@@ -24,9 +24,12 @@ var player = new THREE.Object3D();
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerScale = 0.075;
 var playerSpeed = 1 / 100;
+var playerActive = false;
+
+var cameraTarget = new THREE.Vector();
+var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
 var cameraSpeed = 1 / 1000;
-var playerActive = false;
 
 // Acciones a realizar
 init();
@@ -296,8 +299,7 @@ function update()
 
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
-		cameraTarget = player.position.sub(playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
-		var cameraDiff = new THREE.Vector3();
+		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		console.log(cameraDiff);
 		if(cameraDiff.length() - 0.5)
