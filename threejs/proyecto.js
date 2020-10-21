@@ -24,7 +24,7 @@ var building_B;
 // Parametros usuario
 var player;
 var playerScale = 0.01;
-var playerSpeed = 0.005;
+var playerSpeed = 0.01;
 
 // Acciones a realizar
 init();
@@ -290,13 +290,14 @@ function update()
 
 	// ---------------------------------
 
-	player.position.x += playerSpeed;
+	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.05)
+	//player.position.x += playerSpeed;
 
 	// Control de camara
 	//cameraControls.update();
 
 	// Camara sigue al usuario
-	camera.position = camera.position.lerp(player.position, 0.95);
+	camera.position = camera.position.lerp(player.position, 0.05);
 
 	// Actualiza los FPS
 	//stats.update();
