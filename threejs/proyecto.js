@@ -27,6 +27,7 @@ var playerScale = 0.035;
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
 var playerCurrentBoost = 1;
+var playerPreviousBoost = 1; // Evitar recomputar la cámara si la velocidad no cambia
 var playerBoostAcceleration = 0.01;
 var playerMaxBoost = 2;
 var playerBoost = false;
@@ -370,6 +371,7 @@ function applyPlayerMovement(delta)
 	console.log(playerCurrentRoll);
 
 	// Move acceleration
+	playerPreviousBoost = playerCurrentBoost;
 	if(playerBoost)
 		playerCurrentBoost += playerBoostAcceleration;
 	else
@@ -395,9 +397,11 @@ function applyPlayerMovement(delta)
 
 function updateCameraFov()
 {
-	var newFov = cameraFov + (playerCurrentBoost * (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
-	camera.fov = newFov;
-	camera.updateProjectionMatrix();
+	if(playerCurrentBoost != playerPreviousBoost){
+		var newFov = cameraFov + (playerCurrentBoost * (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
+		camera.fov = newFov;
+		camera.updateProjectionMatrix();
+	}
 }
 
 function update()
@@ -427,6 +431,8 @@ function update()
 		//camera.up.set(player.up.x, player.up.y, player.up.z);
 		camera.up = new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld);
 		camera.lookAt(cameraLookTarget);
+
+		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
 	}
 
 	// Actualiza los FPS
