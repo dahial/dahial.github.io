@@ -29,7 +29,7 @@ var playerActive = false;
 var cameraTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
-var cameraSpeed = 20;
+var cameraSpeed = 2;
 
 // Acciones a realizar
 init();
