@@ -103,7 +103,8 @@ function loadScene()
 			child = child.children[0];
 		//child.rotation.x += Math.PI/2;
 		//child.rotation.z += Math.PI;
-		player.add(child);
+		player.add(gltf.scene)
+		//player.add(child);
 		console.log(child.position)
 		//child.position.set(0,0,0);
 
