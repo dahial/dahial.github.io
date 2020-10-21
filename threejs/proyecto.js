@@ -389,8 +389,9 @@ function update()
 		else
 			camera.position.addVectors(camera.position, cameraDiff.multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
 
-		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance))
-		camera.up.set(player.up.x, player.up.y, player.up.z);
+		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
+		//camera.up.set(player.up.x, player.up.y, player.up.z);
+		camera.up = new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld);
 		camera.lookAt(cameraLookTarget);
 
 		console.log(player.up);
