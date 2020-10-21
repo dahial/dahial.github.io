@@ -40,7 +40,7 @@ var cameraDistance = 30;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
 // Auxiliares de movimiento
-var moveVector = new THREE.Vector(0,0,1);
+var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
 
@@ -373,7 +373,7 @@ function update()
 {
 	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
-	var deltaT = (ahora - antes);			// Tiempo transcurrido en segundos
+	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
 	antes = ahora;									// Actualizar antes
 
 	// ---------------------------------
