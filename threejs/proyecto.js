@@ -363,6 +363,8 @@ function applyPlayerMovement(delta)
 
 	var rollMult = (playerCurrentRoll[0] + playerCurrentRoll[1]) * delta;
 
+	console.log(rollMult);
+
 	// Move acceleration
 	if(playerBoost)
 		playerCurrentBoost += playerBoostAcceleration;
@@ -425,8 +427,6 @@ function update()
 		//camera.up.set(player.up.x, player.up.y, player.up.z);
 		camera.up = new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld);
 		camera.lookAt(cameraLookTarget);
-
-		console.log(player.up);
 	}
 
 	// Actualiza los FPS
