@@ -74,8 +74,8 @@ function setCameras(ar) {
 
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, fogFar*4);
-	camaraPerspectiva.position.set(-300, 1000, 300);
-	camaraPerspectiva.lookAt(new THREE.Vector3(0, 1000, 0));
+	camaraPerspectiva.position.set(800, 800, 800);
+	camaraPerspectiva.lookAt(new THREE.Vector3(0, 0, 0));
 
 	camera = camaraPerspectiva.clone();
 
@@ -302,10 +302,10 @@ function update()
 		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		console.log(cameraDiff);
-		if(cameraDiff.length() - 0.5)
+		if(cameraDiff.length() < 0.5)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
-			camera.position =  camera.position.add(cameraDiff.normalize() * cameraSpeed); // Si lejos del objetivo, avanzar hacia el objetivo
+			camera.position.addVectors(camera.position, cameraDiff.normalize().multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
 	}
 
 	camera.lookAt(0,0,0);
