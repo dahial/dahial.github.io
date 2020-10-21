@@ -345,7 +345,7 @@ function applyPlayerMovement(delta)
 	player.translateY( moveVector.y * moveMult );
 	player.translateZ( moveVector.z * moveMult );
 
-	tmpQuaternion.set( rotationVector.x * rotMult, rotationVector.y * rotMult, rotationVector.z * rotMult, 1 ).normalize();
+	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rotMult, 1 ).normalize();
 	player.quaternion.multiply( tmpQuaternion );
 
 	if (
