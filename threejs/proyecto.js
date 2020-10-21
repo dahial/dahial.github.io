@@ -27,7 +27,6 @@ var building_B;
 // Acciones a realizar
 init();
 loadScene();
-setupGui();
 render();
 
 function init()
@@ -86,8 +85,14 @@ function setCameras(ar) {
 function loadScene()
 {
 	// Cargador de texturas
-	const cubeloader = new THREE.CubeTextureLoader();
 	const loader = new THREE.TextureLoader();
+	const cubeloader = new THREE.CubeTextureLoader();
+	const obj_loader = new OBJLoader();
+
+	// Cargar jugador
+	var playerModel = obj_loader.load('./models/proyecto/spaceship.obj');
+	playerModel.position = new THREE.Vector3(500,500,500);
+	scene.add(playerModel);
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
@@ -220,54 +225,6 @@ function generateBuildings(max_radius)
     	scene.add(building);
 	}
 
-}
-
-function setupGui()
-{
-	// Definicion de los controles
-	effectController = {
-		giroBase: 0,
-		giroBrazo: 0,
-		giroAntebrazoY: 0,
-		giroAntebrazoZ: 0,
-		giroPinza: 0,
-		separacionPinza: 15,
-		reiniciar: function(){resetRobot();},
-		sombras: true,
-	};
-
-	// Creacion interfaz
-	gui = new dat.GUI();
-
-	// Construccion del menu
-	h = gui.addFolder("Control Brazo")
-	h.add(effectController, "giroBase", -180, 180, 1).name("Giro Base").onChange(function() {updateRobot()});
-	h.add(effectController, "giroBrazo", -45, 45, 1).name("Giro Brazo").onChange(function() {updateRobot()});
-	h.add(effectController, "giroAntebrazoY", -180, 180, 1).name("Giro Antebrazo Y").onChange(function() {updateRobot()});
-	h.add(effectController, "giroAntebrazoZ", -90, 90, 1).name("Giro Antebrazo Z").onChange(function() {updateRobot()});
-	h.add(effectController, "giroPinza", -40, 220, 1).name("Giro Pinza").onChange(function() {updateRobot()});
-	h.add(effectController, "separacionPinza", 0, 15, 0.1).name("Separacion Pinza").onChange(function() {updateRobot()});
-	h.add(effectController, "reiniciar").name("Reiniciar");
-}
-
-// Recomputa la posición del Brazo Robot
-function updateRobot(){
-
-	//scene.getObjectByName("base", true).rotation.y = effectController.giroBase * Math.PI / 180;
-	//scene.getObjectByName("brazo", true).rotation.x = effectController.giroBrazo * Math.PI / 180;
-	//scene.getObjectByName("antebrazo", true).rotation.y = effectController.giroAntebrazoY * Math.PI / 180;
-	//scene.getObjectByName("antebrazo", true).rotation.x = effectController.giroAntebrazoZ * Math.PI / 180;
-	//scene.getObjectByName("mano", true).rotation.x = - effectController.giroPinza * Math.PI / 180;
-	//scene.getObjectByName("pinzaIz", true).position.y = - effectController.separacionPinza;
-	//scene.getObjectByName("pinzaDe", true).position.y = effectController.separacionPinza;
-}
-
-function resetRobot(){
-
-	//h.__controllers.forEach(controller => controller.setValue(controller.initialValue));
-	//updateRobot();
-
-	//robot.position.x = robot.position.z = planta.position.x = planta.position.z = 0;
 }
 
 function updateAspectRatio()
