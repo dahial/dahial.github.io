@@ -26,7 +26,7 @@ var player;
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerScale = 0.01;
 var playerSpeed = 0.01;
-var cameraDistance = 3;
+var cameraDistance = 20;
 
 // Acciones a realizar
 init();
