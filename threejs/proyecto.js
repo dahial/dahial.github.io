@@ -302,8 +302,8 @@ function onKeyDown(event)
 		case "ArrowDown": currentKeys[1] = true; break;
 		case "ArrowLeft": currentKeys[2] = true; break;
 		case "ArrowRight": currentKeys[3] = true; break;
-		case "KeyQ": currentKeys[4] = true; break;
-		case "KeyE": currentKeys[5] = true; break;
+		case "q": currentKeys[4] = true; break;
+		case "e": currentKeys[5] = true; break;
 	}
 }
 
@@ -316,8 +316,8 @@ function onKeyUp(event)
 		case "ArrowDown": currentKeys[1] = false; break;
 		case "ArrowLeft": currentKeys[2] = false; break;
 		case "ArrowRight": currentKeys[3] = false; break;
-		case "KeyQ": currentKeys[4] = false; break;
-		case "KeyE": currentKeys[5] = false; break;
+		case "q": currentKeys[4] = false; break;
+		case "e": currentKeys[5] = false; break;
 	}
 
 }
