@@ -29,7 +29,7 @@ var playerScale = 0.075;
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 1 / 100;
 
-var playerCurrentRotation = new THREE.Vector(0,0,0);
+var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 720;
 
 // Parametros camara
