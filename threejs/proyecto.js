@@ -102,7 +102,7 @@ function loadScene()
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
 			child = child.children[0];
-		debug.log(child.children.length);
+		console.log(child.children.length);
 		child.rotation.x += Math.PI/2;
 		//child.rotation.y += Math.PI;
 		player.add(child);
