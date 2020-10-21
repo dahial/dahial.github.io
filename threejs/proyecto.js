@@ -25,10 +25,10 @@ var playerActive = false;
 var playerScale = 0.05;
 
 var playerDirection = new THREE.Vector3(0,0,0);
-var playerSpeed = 1 / 100;
+var playerSpeed = 5 / 100;
 
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
-var playerRotationSpeed = Math.PI / 720;
+var playerRotationSpeed = Math.PI / 180;
 var playerRoll = Math.PI / 4;
 var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 
@@ -349,8 +349,9 @@ function applyPlayerMovement(delta)
 	player.quaternion.multiply( tmpQuaternion );
 
 	if (
-		lastPosition.distanceToSquared( player.position ) > EPS ||
-		8 * ( 1 - lastQuaternion.dot( player.quaternion ) ) > EPS
+		//lastPosition.distanceToSquared( player.position ) > EPS ||
+		//8 * ( 1 - lastQuaternion.dot( player.quaternion ) ) > EPS
+		true
 	) {
 		lastQuaternion.copy( player.quaternion );
 		lastPosition.copy( player.position );
@@ -387,7 +388,7 @@ function update()
 	if(playerActive){
 		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
 		cameraDiff.subVectors(cameraTarget, camera.position);
-		if(cameraDiff.length() < 50)
+		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
 			camera.position.addVectors(camera.position, cameraDiff.multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
