@@ -47,7 +47,7 @@ var cameraDistance = 10;
 var cameraSpeed = 3 / 100; // 0: No se mueve - 1: Instantanea
 var cameraFov = 50;
 var cameraCurrentFov = cameraFov;
-var cameraMaxFov = 75;
+var cameraMaxFov = 90;
 
 // Auxiliares de movimiento
 var moveVector = new THREE.Vector3(0,0,1);
@@ -420,7 +420,7 @@ function update()
 
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
-		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
+		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / playerCurrentBoost)); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
