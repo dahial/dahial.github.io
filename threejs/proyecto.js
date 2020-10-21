@@ -1,3 +1,5 @@
+import OBJLoader from "./lib/OBJLoader.js"
+
 // Globales convenidas
 var renderer, scene, camera;
 // Control de camara
