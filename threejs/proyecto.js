@@ -23,8 +23,9 @@ var building_B;
 var player = new THREE.Object3D();
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerScale = 0.075;
-var playerSpeed = 0.01;
+var playerSpeed = 1 / 100;
 var cameraDistance = 20;
+var cameraSpeed = 1 / 1000;
 
 // Acciones a realizar
 init();
@@ -293,7 +294,13 @@ function update()
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 
 	// Camara sigue al usuario
-	camera.position = camera.position.lerp(player.position, 0.01) -  playerDirection * cameraDistance; // Coloca la cámara detrás del usuario
+	cameraTarget = player.position - playerDirection.multiplyScalar(cameraDistance) // Objetivo de la cámara = detrás del usuario
+	cameraDiff = camera.position - cameraTarget;
+	if(cameraDiff.length() - 0.5)
+		camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
+	else
+		camera.position += cameraDiff.normalize() * cameraSpeed; // Si lejos del objetivo, avanzar hacia el objetivo
+
 	camera.lookAt(0,0,0);
 	//camera.lookAt( player.position + playerDirection * cameraDistance );
 
