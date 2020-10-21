@@ -107,6 +107,7 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
 
+		console.log( 'Player model loaded' );
 
 	},
 	// called while loading is progressing
@@ -290,14 +291,14 @@ function update()
 
 	// ---------------------------------
 
-	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.05)
+	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.001)
 	//player.position.x += playerSpeed;
 
 	// Control de camara
 	//cameraControls.update();
 
 	// Camara sigue al usuario
-	camera.position = camera.position.lerp(player.position, 0.05);
+	camera.position = camera.position.lerp(player.position, 0.01);
 	camera.lookAt(player);
 
 	// Actualiza los FPS
