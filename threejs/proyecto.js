@@ -44,6 +44,9 @@ var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 10;
 var cameraSpeed = 3 / 100; // 0: No se mueve - 1: Instantanea
+var cameraFov = 50;
+var cameraCurrentFov = cameraFov;
+var cameraMaxFov = 75;
 
 // Auxiliares de movimiento
 var moveVector = new THREE.Vector3(0,0,1);
@@ -98,7 +101,7 @@ function mouseChange(event){
 function setCameras(ar) {
 
 	// Camara perspectiva
-	var camaraPerspectiva = new THREE.PerspectiveCamera(50, ar, 0.1, fogFar*4);
+	var camaraPerspectiva = new THREE.PerspectiveCamera(cameraFov, ar, 0.1, fogFar*4);
 	camaraPerspectiva.position.set(800, 800, 800);
 	camaraPerspectiva.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -385,20 +388,16 @@ function applyPlayerMovement(delta)
 
 	lastQuaternion.copy( player.quaternion );
 	lastPosition.copy( player.position );
-
-	//player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll
 	
 	player.getWorldDirection(playerDirection);
 
-	//player.rotateOnAxis(new THREE.Vector3(1,0,0).transformDirection(player.matrixWorld), (currentKeys[0] - currentKeys[1]) * playerRotationSpeed);
-	//player.rotateOnAxis(new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld), (currentKeys[2] - currentKeys[3]) * playerRotationSpeed);
+}
 
-	//player.rotation.x += (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
-	//player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	///player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
-
-	//player.getWorldDirection(playerDirection);
-
+function updateCameraFov()
+{
+	var newFov = cameraFov + (playerCurrentBoost * (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
+	camera.fov = newFov;
+	camera.updateProjectionMatrix();
 }
 
 function update()
