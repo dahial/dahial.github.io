@@ -343,7 +343,6 @@ function update()
 	if(playerActive){
 		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance)); // Objetivo de la cámara = detrás del usuario
 		cameraDiff.subVectors(cameraTarget, camera.position);
-		console.log(cameraDiff);
 		if(cameraDiff.length() < 0.1)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
