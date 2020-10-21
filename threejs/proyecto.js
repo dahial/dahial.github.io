@@ -125,7 +125,7 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 
 		scene.add( player );
-		player.lookAt(0,0,0);
+		player.lookAt(0,500,0);
 		playerActive = true;
 
 		console.log( 'Player model loaded' );
