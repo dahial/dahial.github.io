@@ -359,11 +359,12 @@ function applyPlayerMovement(delta)
 		playerCurrentRoll[1] += playerRollAcc;
 	else
 		playerCurrentRoll[1] -= playerRollAcc * 3;
+
 	playerCurrentRoll[1] = THREE.MathUtils.clamp(playerCurrentRoll[1], 0, playerMaxRoll)
 
 	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * delta;
 
-	console.log(rollMult);
+	console.log(playerCurrentRoll);
 
 	// Move acceleration
 	if(playerBoost)
