@@ -108,7 +108,7 @@ function loadScene()
 			child = root.children[0];
 		}
 		for (i=0; i<root.length; i++)
-			ship.add(root.children[i]);
+			ship.attach(root.children[i]);
 
 		player.add(ship);
 		player.add(new THREE.Mesh(new THREE.SphereGeometry(25,25), new THREE.MeshBasicMaterial({color:'red'})));
