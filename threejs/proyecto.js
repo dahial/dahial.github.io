@@ -295,6 +295,7 @@ function update()
 	// Camara sigue al usuario
 	cameraTarget = player.position - playerDirection * cameraDistance; // Objetivo de la cámara = detrás del usuario
 	cameraDiff = camera.position - cameraTarget;
+	console.log(cameraDiff);
 	if(cameraDiff.length() - 0.5)
 		camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 	else
