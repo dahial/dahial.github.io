@@ -21,10 +21,11 @@ var count_buildingB = 10
 var building_A;
 var building_B;
 
-// Parametros usuario
+// Parametros usuario y cámara
 var player;
 var playerScale = 0.01;
 var playerSpeed = 0.01;
+var cameraDistance = 3;
 
 // Acciones a realizar
 init();
@@ -301,8 +302,8 @@ function update()
 	cameraControls.update();
 
 	// Camara sigue al usuario
-	camera.position = camera.position.lerp(player.position, 0.01);
-	//camera.lookAt(player);
+	camera.position = camera.position.lerp(player.position, 0.01) - player.getWorldDirection() * cameraDistance; // Coloca la cámara detrás del usuario
+	camera.lookAt(player);
 
 	// Actualiza los FPS
 	//stats.update();
