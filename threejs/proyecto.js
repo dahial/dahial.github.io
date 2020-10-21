@@ -26,10 +26,16 @@ var playerScale = 0.035;
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
+var playerCurrentBoost = 1;
+var playerBoostAcceleration = 0.01;
+var playerMaxBoost = 2;
+var playerBoost = false;
 
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 135;
-var playerRoll = Math.PI / 4;
+var playerRollAcc = 2 / 1000;
+var playerMaxRoll = Math.PI / 30
+var playerCurrentRoll = [0, 0];
 var currentKeys = [false, false, false, false, false, false]; // [PitchUp, PitchDown, YawLeft, YawRight, RollLeft, RollRight]
 
 // Parametros camara
@@ -304,6 +310,7 @@ function onKeyDown(event)
 		case "ArrowRight": currentKeys[3] = true; break;
 		case "q": currentKeys[4] = true; break;
 		case "e": currentKeys[5] = true; break;
+		case " ": playerBoost = true; break;
 	}
 }
 
@@ -318,6 +325,7 @@ function onKeyUp(event)
 		case "ArrowRight": currentKeys[3] = false; break;
 		case "q": currentKeys[4] = false; break;
 		case "e": currentKeys[5] = false; break;
+		case " ": playerBoost = false; break;
 	}
 
 }
@@ -337,14 +345,36 @@ function applyPlayerMovement(delta)
 	var lastQuaternion = new THREE.Quaternion();
 	var lastPosition = new THREE.Vector3();
 
-	var moveMult = delta * playerSpeed;
+
 	var rotMult = delta * playerRotationSpeed;
 
+	// Roll acceleration
+	if(currentKeys[4])
+		playerCurrentRoll[0] = min(playerCurrentRoll[0] + playerRollAcc, playerMaxRoll);
+	else
+		playerCurrentRoll[0] = min(playerCurrentRoll[0] - playerRollAcc, 0);
+
+	if(currentKeys[5])
+		playerCurrentRoll[1] = min(playerCurrentRoll[1] + playerRollAcc, playerMaxRoll);
+	else
+		playerCurrentRoll[0] = min(playerCurrentRoll[1] - playerRollAcc, 0);
+
+	var rollMult = (playerCurrentRoll[0] + playerCurrentRoll[1]) * delta;
+
+	// Move acceleration
+	if(playerBoost)
+		playerCurrentBoost = min(playerCurrentBoost + playerBoostAcceleration, playerMaxBoost);
+	else
+		playerCurrentBoost = max(playerCurrentBoost - playerBoostAcceleration, 1);
+
+	var moveMult = delta * playerSpeed * playerCurrentBoost;
+
+	// Apply translation and rotation
 	player.translateX( moveVector.x * moveMult );
 	player.translateY( moveVector.y * moveMult );
 	player.translateZ( moveVector.z * moveMult );
 
-	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rotMult, 1 ).normalize();
+	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rollMult, 1 ).normalize();
 	player.quaternion.multiply( tmpQuaternion );
 
 	lastQuaternion.copy( player.quaternion );
