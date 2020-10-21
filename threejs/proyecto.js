@@ -1,7 +1,5 @@
 // Globales convenidas
 var renderer, scene, camera;
-// Control de camara
-var cameraControls;
 // Monitor de recursos
 var stats;
 // Global GUI
@@ -53,12 +51,6 @@ function init()
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
 
-	// Controlador de camara (desactivar input tradicional)
-	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
-	cameraControls.enableKeys = cameraControls.enablePan = cameraControls.enableRotate = cameraControls.enableZoom = false;
-	cameraControls.target = new THREE.Vector3(0,0,0);
-	cameraControls.update();
-
 	// STATS --> stats.update() en update()
 	stats = new Stats();
 	stats.setMode( 0 );					// Muestra FPS
@@ -109,7 +101,6 @@ function loadScene()
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
-		cameraControls.target = player;
 
 		console.log( 'Player model loaded' );
 
@@ -307,7 +298,7 @@ function update()
 
 	// Camara sigue al usuario
 	camera.position = camera.position.lerp(player.position, 0.01) -  playerDirection * cameraDistance; // Coloca la cámara detrás del usuario
-	//camera.lookAt(player);
+	camera.lookAt( player.position + playerDirection * cameraDistance );
 
 	// Actualiza los FPS
 	//stats.update();
