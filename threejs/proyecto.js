@@ -95,7 +95,8 @@ function loadScene()
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-		gltf.scene.traverse(
+
+		gltf.scene.traverseVisible(
 			function ( child ) {
 				if ( child.isMesh )
 					player.attach(child);
