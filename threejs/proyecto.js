@@ -292,13 +292,12 @@ function update()
 	// Actualizar usuario
 	player.lookAt(0,0,0);
 	player.getWorldDirection(playerDirection);
-
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 
 	// Camara sigue al usuario si está en la escena
 	if(playerActive){
-		console.log(playerDirection);
-		cameraTarget = player.position - playerDirection * cameraDistance; // Objetivo de la cámara = detrás del usuario
+		console.log(playerDirection.multiplyScalar(cameraDistance));
+		cameraTarget = player.position - playerDirection.multiplyScalar(cameraDistance); // Objetivo de la cámara = detrás del usuario
 		console.log(cameraTarget);
 		cameraDiff = camera.position - cameraTarget;
 		console.log(cameraDiff);
