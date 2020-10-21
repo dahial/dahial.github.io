@@ -298,6 +298,7 @@ function update()
 	// Parámetros usuario
 	player.lookAt(0,0,0);
 	player.getWorldDirection(playerDirection);
+	console.lot(playerDirection);
 
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 	//player.position.x += playerSpeed;
