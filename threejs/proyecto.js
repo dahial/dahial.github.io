@@ -102,12 +102,12 @@ function loadScene()
 		while (!child.isMesh)
 			child = child.children[0];
 		
+		child.castShadow = true;
+		child.receiveShadow = true;
 		player.add(child);
 
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
-		player.castShadow = true;
-		player.receiveShadow = true;
 
 		scene.add( player );
 		console.log(player.children.length);
