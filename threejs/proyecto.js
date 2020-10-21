@@ -110,7 +110,7 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 
 		scene.add( player );
-		cameraControls.target = player;
+		cameraControls.target = player.position;
 		console.log( 'Player model loaded' );
 
 	},
