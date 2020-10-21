@@ -90,7 +90,7 @@ function loadScene()
 	const gltfloader = new THREE.GLTFLoader();
 
 	// Cargar jugador
-	var player = loader.load('../models/proyecto/spaceship.gltf',
+	var player = loader.load('../models/proyecto/scene.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
 
