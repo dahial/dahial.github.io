@@ -101,6 +101,7 @@ function loadScene()
 		while (!child.isMesh)
 			child = child.children[0];
 		child.rotation.x += Math.PI/2;
+		child.rotation.y += Math.PI;
 		player.add(child);
 		child.position.set(0,0,0);
 
