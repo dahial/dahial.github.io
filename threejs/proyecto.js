@@ -102,6 +102,7 @@ function loadScene()
 			child = child.children[0];
 		child.rotation.x += Math.PI/2;
 		player.add(child);
+		child.position.set(0,0,0);
 
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
