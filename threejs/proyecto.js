@@ -30,7 +30,7 @@ var playerSpeed = 5 / 100;
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 135;
 var playerRoll = Math.PI / 4;
-var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
+var currentKeys = [false, false, false, false, false, false]; // [PitchUp, PitchDown, YawLeft, YawRight, RollLeft, RollRight]
 
 // Parametros camara
 var cameraTarget = new THREE.Vector3();
@@ -290,36 +290,35 @@ currentKeys[0] = Up
 currentKeys[1] = Down
 currentKeys[2] = Left
 currentKeys[3] = Right
+currentKeys[2] = Q
+currentKeys[3] = E
 */
 function onKeyDown(event)
 {
 	var keyCode = event.key;
 
-	if(keyCode == "ArrowUp")
-		currentKeys[0] = true;
-	else if(keyCode == "ArrowDown")
-		currentKeys[1] = true;
-
-	if(keyCode == "ArrowLeft")
-		currentKeys[2] = true;
-	else if(keyCode == "ArrowRight")
-		currentKeys[3] = true;
-
+	switch(keyCode){
+		case "ArrowUp": currentKeys[0] = true; break;
+		case "ArrowDown": currentKeys[1] = true; break;
+		case "ArrowLeft": currentKeys[2] = true; break;
+		case "ArrowRight": currentKeys[3] = true; break;
+		case "KeyQ": currentKeys[4] = true; break;
+		case "KeyE": currentKeys[5] = true; break;
+	}
 }
 
 function onKeyUp(event)
 {
 	var keyCode = event.key;
 
-	if(keyCode == "ArrowUp")
-		currentKeys[0] = false;
-	else if(keyCode == "ArrowDown")
-		currentKeys[1] = false;
-	
-	if(keyCode == "ArrowLeft")
-		currentKeys[2] = false;
-	else if(keyCode == "ArrowRight")
-		currentKeys[3] = false;
+	switch(keyCode){
+		case "ArrowUp": currentKeys[0] = false; break;
+		case "ArrowDown": currentKeys[1] = false; break;
+		case "ArrowLeft": currentKeys[2] = false; break;
+		case "ArrowRight": currentKeys[3] = false; break;
+		case "KeyQ": currentKeys[4] = false; break;
+		case "KeyE": currentKeys[5] = false; break;
+	}
 
 }
 
@@ -328,7 +327,7 @@ function updatePlayerRotation()
 
 	playerCurrentRotation.x = (currentKeys[1] - currentKeys[0]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	playerCurrentRotation.z = 0;
+	playerCurrentRotation.z = (currentKeys[4] - currentKeys[5]) * playerRotationSpeed;
 
 }
 
