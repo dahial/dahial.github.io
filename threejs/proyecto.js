@@ -26,6 +26,7 @@ var playerScale = 0.075;
 var playerSpeed = 1 / 100;
 var cameraDistance = 20;
 var cameraSpeed = 1 / 1000;
+var playerActive = false;
 
 // Acciones a realizar
 init();
@@ -102,6 +103,8 @@ function loadScene()
 		player.scale.set(playerScale, playerScale, playerScale);
 
 		scene.add( player );
+		playerActive = true;
+
 		console.log( 'Player model loaded' );
 
 	},
@@ -292,14 +295,16 @@ function update()
 
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 
-	// Camara sigue al usuario
-	cameraTarget = player.position - playerDirection * cameraDistance; // Objetivo de la cámara = detrás del usuario
-	cameraDiff = camera.position - cameraTarget;
-	console.log(cameraDiff);
-	if(cameraDiff.length() - 0.5)
-		camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
-	else
-		camera.position += cameraDiff.normalize() * cameraSpeed; // Si lejos del objetivo, avanzar hacia el objetivo
+	// Camara sigue al usuario si está en la escena
+	if(playerActive){
+		cameraTarget = player.position - playerDirection * cameraDistance; // Objetivo de la cámara = detrás del usuario
+		cameraDiff = camera.position - cameraTarget;
+		console.log(cameraDiff);
+		if(cameraDiff.length() - 0.5)
+			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
+		else
+			camera.position += cameraDiff.normalize() * cameraSpeed; // Si lejos del objetivo, avanzar hacia el objetivo
+	}
 
 	camera.lookAt(0,0,0);
 	//camera.lookAt( player.position + playerDirection * cameraDistance );
