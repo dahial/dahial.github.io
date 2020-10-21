@@ -56,7 +56,7 @@ function init()
 	// Controlador de camara (desactivar input tradicional)
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.enableKeys = cameraControls.enablePan = cameraControls.enableRotate = cameraControls.enableZoom = false;
-	cameraControls.target = player;
+	cameraControls.target = new THREE.Vector3(0,0,0);
 	cameraControls.update();
 
 	// STATS --> stats.update() en update()
@@ -109,6 +109,7 @@ function loadScene()
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
 		scene.add( player );
+		cameraControls.target = player;
 
 		console.log( 'Player model loaded' );
 
