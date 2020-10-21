@@ -95,6 +95,7 @@ function loadScene()
 	// called when the resource is loaded
 	function ( gltf ) {
 		player = gltf.scene;
+		player.position = new THREE.Vector3(500,500,500);
 		scene.add( gltf.scene );
 
 		gltf.animations; // Array<THREE.AnimationClip>
@@ -117,7 +118,6 @@ function loadScene()
 		console.log(error);
 
 	});
-	player.position = new THREE.Vector3(500,500,500);
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
