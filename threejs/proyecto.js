@@ -96,6 +96,7 @@ function loadScene()
 	// called when the resource is loaded
 	function ( gltf ) {
 		player = gltf.scene;
+		print(gltf.scene.children.length);
 		player.position = new THREE.Vector3(500,500,500);
 		player.scale = new THREE.Vector3(playerScale, playerScale, playerScale);
 		scene.add( player );
