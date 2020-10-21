@@ -87,10 +87,11 @@ function loadScene()
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
-	const gltfloader = new THREE.GLTFLoader();
+	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/');
 
 	// Cargar jugador
-	var player = loader.load('../models/proyecto/scene.gltf',
+	gltfloader.set
+	var player = gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
 
