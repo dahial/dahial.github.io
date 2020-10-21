@@ -113,6 +113,7 @@ function loadScene()
 	function ( error ) {
 
 		console.log( 'An error happened' );
+		console.log(error);
 
 	});
 	player.position = new THREE.Vector3(500,500,500);
