@@ -110,7 +110,8 @@ function loadScene()
 		for (i=0; i<root.length; i++)
 			ship.add(root.children[i]);
 
-		player.attach(ship);
+		player.add(ship);
+		player.add(new THREE.Mesh(new THREE.SphereGeometry(25,25), new THREE.MeshBasicMaterial({color:'red'})));
 		
 		//child.rotation.x += Math.PI/2;
 		//child.rotation.z += Math.PI;
