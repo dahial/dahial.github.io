@@ -26,7 +26,7 @@ var playerScale = 0.075;
 var playerSpeed = 1 / 100;
 var playerActive = false;
 
-var cameraTarget = new THREE.Vector();
+var cameraTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
 var cameraSpeed = 1 / 1000;
