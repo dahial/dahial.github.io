@@ -328,6 +328,7 @@ function updatePlayerDirection()
 	player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
 	//player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
 
+	player.getWorldDirection(playerDirection);
 
 }
 
@@ -342,7 +343,6 @@ function update()
 
 	// Actualizar usuario
 	updatePlayerDirection();
-	player.getWorldDirection(playerDirection);
 	player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
 
 	// Camara sigue al usuario si está en la escena
