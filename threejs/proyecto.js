@@ -373,14 +373,14 @@ function update()
 {
 	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
-	var deltaT = (ahora - antes) / 1000;			// Tiempo transcurrido en segundos
+	var deltaT = (ahora - antes);			// Tiempo transcurrido en segundos
 	antes = ahora;									// Actualizar antes
 
 	// ---------------------------------
 
 	// Actualizar usuario
 	updatePlayerRotation();
-	applyPlayerMovement();
+	applyPlayerMovement(deltaT);
 	//player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
 
 	// Camara sigue al usuario si está en la escena
