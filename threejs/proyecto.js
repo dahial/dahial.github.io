@@ -34,7 +34,7 @@ var playerBoost = false;
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 135;
 var playerRollAcc = 5 / 1000000;
-var playerMaxRoll = Math.PI / 30
+var playerMaxRoll = 1 / 10000
 var playerCurrentRoll = [0, 0];
 var currentKeys = [false, false, false, false, false, false]; // [PitchUp, PitchDown, YawLeft, YawRight, RollLeft, RollRight]
 
