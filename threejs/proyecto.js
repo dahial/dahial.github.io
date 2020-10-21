@@ -102,10 +102,11 @@ function loadScene()
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
 			child = child.children[0];
+		debug.log(child.children.length);
 		child.rotation.x += Math.PI/2;
-		child.rotation.y += Math.PI;
+		//child.rotation.y += Math.PI;
 		player.add(child);
-		child.position.set(0,0,0);
+		//child.position.set(0,0,0);
 
 		player.position.set(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
@@ -298,7 +299,6 @@ function update()
 	// Parámetros usuario
 	player.lookAt(0,0,0);
 	player.getWorldDirection(playerDirection);
-	console.log(playerDirection);
 
 	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 	//player.position.x += playerSpeed;
