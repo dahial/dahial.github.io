@@ -22,7 +22,7 @@ var building_A;
 var building_B;
 
 // Parametros usuario
-
+var player;
 
 // Acciones a realizar
 init();
@@ -94,7 +94,7 @@ function loadScene()
 	var player = gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
-
+		player = glft.scene;
 		scene.add( gltf.scene );
 
 		gltf.animations; // Array<THREE.AnimationClip>
@@ -117,7 +117,7 @@ function loadScene()
 		console.log(error);
 
 	});
-	player.position = new THREE.Vector3(500,500,500);
+	//player.position = new THREE.Vector3(500,500,500);
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
