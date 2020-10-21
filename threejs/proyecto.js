@@ -22,7 +22,7 @@ var building_B;
 // Parametros usuario y cámara
 var player = new THREE.Object3D();
 var playerDirection = new THREE.Vector3(0,0,0);
-var playerScale = 0.01;
+var playerScale = 0.1;
 var playerSpeed = 0.01;
 var cameraDistance = 20;
 
@@ -85,16 +85,16 @@ function loadScene()
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/');
 
 	// Cargar jugador
-	gltfloader.load('ship.gltf',
+	gltfloader.load('ship/ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
 
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
 			child = child.children[0];
-		child.rotation.x += Math.PI/2;
-		child.rotation.y += Math.PI/2;
-		child.rotation.z += Math.PI;
+		//child.rotation.x += Math.PI/2;
+		//child.rotation.y += Math.PI/2;
+		//child.rotation.z += Math.PI;
 		player.add(child);
 		console.log(child.position)
 		//child.position.set(0,0,0);
