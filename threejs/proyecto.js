@@ -87,7 +87,7 @@ function loadScene()
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
-	const obj_loader = new OBJLoader();
+	const obj_loader = new THREE.OBJLoader();
 
 	// Cargar jugador
 	var playerModel = obj_loader.load('./models/proyecto/spaceship.obj');
