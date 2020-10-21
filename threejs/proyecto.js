@@ -1,3 +1,5 @@
+import {PointerLockControls} from '../lib/PointerLockControls.js'
+
 // Globales convenidas
 var renderer, scene, camera;
 // Controles
