@@ -53,11 +53,10 @@ function init()
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
 
-	// Controlador de camara
+	// Controlador de camara (desactivar input tradicional)
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
-	cameraControls.target.set(0,0,0);
-	cameraControls.enableKeys = false;
-	cameraControls.target = new THREE.Vector3(0,0,0);
+	cameraControls.enableKeys = cameraControls.enablePan = cameraControls.enableRotate = cameraControls.enableZoom = false;
+	cameraControls.target = player;
 	cameraControls.update();
 
 	// STATS --> stats.update() en update()
