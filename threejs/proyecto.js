@@ -101,7 +101,7 @@ function loadScene()
 		var ship = new THREE.Object3D();
 
 		// Importar los meshes directamente al jugador
-		root = gltf.scene;
+		/*root = gltf.scene;
 		child = gltf.scene.children[0];
 		while (!child.isMesh){
 			root = child;
@@ -110,8 +110,10 @@ function loadScene()
 		for (i=0; i<root.length; i++)
 			ship.attach(root.children[i]);
 
-		player.attach(ship);
-		player.add(new THREE.Mesh(new THREE.SphereGeometry(25,25), new THREE.MeshBasicMaterial({color:'red'})));
+		player.attach(ship);*/
+
+		player.add(gltf.scene);
+		//player.add(new THREE.Mesh(new THREE.SphereGeometry(25,25), new THREE.MeshBasicMaterial({color:'red'})));
 		
 		//child.rotation.x += Math.PI/2;
 		//child.rotation.z += Math.PI;
