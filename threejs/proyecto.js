@@ -335,8 +335,8 @@ function updatePlayerRotation()
 function applyPlayerMovement(delta)
 {
 
-	var lastQuaternion = new Quaternion();
-	var lastPosition = new Vector3();
+	var lastQuaternion = new THREE.Quaternion();
+	var lastPosition = new THREE.Vector3();
 
 	var moveMult = delta * playerSpeed;
 	var rotMult = delta * playerRotationSpeed;
