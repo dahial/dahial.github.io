@@ -391,7 +391,7 @@ function update()
 
 		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance))
 		camera.lookAt(cameraLookTarget);
-		camera.up = player.up;
+		camera.up.set(player.up.x, player.up.y, player.up.z);
 	}
 
 	// Actualiza los FPS
