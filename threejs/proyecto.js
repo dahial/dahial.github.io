@@ -96,11 +96,10 @@ function loadScene()
 	// called when the resource is loaded
 	function ( gltf ) {
 
-		gltf.scene.traverseVisible(
-			function ( child ) {
-				if ( child.isMesh )
-					player.attach(child);
-			} );
+		child = gltf.scene.children[0];
+		while (!child.isMesh)
+			child = child.children[0];
+		player.attach(child);
 
 		player.position = new THREE.Vector3(500,500,500);
 		player.scale.set(playerScale, playerScale, playerScale);
