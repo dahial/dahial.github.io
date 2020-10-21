@@ -36,7 +36,7 @@ var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 var cameraTarget = new THREE.Vector3();
 var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
-var cameraDistance = 30;
+var cameraDistance = 20;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
 // Auxiliares de movimiento
@@ -350,7 +350,7 @@ function applyPlayerMovement(delta)
 
 	lastQuaternion.copy( player.quaternion );
 	lastPosition.copy( player.position );
-	
+
 	player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll
 	
 
