@@ -291,7 +291,8 @@ function update()
 
 	// ---------------------------------
 
-	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005)
+	player.lookAt(0,0,0);
+	player.position = player.position.lerp(new THREE.Vector3(0,0,0), 0.0005);
 	//player.position.x += playerSpeed;
 
 	// Control de camara
