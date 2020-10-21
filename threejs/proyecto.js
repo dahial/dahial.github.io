@@ -22,7 +22,7 @@ var building_B;
 // Parametros usuario
 var player = new THREE.Object3D();
 var playerActive = false;
-var playerScale = 0.075;
+var playerScale = 0.05;
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 1 / 100;
@@ -36,7 +36,7 @@ var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 var cameraTarget = new THREE.Vector3();
 var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
-var cameraDistance = 20;
+var cameraDistance = 30;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
 // Acciones a realizar
