@@ -36,7 +36,7 @@ var currentKeys = [false, false, false, false]; // [Up, Down, Left, Right]
 var cameraTarget = new THREE.Vector3();
 var cameraLookTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
-var cameraDistance = 50;
+var cameraDistance = 20;
 var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
 // Acciones a realizar
@@ -320,9 +320,15 @@ function onKeyUp(event)
 
 function updatePlayerDirection()
 {
+
+	player.rotateOnAxis(new THREE.Vector3(1,0,0).transformDirection(player.matrixWorld), (currentKeys[0] - currentKeys[1]) * playerRotationSpeed);
+	player.rotateOnAxis(new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld), (currentKeys[2] - currentKeys[3]) * playerRotationSpeed);
+
 	player.rotation.x += (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
 	player.rotation.y += (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
+	//player.rotation.z = (currentKeys[3] - currentKeys[2]) * playerRoll;
+
+
 }
 
 function update()
