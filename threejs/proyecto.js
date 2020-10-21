@@ -56,7 +56,7 @@ function init()
 	// Controlador de camara
 	cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 	cameraControls.enableKeys = false;
-	cameraControls.target.set(new THREE.Vector3(0,0,0));
+	cameraControls.target.set(0,0,0);
 	cameraControls.update();
 
 	// STATS --> stats.update() en update()
