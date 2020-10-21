@@ -335,7 +335,7 @@ function updatePlayerRotation()
 
 	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
-	playerCurrentRotation.z = (currentKeys[5] - currentKeys[4]) * playerRotationSpeed;
+	playerCurrentRotation.z = 1;
 
 }
 
@@ -361,7 +361,7 @@ function applyPlayerMovement(delta)
 		playerCurrentRoll[1] -= playerRollAcc;
 	playerCurrentRoll[1] = THREE.MathUtils.clamp(playerCurrentRoll[1], 0, playerMaxRoll)
 
-	var rollMult = (playerCurrentRoll[0] + playerCurrentRoll[1]) * delta;
+	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * delta;
 
 	console.log(rollMult);
 
