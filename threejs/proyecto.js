@@ -29,7 +29,7 @@ var playerActive = false;
 var cameraTarget = new THREE.Vector3();
 var cameraDiff = new THREE.Vector3();
 var cameraDistance = 20;
-var cameraSpeed = 0.1; // 0: No se mueve - 1: Instantanea
+var cameraSpeed = 2 / 100; // 0: No se mueve - 1: Instantanea
 
 // Acciones a realizar
 init();
