@@ -17,6 +17,8 @@ var count_buildingB = 15
 var count_rings = 20;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
+var distance_warn = 600;
+var distance_out = 1000;
 
 // Objetos prefabricados
 var building_A;
@@ -26,6 +28,7 @@ var ring;
 // Objetos en escena
 var list_buildingA = list_buildingB = [];
 var list_rings = [];
+var ground, ground_grid;
 
 // Objetivo juego
 var ring_value = 100;
@@ -252,7 +255,7 @@ function loadScene()
 	scene.add( directionalLight1, directionalLight2, directionalLight3);
 
 	console.log("Building ground...");
-    // Construir el suelo
+    // Construir el suelo interior
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
@@ -263,12 +266,29 @@ function loadScene()
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
-    var ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
+    ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
+    ground.name = "ground";
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
 
     scene.add(ground);
+
+    // Construir el suelo exterior
+    var groundGridTexture = loader.load('./images/proyecto/ground_grid.png');
+    groundGridTexture.color = 0xffffff;
+    groundGridTexture.wrapS = groundGridTexture.wrapT = THREE.RepeatWrapping;
+    groundGridTexture.repeat.set(250,250);
+    groundGridTexture.anisotropy = 16;
+
+    var groundGridMaterial = new THREE.MeshBasicMaterial( { map: groundGridTexture,  side: THREE.DoubleSide });
+
+    ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, scene_radius*2, 128, 16), groundGridMaterial);
+    ground_grid.name = "ground";
+    
+    ground_grid.rotation.x = -Math.PI / 2;
+
+    scene.add(ground_grid);
 
 
 	console.log("Generating buildings...");
@@ -629,7 +649,10 @@ function checkPlayerCollisions()
 
 function checkPlayerInBounds()
 {
+	if(player.position.y <= 0)
+		playerCrashed(ground);
 
+	if(player.position.distanceTo(new THREE.Vector3(0,0,0)) > distance_warn)
 }
 
 function playerCrashed(object)
@@ -648,6 +671,16 @@ function collectRing(object)
 
 }
 
+function animateRings()
+{
+	// Rotar anillos
+	for(i=0; i < count_rings; i++){
+		list_rings[i].rotation.x += ringRotation * 0.8;
+		list_rings[i].rotation.y += ringRotation * 1.2;
+		list_rings[i].rotation.z += ringRotation * 1.0;
+	}
+}
+
 function update()
 {
 	// Actualizar antes/ahora ------------
@@ -659,16 +692,13 @@ function update()
 
 	// Si el usuario está activo:
 	if(playerActive){
-
-		applyPlayerMovement(deltaT);
-		cameraFollowPlayer();
-		checkPlayerCollisions();
-		checkPlayerInBounds();
+		applyPlayerMovement(deltaT); 	// Mover al usuario
+		cameraFollowPlayer();			// Seguir al usuario con la cámara
+		checkPlayerCollisions();		// Comprobar colisiones del usuario
+		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 	}
 
-	// Rotar anillos
-	for(i=0; i < count_rings; i++)
-		list_rings[i].rotation.y += ringRotation;
+	animateRings();
 
 	// Actualiza los FPS
 	stats.update();
