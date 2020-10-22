@@ -12,9 +12,9 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 1;
-var count_buildingB = 1
-var count_rings = 1;
+var count_buildingA = 5;
+var count_buildingB = 10
+var count_rings = 15;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
 
@@ -63,8 +63,8 @@ var cameraCurrentFov = cameraFov;
 var cameraMaxFov = 90;
 
 // Parametros anillos
-var ringMinY = 125;
-var ringMaxY = 25;
+var ringMinY = 10;
+var ringMaxY = 125;
 var ringRotation = 5/1000;
 
 // Auxiliares
