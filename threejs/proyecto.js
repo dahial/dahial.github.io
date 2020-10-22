@@ -12,8 +12,8 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 40;
-var count_buildingB = 20
+var count_buildingA = 25;
+var count_buildingB = 15
 var count_rings = 25;
 var skyboxTexture;
 
@@ -223,7 +223,7 @@ function loadPrefabs() {
 function loadScene()
 {
 	console.log("loadScene()");
-	
+
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
@@ -370,7 +370,7 @@ function checkCollisionGeneric(object)
 		var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
     	if (collider.intersectsBox(objectBox))
-    		return list_buildingA[i]
+    		return list_buildingA[i];
 
 	}
 
@@ -379,7 +379,7 @@ function checkCollisionGeneric(object)
 		var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
     	if (collider.intersectsBox(objectBox))
-    		return list_buildingA[i]
+    		return list_buildingB[i];
     }
 
 
@@ -388,7 +388,7 @@ function checkCollisionGeneric(object)
 		var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
     	if (collider.intersectsBox(objectBox))
-    		return list_rings[i]
+    		return list_rings[i];
     }
 
 	return null;
