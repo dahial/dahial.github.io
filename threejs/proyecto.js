@@ -12,9 +12,9 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 10;
-var count_buildingB = 10
-var count_rings = 1;
+var count_buildingA = 35;
+var count_buildingB = 15
+var count_rings = 20;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
 
