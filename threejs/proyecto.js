@@ -735,7 +735,7 @@ function animateRings()
 
 function animateGrid(time)
 {
-	grid_opacity = Math.abs(Math.sin(time / 1000));
+	grid_master_opacity = Math.abs(Math.sin(time / 1000));
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
 
 }
