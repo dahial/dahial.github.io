@@ -453,7 +453,7 @@ function checkPlayerCollisions()
 	for(i=0; i < count_buildingA; i++){
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-    	if(playerBox.intersects(buildingBox))
+    	if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingA[i]);
 	}
 
@@ -461,12 +461,12 @@ function checkPlayerCollisions()
 	for(i=0; i < count_buildingB; i++){
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-    	if(playerBox.intersects(buildingBox))
+    	if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingB[i]);
 	}
 
 	// Comprobar colisiones con Rings
-	
+
 }
 
 function checkPlayerInBounds()
