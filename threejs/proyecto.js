@@ -273,12 +273,12 @@ function generateBuildings(max_radius)
 
   		building.position.x = r * Math.cos(theta);
   		building.position.z = r * Math.sin(theta);
-  		building.rotation.y = theta;
+  		//building.rotation.y = theta;
 
   		list_buildingA.push(building);
     	scene.add(building);
 
-		var boxVisual = new THREE.BoxHelper(building.geometry, 0xff0000);
+		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
 		building.attach(boxVisual);
 	}
 
@@ -299,12 +299,12 @@ function generateBuildings(max_radius)
 
   		building.position.x = r * Math.cos(theta);
   		building.position.z = r * Math.sin(theta);
-  		building.rotation.y = Math.random() * 2 * Math.PI;
+  		//building.rotation.y = Math.random() * 2 * Math.PI;
 
   		list_buildingB.push(building);
     	scene.add(building);
 
-		var boxVisual = new THREE.BoxHelper(building.geometry, 0xff0000);
+		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
 		building.attach(boxVisual);
 	}
 
