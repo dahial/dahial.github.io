@@ -291,7 +291,7 @@ function loadScene()
     var sphereGridTexture = loader.load('./images/proyecto/ground_grid.png');
     sphereGridTexture.color = 0xffffff;
     sphereGridTexture.wrapS = sphereGridTexture.wrapT = THREE.RepeatWrapping;
-    sphereGridTexture.repeat.set(200,100);
+    sphereGridTexture.repeat.set(300,100);
     sphereGridTexture.anisotropy = 16;
     var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: sphereGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
     sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
