@@ -151,7 +151,7 @@ function loadScene()
 		playerActive = true;
 
 		playerBoxVisual = new THREE.BoxHelper(player, 0x00ff00);
-		scene.add(boxVisual);
+		scene.add(playerBoxVisual);
 
 		console.log( 'Player model loaded' );
 
