@@ -12,9 +12,9 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 25;
-var count_buildingB = 15
-var count_rings = 25;
+var count_buildingA = 1;
+var count_buildingB = 1
+var count_rings = 1;
 var skyboxTexture;
 
 // Objetos prefabricados
