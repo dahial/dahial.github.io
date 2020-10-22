@@ -24,7 +24,7 @@ var ring;
 
 // Objetos en escena
 var list_buildingA = list_buildingB = [];
-var rings = [];
+var list_rings = [];
 
 // Objetivo juego
 var ring_value = 100;
