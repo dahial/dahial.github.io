@@ -463,7 +463,7 @@ function checkPlayerCollisions()
 	for(i=0; i < count_buildingA; i++){
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-    	if (buildingBox.distanceToPoint(player.position) == 0)
+    	if (buildingBox.distanceToPoint(player.position) < 1)
     	//if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingA[i]);
 	}
@@ -472,7 +472,7 @@ function checkPlayerCollisions()
 	for(i=0; i < count_buildingB; i++){
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-    	if (buildingBox.distanceToPoint(player.position) == 0)
+    	if (buildingBox.distanceToPoint(player.position) < 1)
     	//if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingB[i]);
 	}
