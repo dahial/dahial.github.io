@@ -226,10 +226,10 @@ function loadScene()
 
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
-	const cubeloader = new THREE.CubeTextureLoader();
 
     // Luces y niebla
 
+	console.log("Placing lights...");
 	scene.add( new THREE.AmbientLight( 0xbbaacc ) );
 
 	var light = new THREE.DirectionalLight( 0xeebbbb, 0.33 );
@@ -251,6 +251,7 @@ function loadScene()
 
 	scene.add( directionalLight1, directionalLight2, directionalLight3);
 
+	console.log("Building ground...");
     // Construir el suelo
     var groundTexture = loader.load('./images/proyecto/ground_diffuse.png');
     groundTexture.color = 0xffffff;
@@ -269,6 +270,8 @@ function loadScene()
 
     scene.add(ground);
 
+
+	console.log("Generating buildings...");
     // Añadir edificios
     generateBuildings(scene_radius - 25);
 
