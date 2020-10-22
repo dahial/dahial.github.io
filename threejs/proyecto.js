@@ -287,6 +287,7 @@ function loadScene()
     ground_grid.name = "ground";
     ground_grid.rotation.x = -Math.PI / 2;
 
+    // Construir la esfera límite
     var sphereGridTexture = groundGridTexture.clone();
     sphereGridTexture.repeat.set(200,100);
     var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: sphereGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
