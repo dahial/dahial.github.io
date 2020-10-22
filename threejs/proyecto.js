@@ -597,7 +597,7 @@ function updateCameraFov()
 
 function cameraFollowPlayer()
 {
-	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / playerCurrentBoost)); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando)
+	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
