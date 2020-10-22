@@ -75,7 +75,7 @@ init();
 loadPrefabs();
 loadScene();
 render();
-/*
+
 function init()
 {
 	// Inicializar el renderer
@@ -373,6 +373,7 @@ function checkCollisionGeneric(object)
 
     	if (collider.intersectsBox(objectBox))
     		return list_buildingA[i]
+    }
 
 
     // Rings
@@ -381,6 +382,7 @@ function checkCollisionGeneric(object)
 
     	if (collider.intersectsBox(objectBox))
     		return list_rings[i]
+    }
 
 	return null;
 }
@@ -553,10 +555,10 @@ function checkPlayerCollisions()
 
 }
 
-/*function checkPlayerInBounds()
+function checkPlayerInBounds()
 {
 
-}*/
+}
 
 function playerCrashed(object)
 {
@@ -573,7 +575,7 @@ function collectRing(object)
 	placeRing(object);
 
 }
-*/
+
 function update()
 {
 	// Actualizar antes/ahora ------------
