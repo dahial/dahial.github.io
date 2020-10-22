@@ -283,7 +283,7 @@ function loadScene()
 
     var groundGridMaterial = new THREE.MeshBasicMaterial( { map: groundGridTexture,  side: THREE.DoubleSide });
 
-    ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, scene_radius*2, 128, 16), groundGridMaterial);
+    ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, scene_radius*2, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
     
     ground_grid.rotation.x = -Math.PI / 2;
