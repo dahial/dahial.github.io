@@ -17,7 +17,7 @@ var count_buildingB = 15
 var count_rings = 20;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
-var distance_warn = 600;
+var distance_warn = 800;
 var distance_oob = 1000;
 
 // Objetos prefabricados
@@ -277,14 +277,15 @@ function loadScene()
 
     // Construir el suelo exterior
     var groundGridTexture = loader.load('./images/proyecto/ground_grid.png');
+    var groundGridAlphaTexture = loader.load('./images/proyecto/ground_grid_alpha.png');
     groundGridTexture.color = 0xffffff;
     groundGridTexture.wrapS = groundGridTexture.wrapT = THREE.RepeatWrapping;
     groundGridTexture.repeat.set(250,250);
     groundGridTexture.anisotropy = 16;
 
-    var groundGridMaterial = new THREE.MeshBasicMaterial( { map: groundGridTexture,  side: THREE.DoubleSide });
+    var groundGridMaterial = new THREE.MeshBasicMaterial( { map: groundGridTexture, alphaMap: groundGridAlphaTexture, side: THREE.DoubleSide, emissive: 0xddaaaa });
 
-    ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, scene_radius*2, 64, 16), groundGridMaterial);
+    ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
     
     ground_grid.rotation.x = -Math.PI / 2;
