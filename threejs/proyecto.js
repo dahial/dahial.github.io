@@ -365,7 +365,7 @@ function placeRing(ring){
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
 	}
-	while((checkBuildingCollision(ring_instance, false) != null) && (checkRingCollision(ring_instance, false) != null)); // Comprobar no-colision
+	while((checkBuildingCollision(ring, false) != null) && (checkRingCollision(ring, false) != null)); // Comprobar no-colision
 
 }
 
