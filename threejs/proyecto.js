@@ -15,6 +15,7 @@ var scene_radius = 500;
 var count_buildingA = 40;
 var count_buildingB = 20
 var count_rings = 25;
+var skyboxTexture;
 
 // Objetos prefabricados
 var building_A;
@@ -128,6 +129,17 @@ function loadPrefabs() {
 	const cubeloader = new THREE.CubeTextureLoader();
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/ship/');
 
+	// Construir la SkyBox
+    skyboxTexture = cubeloader.load([
+      './images/proyecto/posX.png',
+      './images/proyecto/negX.png',
+      './images/proyecto/posY.png',
+      './images/proyecto/negY.png',
+      './images/proyecto/posZ.png',
+      './images/proyecto/negZ.png',
+    ]);
+    scene.background = skyboxTexture;
+
 	// Cargar jugador
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
@@ -209,17 +221,6 @@ function loadScene()
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
-
-	// Construir la SkyBox
-    const skyboxTexture = cubeloader.load([
-      './images/proyecto/posX.png',
-      './images/proyecto/negX.png',
-      './images/proyecto/posY.png',
-      './images/proyecto/negY.png',
-      './images/proyecto/posZ.png',
-      './images/proyecto/negZ.png',
-    ]);
-    scene.background = skyboxTexture;
 
     // Luces y niebla
 
