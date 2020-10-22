@@ -336,6 +336,8 @@ function generateBuildings(max_radius)
 
   		list_buildingB.push(building);
     	scene.add(building);
+		console.log("buildingB added");
+    	console.log("i = " + i);
 
 	}
 
@@ -414,7 +416,6 @@ function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistanc
 
 			}
 		}
-
 
 		// Building B
 		if(checkB){
