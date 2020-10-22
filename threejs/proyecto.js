@@ -322,7 +322,7 @@ function generateBuildings(max_radius)
 
 }
 
-function generateRings(max_radius)
+/*function generateRings(max_radius)
 {
 	// Rings
 	for(i=0; i < count_rings; i++){
@@ -335,7 +335,7 @@ function generateRings(max_radius)
     	scene.add(ring_instance);
 	}
 
-}
+}*/
 
 function placeRing(ring){
 	do{
