@@ -286,10 +286,14 @@ function loadScene()
 
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
+
+    var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.2 });
+    sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
     
     ground_grid.rotation.x = -Math.PI / 2;
 
     scene.add(ground_grid);
+    scene.add(sphere_grid);
 
 
 	console.log("Generating buildings...");
