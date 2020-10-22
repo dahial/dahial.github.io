@@ -121,6 +121,7 @@ function init()
 		music.setBuffer( buffer );
 		music.setLoop(true);
 		music.setVolume(0.5);
+		music.context.resume();
 		music.play();
 	});
 
