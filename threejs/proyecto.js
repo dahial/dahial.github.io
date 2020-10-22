@@ -18,7 +18,7 @@ var count_rings = 20;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
 var distance_warn = 600;
-var distance_out = 1000;
+var distance_oob = 1000;
 
 // Objetos prefabricados
 var building_A;
@@ -76,6 +76,7 @@ var ringRotation = 15/1000;
 var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
+var warning_current = false;
 
 // Acciones a realizar
 init();
@@ -652,7 +653,37 @@ function checkPlayerInBounds()
 	if(player.position.y <= 0)
 		playerCrashed(ground);
 
-	if(player.position.distanceTo(new THREE.Vector3(0,0,0)) > distance_warn)
+	var curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
+
+	if(warning_current){
+		if(curr_distance < distance_warn){
+			warning_current = false;
+			changeWarning()
+		}
+
+		else if(curr_distance > distance_oob)
+			playerOOB();
+	}
+	else{
+		if(curr_distance > distance_warn){
+			warning_current = true;
+			changeWarning()
+		}
+	}
+}
+
+function changeWarning(){
+	if(warning_current)
+		console.log("ATENCIÓN: Abandonando el terreno de juego");
+	else
+		console.log("Regresando al terreno de juego");
+
+}
+
+function playerOOB(){
+
+	console.log("Out of bounds");
+	playerActive = false;
 }
 
 function playerCrashed(object)
