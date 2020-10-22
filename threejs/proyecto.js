@@ -26,7 +26,7 @@ var list_buildingA = list_buildingB = [];
 var rings = [];
 
 // Objetivo juego
-var value_ring = 100;
+var ring_value = 100;
 var currentScore = 0;
 var maxScore = 0;
 
@@ -60,6 +60,10 @@ var cameraFov = 50;
 var cameraCurrentFov = cameraFov;
 var cameraMaxFov = 90;
 
+// Parametros anillos
+var ringMinY = 125;
+var ringMaxY = 25;
+
 // Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
@@ -68,6 +72,7 @@ var playerBoxVisual;
 
 // Acciones a realizar
 init();
+loadPrefabs();
 loadScene();
 render();
 
@@ -106,11 +111,6 @@ function init()
 
 }
 
-function mouseChange(event){
-	console.log("Mouse change");
-
-}
-
 function setCameras(ar) {
 
 	// Camara perspectiva
@@ -123,9 +123,7 @@ function setCameras(ar) {
 	scene.add(camera);
 }
 
-function loadScene()
-{
-	// Cargador de texturas
+function loadPrefabs() {
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/ship/');
@@ -169,6 +167,48 @@ function loadScene()
 		console.log(error);
 
 	});
+
+	// Construir los edificios
+
+    // Building A
+    var buildingSideTexture = loader.load('./images/proyecto/skyscraper_window.png');
+    var buildingTopTexture = loader.load('./images/proyecto/skyscraper_top.png');
+
+    buildingSideTexture.color = buildingTopTexture.color = 0xffddee;
+    buildingSideTexture.wrapS = buildingSideTexture.wrapT = THREE.RepeatWrapping;
+    buildingSideTexture.repeat.set(60,30);
+    buildingSideTexture.anisotropy = 16;
+
+    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
+    var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
+    building_A = new THREE.Mesh(new THREE.BoxGeometry(25, 250, 25), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
+    building_A.castShadow = true;
+    building_A.receiveShadow = true;
+
+    // Building B
+    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_tile.png');
+
+    warehouseSideTexture.color = 0xffddee;
+    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
+    warehouseSideTexture.repeat.set(10,20);
+    warehouseSideTexture.anisotropy = 16;
+
+    var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
+    building_B = new THREE.Mesh(new THREE.BoxGeometry(100, 40, 60), warehouseMaterial);
+    building_B.castShadow = true;
+    building_B.receiveShadow = true;
+
+    // Ring
+    var ringMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, shininess: 15, specular: 0xffffff, emissive: 0xdddd00} );
+    ring = new THREE.Mesh(new THREE.RingGeometry(5,10,3,1), ringMaterial);
+
+}
+
+function loadScene()
+{
+		// Cargador de texturas
+	const loader = new THREE.TextureLoader();
+	const cubeloader = new THREE.CubeTextureLoader();
 
 	// Construir la SkyBox
     const skyboxTexture = cubeloader.load([
@@ -222,37 +262,11 @@ function loadScene()
 
     scene.add(ground);
 
-    // Construir los edificios
-
-    // Building A
-    var buildingSideTexture = loader.load('./images/proyecto/skyscraper_window.png');
-    var buildingTopTexture = loader.load('./images/proyecto/skyscraper_top.png');
-
-    buildingSideTexture.color = buildingTopTexture.color = 0xffddee;
-    buildingSideTexture.wrapS = buildingSideTexture.wrapT = THREE.RepeatWrapping;
-    buildingSideTexture.repeat.set(60,30);
-    buildingSideTexture.anisotropy = 16;
-
-    var buildingSideMaterial = new THREE.MeshPhongMaterial({ map: buildingSideTexture, envMap: skyboxTexture, reflectivity: 1, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
-    var buildingTopMaterial = new THREE.MeshPhongMaterial({ map: buildingTopTexture, side: THREE.DoubleSide, shininess: 0});
-    building_A = new THREE.Mesh(new THREE.BoxGeometry(25, 250, 25), [buildingSideMaterial, buildingSideMaterial, buildingTopMaterial, buildingTopMaterial, buildingSideMaterial, buildingSideMaterial,]);
-    building_A.castShadow = true;
-    building_A.receiveShadow = true;
-
-    // Building B
-    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_tile.png');
-
-    warehouseSideTexture.color = 0xffddee;
-    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
-    warehouseSideTexture.repeat.set(10,20);
-    warehouseSideTexture.anisotropy = 16;
-
-    var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
-    building_B = new THREE.Mesh(new THREE.BoxGeometry(100, 40, 60), warehouseMaterial);
-    building_B.castShadow = true;
-    building_B.receiveShadow = true;
-
+    // Añadir edificios
     generateBuildings(scene_radius - 25);
+
+    // Añadir objetivos
+    generateRings(scene_radius - 25, count_rings);
 }
 
 function generateBuildings(max_radius)
@@ -262,25 +276,25 @@ function generateBuildings(max_radius)
 
     	var building = building_A.clone();
 
-    	var scale = 0.6 + Math.random()*0.4;
-    	building.position.y = 125.5 * scale;
-    	building.scale.y = scale;
+    	do{
+	    	var scale = 0.6 + Math.random()*0.4;
+	    	building.position.y = 125.5 * scale;
+	    	building.scale.y = scale;
 
-    	building.name = "skyscraper";
+	    	building.name = "skyscraper";
 
- 		//Posicionar BuildingA en el radio
- 		var r = max_radius * Math.random();
-  		var theta = Math.random() * 2 * Math.PI;
+	 		//Posicionar BuildingA en el radio
+	 		var r = max_radius * Math.random();
+	  		var theta = Math.random() * 2 * Math.PI;
 
-  		building.position.x = r * Math.cos(theta);
-  		building.position.z = r * Math.sin(theta);
-  		//building.rotation.y = theta;
+	  		building.position.x = r * Math.cos(theta);
+	  		building.position.z = r * Math.sin(theta);
+	  		//building.rotation.y = theta;
+  		}
+  		while(checkCollisionGeneric(building) != null) // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingA.push(building);
     	scene.add(building);
-
-		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
-		building.attach(boxVisual);
 	}
 
 	// BuildingB
@@ -304,24 +318,74 @@ function generateBuildings(max_radius)
 
   		list_buildingB.push(building);
     	scene.add(building);
-
-		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
-		building.attach(boxVisual);
 	}
 
 }
 
-function generateRings(Nrings)
+function generateRings(max_radius)
 {
+	// BuildingA
+	for(i=0; i < count_rings; i++){
 
+    	var ring_instance = ring.clone();
+
+    	placeRing(ring_instance);
+
+  		list_rings.push(ring_instance);
+    	scene.add(ring_instance);
+	}
 
 }
 
-function collectRing(i)
-{
+function placeRing(ring){
+	do{
+	    	ring_instance.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
+	    	ring_instance.name = "ring";
 
+	 		//Posicionar ring en el radio
+	 		var r = max_radius * Math.random();
+	  		var theta = Math.random() * 2 * Math.PI;
 
+	  		ring_instance.position.x = r * Math.cos(theta);
+	  		ring_instance.position.z = r * Math.sin(theta);
+	  		ring_instance.rotation.y = theta;
+  		}
+  		while(checkCollisionGeneric(ring_instance) != null) // Comprobar no-colision
 }
+
+// Indica con qué objeto está colisionando este objeto
+function checkCollisionGeneric(object)
+{
+	var objectBox = new THREE.Box3().setFromObject(object)
+
+	// Building A
+	for(int i=0; i < list_buildingA.length; i++){
+		var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+
+    	if (collider.intersectsBox(objectBox))
+    		return list_buildingA[i]
+
+	}
+
+	// Building B
+	for(int i=0; i < list_buildingB.length; i++){
+		var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+    	if (collider.intersectsBox(objectBox))
+    		return list_buildingA[i]
+
+
+    // Rings
+    for(int i=0; i < list_rings.length; i++){
+		var collider = new THREE.Box3().setFromObject(list_rings[i]);
+
+    	if (collider.intersectsBox(objectBox))
+    		return list_rings[i]
+
+	return null;
+}
+
+
 
 function updateAspectRatio()
 {
@@ -457,14 +521,23 @@ function cameraFollowPlayer()
 
 function checkPlayerCollisions()
 {
-	playerBox = new THREE.Box3().setFromObject(player);
+	var collision = checkCollisionGeneric(player);
 
+	if(collision != null){
+
+		switch(collision.name){
+			case "skyscraper": playerCrashed(collision); break;
+			case "warehouse": playerCrashed(collision); break;
+			case "ring": collectRing(collision); break;
+		}
+
+	}
+	/*
 	// Comprobar colisiones con BuildingA
 	for(i=0; i < count_buildingA; i++){
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingA[i]);
 
     	if (buildingBox.distanceToPoint(player.position) < 1)
-    	//if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingA[i]);
 	}
 
@@ -473,10 +546,9 @@ function checkPlayerCollisions()
     	var buildingBox = new THREE.Box3().setFromObject(list_buildingB[i]);
 
     	if (buildingBox.distanceToPoint(player.position) < 1)
-    	//if(playerBox.intersectsBox(buildingBox))
     		playerCrashed(list_buildingB[i]);
 	}
-
+	*/
 	// Comprobar colisiones con Rings
 
 }
@@ -491,6 +563,16 @@ function playerCrashed(object)
 {
 	console.log("Crashed with " + object.name);
 	playerActive = false;
+}
+
+function collectRing(object)
+{
+	currentScore += ring_value;
+	maxScore = Math.max(currentScore, maxScore);
+	console.log(currentScore);
+	
+	placeRing(object);
+
 }
 
 function update()
