@@ -588,7 +588,7 @@ function applyPlayerMovement(delta)
 
 function updateCameraFov()
 {
-	if(playerCurrentBoost != playerPreviousBoost){
+	if((playerCurrentBoost != playerPreviousBoost) && playerCurrentBoost >= 1){
 		var newFov = cameraFov + ((playerCurrentBoost - 1) / (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
 		camera.fov = newFov;
 		camera.updateProjectionMatrix();
