@@ -291,7 +291,7 @@ function generateBuildings(max_radius)
 	  		building.position.z = r * Math.sin(theta);
 	  		//building.rotation.y = theta;
   		}
-  		while(checkCollisionGeneric(building) != null) // Comprobar no-solapamiento de BuildingA entre si
+  		while(checkCollisionGeneric(building) != null); // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingA.push(building);
     	scene.add(building);
@@ -339,18 +339,18 @@ function generateRings(max_radius)
 
 function placeRing(ring){
 	do{
-	    	ring_instance.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
-	    	ring_instance.name = "ring";
+    	ring_instance.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
+    	ring_instance.name = "ring";
 
-	 		//Posicionar ring en el radio
-	 		var r = max_radius * Math.random();
-	  		var theta = Math.random() * 2 * Math.PI;
+ 		//Posicionar ring en el radio
+ 		var r = max_radius * Math.random();
+  		var theta = Math.random() * 2 * Math.PI;
 
-	  		ring_instance.position.x = r * Math.cos(theta);
-	  		ring_instance.position.z = r * Math.sin(theta);
-	  		ring_instance.rotation.y = theta;
-  		}
-  		while(checkCollisionGeneric(ring_instance) != null) // Comprobar no-colision
+  		ring_instance.position.x = r * Math.cos(theta);
+  		ring_instance.position.z = r * Math.sin(theta);
+  		ring_instance.rotation.y = theta;
+	}
+	while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
 }
 
 // Indica con qué objeto está colisionando este objeto
