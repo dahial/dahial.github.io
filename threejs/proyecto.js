@@ -307,7 +307,7 @@ function generateRings(Nrings)
 
 }
 
-function collectRing()
+function collectRing(i)
 {
 
 
@@ -459,7 +459,7 @@ function update()
 
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
 
-		var playerbox = new THREE.Box3().setFromObjecT(player);
+		var playerbox = new THREE.Box3().setFromObject(player);
 		console.log(playerbox)
 	}
 
