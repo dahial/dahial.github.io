@@ -310,7 +310,10 @@ function generateBuildings(max_radius)
 	// BuildingB
 	for(i=0; i < count_buildingB; i++){
 
+		console.log("count_buildingB = " + count_buildingB);
+		console.log("i = " + i);
 		console.log("Adding buildingB");
+
     	var building = building_B.clone();
 
     	do{
