@@ -278,7 +278,7 @@ function generateBuildings(max_radius)
   		list_buildingA.push(building);
     	scene.add(building);
 
-		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
+		var boxVisual = new THREE.BoxHelper(building.geometry, 0xff0000);
 		building.attach(boxVisual);
 	}
 
@@ -303,8 +303,8 @@ function generateBuildings(max_radius)
 
   		list_buildingB.push(building);
     	scene.add(building);
-    	
-		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
+
+		var boxVisual = new THREE.BoxHelper(building.geometry, 0xff0000);
 		building.attach(boxVisual);
 	}
 
