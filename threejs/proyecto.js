@@ -12,7 +12,7 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 30;
+var count_buildingA = 10;
 var count_buildingB = 10
 var count_rings = 1;
 var ring_radius = scene_radius - 25;
@@ -304,8 +304,7 @@ function generateBuildings(max_radius)
 	  		building.position.z = r * Math.sin(theta);
 	  		//building.rotation.y = theta;
   		}
-  		//while(checkCollisionGeneric(building) != null); // Comprobar no-solapamiento de BuildingA entre si
-  		while(false); // Comprobar no-solapamiento de BuildingA entre si
+  		while(checkBuildingCollision(building, false) != null); // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingA.push(building);
     	scene.add(building);
