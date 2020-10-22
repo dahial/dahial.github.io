@@ -79,6 +79,8 @@ render();
 
 function init()
 {
+	console.log("init()");
+
 	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -125,6 +127,8 @@ function setCameras(ar) {
 }
 
 function loadPrefabs() {
+	console.log("loadPrefabs()");
+
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
 	const gltfloader = new THREE.GLTFLoader().setPath('../models/proyecto/ship/');
@@ -218,6 +222,8 @@ function loadPrefabs() {
 
 function loadScene()
 {
+	console.log("loadScene()");
+	
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
