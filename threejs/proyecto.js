@@ -67,7 +67,7 @@ var cameraMaxFov = 90;
 // Parametros anillos
 var ringMinY = 10;
 var ringMaxY = 175;
-var ringRotation = 5/1000;
+var ringRotation = 15/1000;
 
 // Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
@@ -478,33 +478,33 @@ playerBrake = Shift
 */
 function onKeyDown(event)
 {
-	var keyCode = event.key;
+	var keyCode = event.code;
 
 	switch(keyCode){
 		case "ArrowUp": currentKeys[0] = true; break;
 		case "ArrowDown": currentKeys[1] = true; break;
 		case "ArrowLeft": currentKeys[2] = true; break;
 		case "ArrowRight": currentKeys[3] = true; break;
-		case "q": currentKeys[4] = true; break;
-		case "e": currentKeys[5] = true; break;
-		case " ": playerBoost = true; break;
-		case "Shift": playerBrake = true; break;
+		case "KeyQ": currentKeys[4] = true; break;
+		case "KeyE": currentKeys[5] = true; break;
+		case "Space": playerBoost = true; break;
+		case "ShiftLeft": playerBrake = true; break;
 	}
 }
 
 function onKeyUp(event)
 {
-	var keyCode = event.key;
+	var keyCode = event.code;
 
 	switch(keyCode){
 		case "ArrowUp": currentKeys[0] = false; break;
 		case "ArrowDown": currentKeys[1] = false; break;
 		case "ArrowLeft": currentKeys[2] = false; break;
 		case "ArrowRight": currentKeys[3] = false; break;
-		case "q": currentKeys[4] = false; break;
-		case "e": currentKeys[5] = false; break;
-		case " ": playerBoost = false; break;
-		case "Shift": playerBrake = false; break;
+		case "KeyQ": currentKeys[4] = false; break;
+		case "KeyE": currentKeys[5] = false; break;
+		case "Space": playerBoost = false; break;
+		case "ShiftLeft": playerBrake = false; break;
 	}
 
 }
