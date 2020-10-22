@@ -581,10 +581,18 @@ function applyPlayerMovement(delta)
 
 	if(playerBoost != playerBrake){
 
-		if(playerBoost)
-			playerCurrentBoost += playerBoostAcceleration;
-		else
-			playerCurrentBoost -= playerBoostAcceleration;
+		if(playerBoost){
+			if(playerCurrentBoost < 1)
+				playerCurrentBoost += 2*playerBoostAcceleration;
+			else
+				playerCurrentBoost += 2*playerBoostAcceleration;
+		}
+		else{
+			if(playerCurrentBoost > 1)
+				playerCurrentBoost -= 2*playerBoostAcceleration;
+			else
+				playerCurrentBoost -= playerBoostAcceleration;
+		}
 
 		playerCurrentBoost = THREE.MathUtils.clamp(playerCurrentBoost, playerMaxBrake, playerMaxBoost)
 	}
@@ -594,12 +602,6 @@ function applyPlayerMovement(delta)
 		if(playerCurrentBoost > 1)
 			playerCurrentBoost -= playerBoostAcceleration;
 	}
-
-	/*if(playerBoost)
-		playerCurrentBoost += playerBoostAcceleration;
-	else
-		playerCurrentBoost -= playerBoostAcceleration;
-	playerCurrentBoost = THREE.MathUtils.clamp(playerCurrentBoost, 1, playerMaxBoost)*/
 
 	var moveMult = delta * playerSpeed * playerCurrentBoost;
 
