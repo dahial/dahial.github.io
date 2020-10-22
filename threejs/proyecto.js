@@ -362,9 +362,6 @@ function placeRing(ring){
   		ring.position.x = r * Math.cos(theta);
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
-
-  		console.log("Building collision: " + (checkBuildingCollision(ring, true, 5) != null))
-  		console.log("Ring collision: " + (checkRingCollision(ring, false) != null))
 	}
 	while((checkBuildingCollision(ring, true, true, true, 5) != null) || (checkRingCollision(ring, false) != null)); // Comprobar no-colision
 	//while(false); // Comprobar no-colision
