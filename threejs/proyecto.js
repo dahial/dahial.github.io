@@ -288,8 +288,8 @@ function loadScene()
     ground_grid.rotation.x = -Math.PI / 2;
 
     var sphereGridTexture = groundGridTexture.clone();
-    sphereGridTexture.repeat.set(100,50);
-    var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
+    sphereGridTexture.repeat.set(200,100);
+    var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: sphereGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
     sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
     sphere_grid.name = "bounds";
 
