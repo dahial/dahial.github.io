@@ -282,7 +282,7 @@ function loadScene()
 function generateBuildings(max_radius)
 {
 	// BuildingA
-	for(i=0; i < count_buildingA; i++){
+	for(j=0; j < count_buildingA; j++){
 
     	var building = building_A.clone();
 
@@ -308,16 +308,11 @@ function generateBuildings(max_radius)
 	}
 
 	// BuildingB
-	for(i=0; i < count_buildingB; i++){
-
-		console.log("count_buildingB = " + count_buildingB);
-		console.log("i = " + i);
+	for(j=0; j < count_buildingB; j++){
 
     	var building = building_B.clone();
 
     	do{
-
-			console.log("Trying buildingB");
     		var scale = 0.5 + Math.random()*0.5;
 	    	building.position.y = 20.5 * scale;
 	    	building.scale = new THREE.Vector3(scale,scale,scale);
@@ -330,17 +325,12 @@ function generateBuildings(max_radius)
 
 	  		building.position.x = r * Math.cos(theta);
 	  		building.position.z = r * Math.sin(theta);
-
-    		console.log("i = " + i);
-	  		console.log("Building collision: " + (checkBuildingCollision(building, false, true, false) != null))
   		}
   		while(checkBuildingCollision(building, false, true, false) != null); // Comprobar no-solapamiento de BuildingB entre si
   		//while(false);
 
   		list_buildingB.push(building);
     	scene.add(building);
-		console.log("buildingB added");
-    	console.log("i = " + i);
 
 	}
 
