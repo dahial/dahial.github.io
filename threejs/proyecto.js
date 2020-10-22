@@ -341,6 +341,7 @@ function generateRings(max_radius)
 	for(i=0; i < count_rings; i++){
 
     	var ring_instance = ring.clone();
+    	ring_instance.name = "ring";
 
     	placeRing(ring_instance, max_radius);
 
@@ -353,7 +354,6 @@ function generateRings(max_radius)
 function placeRing(ring, max_radius){
 	do{
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
-    	ring.name = "ring";
 
  		//Posicionar ring en el radio
  		var r = max_radius * Math.random();
@@ -362,11 +362,16 @@ function placeRing(ring, max_radius){
   		ring.position.x = r * Math.cos(theta);
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
+
+
+		console.log("r = " + r);
+		console.log("theta = " + theta);
+		console.log("x = " + (r * Math.cos(theta)));
+		console.log("z = " + (r * Math.sin(theta)));
 	}
 	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
 	while(false); // Comprobar no-colision
 
-	console.log(ring.position);
 }
 
 // Indica con qué edificio está colisionando este objeto
