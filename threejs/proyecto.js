@@ -206,7 +206,7 @@ function loadPrefabs() {
 
 function loadScene()
 {
-		// Cargador de texturas
+	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
 
@@ -553,11 +553,10 @@ function checkPlayerCollisions()
 
 }
 
-function checkPlayerInBounds()
+/*function checkPlayerInBounds()
 {
 
-
-}
+}*/
 
 function playerCrashed(object)
 {
