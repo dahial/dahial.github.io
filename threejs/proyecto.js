@@ -43,7 +43,9 @@ var playerCurrentBoost = 1;
 var playerPreviousBoost = 1; // Evitar recomputar la cámara si la velocidad no cambia
 var playerBoostAcceleration = 0.01;
 var playerMaxBoost = 2;
+var playerMaxBrake = 0.5;
 var playerBoost = false;
+var playerBrake = false;
 
 var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 135;
@@ -308,6 +310,7 @@ function generateBuildings(max_radius)
 	// BuildingB
 	for(i=0; i < count_buildingB; i++){
 
+		console.log("Adding buildingB");
     	var building = building_B.clone();
 
     	do{
@@ -468,8 +471,8 @@ currentKeys[0] = Up
 currentKeys[1] = Down
 currentKeys[2] = Left
 currentKeys[3] = Right
-currentKeys[4] = A
-currentKeys[5] = D
+currentKeys[4] = Q
+currentKeys[5] = E
 playerBoost = Space
 playerBrake = Shift
 */
@@ -482,9 +485,10 @@ function onKeyDown(event)
 		case "ArrowDown": currentKeys[1] = true; break;
 		case "ArrowLeft": currentKeys[2] = true; break;
 		case "ArrowRight": currentKeys[3] = true; break;
-		case "a": currentKeys[4] = true; break;
-		case "d": currentKeys[5] = true; break;
+		case "q": currentKeys[4] = true; break;
+		case "e": currentKeys[5] = true; break;
 		case " ": playerBoost = true; break;
+		case "Shift": playerBrake = true; break;
 	}
 }
 
@@ -497,9 +501,10 @@ function onKeyUp(event)
 		case "ArrowDown": currentKeys[1] = false; break;
 		case "ArrowLeft": currentKeys[2] = false; break;
 		case "ArrowRight": currentKeys[3] = false; break;
-		case "a": currentKeys[4] = false; break;
-		case "d": currentKeys[5] = false; break;
+		case "q": currentKeys[4] = false; break;
+		case "e": currentKeys[5] = false; break;
 		case " ": playerBoost = false; break;
+		case "Shift": playerBrake = false; break;
 	}
 
 }
@@ -541,11 +546,28 @@ function applyPlayerMovement(delta)
 
 	// Move acceleration
 	playerPreviousBoost = playerCurrentBoost;
-	if(playerBoost)
+
+	if(playerBoost != playerBrake){
+
+		if(playerBoost)
+			playerCurrentBoost += playerBoostAcceleration;
+		else
+			playerCurrentBoost -= playerBoostAcceleration;
+
+		playerCurrentBoost = THREE.MathUtils.clamp(playerCurrentBoost, playerMaxBrake, playerMaxBoost)
+	}
+	else{
+		if(playerCurrentBoost < 1)
+			playerCurrentBoost += playerBoostAcceleration;
+		if(playerCurrentBoost > 1)
+			playerCurrentBoost -= playerBoostAcceleration;
+	}
+
+	/*if(playerBoost)
 		playerCurrentBoost += playerBoostAcceleration;
 	else
 		playerCurrentBoost -= playerBoostAcceleration;
-	playerCurrentBoost = THREE.MathUtils.clamp(playerCurrentBoost, 1, playerMaxBoost)
+	playerCurrentBoost = THREE.MathUtils.clamp(playerCurrentBoost, 1, playerMaxBoost)*/
 
 	var moveMult = delta * playerSpeed * playerCurrentBoost;
 
