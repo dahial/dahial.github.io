@@ -370,6 +370,7 @@ function updatePlayerRotation()
 
 function applyPlayerMovement(delta)
 {
+	updatePlayerRotation();
 
 	var lastQuaternion = new THREE.Quaternion();
 	var lastPosition = new THREE.Vector3();
@@ -392,8 +393,6 @@ function applyPlayerMovement(delta)
 	playerCurrentRoll[1] = THREE.MathUtils.clamp(playerCurrentRoll[1], 0, playerMaxRoll)
 
 	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * delta;
-
-	console.log(playerCurrentRoll);
 
 	// Move acceleration
 	playerPreviousBoost = playerCurrentBoost;
@@ -429,23 +428,9 @@ function updateCameraFov()
 	}
 }
 
-function update()
+function cameraFollowPlayer()
 {
-	// Actualizar antes/ahora ------------
-	var ahora = Date.now();							// Hora actual
-	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
-	antes = ahora;									// Actualizar antes
-
-	// ---------------------------------
-
-	// Actualizar usuario
-	updatePlayerRotation();
-	applyPlayerMovement(deltaT);
-	//player.position.addVectors(player.position, playerDirection.normalize().multiplyScalar(playerSpeed));
-
-	// Camara sigue al usuario si está en la escena
-	if(playerActive){
-		cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / playerCurrentBoost)); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando)
+	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / playerCurrentBoost)); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
@@ -458,9 +443,61 @@ function update()
 		camera.lookAt(cameraLookTarget);
 
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
+}
 
-		var playerbox = new THREE.Box3().setFromObject(player);
-		console.log(playerbox)
+function checkPlayerCollisions()
+{
+	playerBox = new THREE.Box3().setFromObject(player);
+
+	// Comprobar colisiones con BuildingA
+	for(i=0; i < count_buildingA; i++){
+    	var buildingBox = new THREE.Box3().setFromObject(list_buildingA[i]);
+
+    	if(playerBox.intersects(buildingBox))
+    		playerCrashed(list_buildingA[i]);
+	}
+
+	// Comprobar colisiones con BuildingB
+	for(i=0; i < count_buildingB; i++){
+    	var buildingBox = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+    	if(playerBox.intersects(buildingBox))
+    		playerCrashed(list_buildingB[i]);
+	}
+
+	// Comprobar colisiones con Rings
+	
+}
+
+function checkPlayerInBounds()
+{
+
+
+}
+
+function playerCrashed(object)
+{
+	console.log("Crashed with " + object.name);
+	playerActive = false;
+}
+
+function update()
+{
+	// Actualizar antes/ahora ------------
+	var ahora = Date.now();							// Hora actual
+	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
+	antes = ahora;									// Actualizar antes
+
+	// ---------------------------------
+
+	// Si el usuario está activo:
+	if(playerActive){
+
+		applyPlayerMovement(deltaT);
+		cameraFollowPlayer();
+		checkPlayerCollisions();
+		checkPlayerInBounds();
+
 	}
 
 	// Actualiza los FPS
