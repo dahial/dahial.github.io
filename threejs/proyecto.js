@@ -64,6 +64,7 @@ var cameraMaxFov = 90;
 // Parametros anillos
 var ringMinY = 125;
 var ringMaxY = 25;
+var ringRotation = 1/1000;
 
 // Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
@@ -367,35 +368,68 @@ function placeRing(ring, max_radius){
 }
 
 // Indica con qué objeto está colisionando este objeto
-function checkCollisionGeneric(object)
+function checkCollisionGeneric(object, useCenter)
 {
-	var objectBox = new THREE.Box3().setFromObject(object)
+	// Usar centro del objeto
+	if(useCenter){
+		// Building A
+		for(i=0; i < list_buildingA.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	// Building A
-	for(i=0; i < list_buildingA.length; i++){
-		var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+	    	if (collider.distanceToPoint(object.position) < 1)
+	    		return list_buildingA[i];
 
-    	if (collider.intersectsBox(objectBox))
-    		return list_buildingA[i];
+		}
+
+		// Building B
+		for(i=0; i < list_buildingB.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+	    	if (collider.distanceToPoint(object.position) < 1)
+	    		return list_buildingB[i];
+	    }
+
+
+	    // Rings
+	    for(i=0; i < list_rings.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+
+	    	if (collider.distanceToPoint(object.position) < 1)
+	    		return list_rings[i];
+	    }
 
 	}
+	// Usar BoundingBox del objeto
+	else{
+		var objectBox = new THREE.Box3().setFromObject(object)
 
-	// Building B
-	for(i=0; i < list_buildingB.length; i++){
-		var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+		// Building A
+		for(i=0; i < list_buildingA.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-    	if (collider.intersectsBox(objectBox))
-    		return list_buildingB[i];
-    }
+	    	if (collider.intersectsBox(objectBox))
+	    		return list_buildingA[i];
+
+		}
+
+		// Building B
+		for(i=0; i < list_buildingB.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+	    	if (collider.intersectsBox(objectBox))
+	    		return list_buildingB[i];
+	    }
 
 
-    // Rings
-    for(i=0; i < list_rings.length; i++){
-		var collider = new THREE.Box3().setFromObject(list_rings[i]);
+	    // Rings
+	    for(i=0; i < list_rings.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-    	if (collider.intersectsBox(objectBox))
-    		return list_rings[i];
-    }
+	    	if (collider.intersectsBox(objectBox))
+	    		return list_rings[i];
+	    }
+	}
+	
 
 	return null;
 }
@@ -536,7 +570,7 @@ function cameraFollowPlayer()
 
 function checkPlayerCollisions()
 {
-	var collision = checkCollisionGeneric(player);
+	var collision = checkCollisionGeneric(player, true);
 
 	if(collision != null){
 
@@ -606,8 +640,11 @@ function update()
 		playerBoxVisual.update();
 		checkPlayerCollisions();
 		checkPlayerInBounds();
-
 	}
+
+	// Rotar anillos
+	for(i=0; i < count_ring; i++)
+		list_rings[i].rotation.y += ringRotation;
 
 	// Actualiza los FPS
 	stats.update();
