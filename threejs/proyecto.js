@@ -661,7 +661,7 @@ function checkPlayerInBounds()
 
 	if(warning_current){
 
-		// Computar transparencia de la esfera según la distancia
+		// Computar transparencia de la esfera límite según la distancia
 		sphere_grid.material.opacity = ((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity;
 
 		if(curr_distance < distance_warn){
