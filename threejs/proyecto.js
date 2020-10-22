@@ -64,7 +64,7 @@ var cameraMaxFov = 90;
 // Parametros anillos
 var ringMinY = 125;
 var ringMaxY = 25;
-var ringRotation = 1/1000;
+var ringRotation = 5/1000;
 
 // Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
