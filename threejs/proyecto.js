@@ -365,10 +365,12 @@ function placeRing(ring, max_radius){
 	}
 	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
 	while(false); // Comprobar no-colision
+
+	console.log(ring.position);
 }
 
-// Indica con qué objeto está colisionando este objeto
-function checkCollisionGeneric(object, useCenter)
+// Indica con qué edificio está colisionando este objeto
+function checkBuildingCollision(object, useCenter)
 {
 	// Usar centro del objeto
 	if(useCenter){
@@ -388,16 +390,6 @@ function checkCollisionGeneric(object, useCenter)
 	    	if (collider.distanceToPoint(object.position) < 1)
 	    		return list_buildingB[i];
 	    }
-
-
-	    // Rings
-	    for(i=0; i < list_rings.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_rings[i]);
-
-	    	if (collider.distanceToPoint(object.position) < 1)
-	    		return list_rings[i];
-	    }
-
 	}
 	// Usar BoundingBox del objeto
 	else{
@@ -419,7 +411,29 @@ function checkCollisionGeneric(object, useCenter)
 	    	if (collider.intersectsBox(objectBox))
 	    		return list_buildingB[i];
 	    }
+	}
+	
 
+	return null;
+}
+
+// Indica con qué anillo está colisionando este objeto
+function checkRingCollision(object, useCenter)
+{
+	// Usar centro del objeto
+	if(useCenter){
+	    // Rings
+	    for(i=0; i < list_rings.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+
+	    	if (collider.distanceToPoint(object.position) < 1)
+	    		return list_rings[i];
+	    }
+
+	}
+	// Usar BoundingBox del objeto
+	else{
+		var objectBox = new THREE.Box3().setFromObject(object)
 
 	    // Rings
 	    for(i=0; i < list_rings.length; i++){
@@ -433,8 +447,6 @@ function checkCollisionGeneric(object, useCenter)
 
 	return null;
 }
-
-
 
 function updateAspectRatio()
 {
@@ -570,35 +582,19 @@ function cameraFollowPlayer()
 
 function checkPlayerCollisions()
 {
-	var collision = checkCollisionGeneric(player, true);
+	var collision;
 
-	if(collision != null){
+	// Comprobar colisión con edificios
+	collision = checkBuildingCollision(player, true);
 
-		switch(collision.name){
-			case "skyscraper": playerCrashed(collision); break;
-			case "warehouse": playerCrashed(collision); break;
-			case "ring": collectRing(collision); break;
-		}
+	if(collision != null)
+		playerCrashed(collision);
 
-	}
-	/*
-	// Comprobar colisiones con BuildingA
-	for(i=0; i < count_buildingA; i++){
-    	var buildingBox = new THREE.Box3().setFromObject(list_buildingA[i]);
+	// Comprobar colisión con anillos
+	collision = checkRingCollision(player, false);
 
-    	if (buildingBox.distanceToPoint(player.position) < 1)
-    		playerCrashed(list_buildingA[i]);
-	}
-
-	// Comprobar colisiones con BuildingB
-	for(i=0; i < count_buildingB; i++){
-    	var buildingBox = new THREE.Box3().setFromObject(list_buildingB[i]);
-
-    	if (buildingBox.distanceToPoint(player.position) < 1)
-    		playerCrashed(list_buildingB[i]);
-	}
-	*/
-	// Comprobar colisiones con Rings
+	if(collision != null)
+		collectRing(collision);
 
 }
 
@@ -617,7 +613,7 @@ function collectRing(object)
 {
 	currentScore += ring_value;
 	maxScore = Math.max(currentScore, maxScore);
-	console.log(currentScore);
+	console.log("Score: " + currentScore);
 
 	placeRing(object);
 
