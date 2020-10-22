@@ -382,7 +382,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingA.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
 	    		return list_buildingA[i];
 
 		}
@@ -391,7 +391,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingB.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
 	    		return list_buildingB[i];
 	    }
 	}
@@ -403,7 +403,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingA.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.intersectsBox(objectBox))
+	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
 	    		return list_buildingA[i];
 
 		}
@@ -412,7 +412,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingB.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.intersectsBox(objectBox))
+	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
 	    		return list_buildingB[i];
 	    }
 	}
@@ -430,7 +430,7 @@ function checkRingCollision(object, useCenter)
 	    for(i=0; i < list_rings.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
 	    		return list_rings[i];
 	    }
 
@@ -443,7 +443,7 @@ function checkRingCollision(object, useCenter)
 	    for(i=0; i < list_rings.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-	    	if (collider.intersectsBox(objectBox))
+	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
 	    		return list_rings[i];
 	    }
 	}
