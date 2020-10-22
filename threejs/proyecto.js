@@ -149,7 +149,7 @@ function loadScene()
 		player.lookAt(0,500,0);
 		playerActive = true;
 
-		var boxVisual = new THREE.BoxHelper(player, 0xff0000);
+		var boxVisual = new THREE.BoxHelper(player, 0x00ff00);
 		player.attach(boxVisual);
 
 		console.log( 'Player model loaded' );
@@ -277,6 +277,9 @@ function generateBuildings(max_radius)
 
   		list_buildingA.push(building);
     	scene.add(building);
+
+		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
+		building.attach(boxVisual);
 	}
 
 	// BuildingB
@@ -300,6 +303,9 @@ function generateBuildings(max_radius)
 
   		list_buildingB.push(building);
     	scene.add(building);
+    	
+		var boxVisual = new THREE.BoxHelper(building, 0xff0000);
+		building.attach(boxVisual);
 	}
 
 }
