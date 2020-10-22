@@ -382,7 +382,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingA.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_buildingA[i].id)
 	    		return list_buildingA[i];
 
 		}
@@ -391,7 +391,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingB.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_buildingB[i].id)
 	    		return list_buildingB[i];
 	    }
 	}
@@ -403,8 +403,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingA.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-			console.log(object.id + "vs" + collider.id)
-	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
+	    	if (collider.intersectsBox(objectBox) && object.id != list_buildingA[i].id)
 	    		return list_buildingA[i];
 
 		}
@@ -414,8 +413,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingB.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-			console.log(object.id + "vs" + collider.id)
-	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
+	    	if (collider.intersectsBox(objectBox) && object.id != list_buildingB[i].id)
 	    		return list_buildingB[i];
 	    }
 	}
@@ -433,7 +431,7 @@ function checkRingCollision(object, useCenter)
 	    for(i=0; i < list_rings.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != collider.id)
+	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_rings[i].id)
 	    		return list_rings[i];
 	    }
 
@@ -442,12 +440,11 @@ function checkRingCollision(object, useCenter)
 	else{
 		var objectBox = new THREE.Box3().setFromObject(object)
 
-		console.log(object.id + "vs" + collider.id)
 	    // Rings
 	    for(i=0; i < list_rings.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-	    	if (collider.intersectsBox(objectBox) && object.id != collider.id)
+	    	if (collider.intersectsBox(objectBox) && object.id != list_rings[i].id)
 	    		return list_rings[i];
 	    }
 	}
