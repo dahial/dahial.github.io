@@ -312,11 +312,12 @@ function generateBuildings(max_radius)
 
 		console.log("count_buildingB = " + count_buildingB);
 		console.log("i = " + i);
-		console.log("Adding buildingB");
 
     	var building = building_B.clone();
 
     	do{
+
+			console.log("Trying buildingB");
     		var scale = 0.5 + Math.random()*0.5;
 	    	building.position.y = 20.5 * scale;
 	    	building.scale = new THREE.Vector3(scale,scale,scale);
