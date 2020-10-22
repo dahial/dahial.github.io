@@ -12,7 +12,7 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 10;
+var count_buildingA = 30;
 var count_buildingB = 10
 var count_rings = 1;
 var ring_radius = scene_radius - 25;
