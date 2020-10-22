@@ -75,7 +75,7 @@ init();
 loadPrefabs();
 loadScene();
 render();
-
+/*
 function init()
 {
 	// Inicializar el renderer
@@ -322,7 +322,7 @@ function generateBuildings(max_radius)
 
 }
 
-/*function generateRings(max_radius)
+function generateRings(max_radius)
 {
 	// Rings
 	for(i=0; i < count_rings; i++){
@@ -335,7 +335,7 @@ function generateBuildings(max_radius)
     	scene.add(ring_instance);
 	}
 
-}*/
+}
 
 function placeRing(ring){
 	do{
@@ -573,7 +573,7 @@ function collectRing(object)
 	placeRing(object);
 
 }
-
+*/
 function update()
 {
 	// Actualizar antes/ahora ------------
