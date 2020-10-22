@@ -12,14 +12,16 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 35;
-var count_buildingB = 15
+var count_buildingA = 45;
+var count_buildingB = 20
 var count_rings = 20;
 var ring_radius = scene_radius - 25;
 var skyboxTexture;
 var distance_warn = 800;
 var distance_oob = 1000;
 var sphere_max_opacity = 0.2;
+var ground_grid_opacity = 0.2;
+var grid_master_opacity = 1;
 
 // Objetos prefabricados
 var building_A;
@@ -78,6 +80,9 @@ var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
 var warning_current = false;
+
+// Tiempo
+var startTime;
 
 // Acciones a realizar
 init();
@@ -171,6 +176,7 @@ function loadPrefabs() {
 		scene.add( player );
 		player.lookAt(0,500,0);
 		playerActive = true;
+		startTime = Date.now();
 
 		console.log( 'Player model loaded' );
 
@@ -282,7 +288,7 @@ function loadScene()
     groundGridTexture.wrapS = groundGridTexture.wrapT = THREE.RepeatWrapping;
     groundGridTexture.repeat.set(100,100);
     groundGridTexture.anisotropy = 16;
-    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0x00ffff, color: 0x0, opacity: 0.2 });
+    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0x00ffff, color: 0x0, opacity: ground_grid_opacity });
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
     ground_grid.rotation.x = -Math.PI / 2;
@@ -349,7 +355,7 @@ function generateBuildings(max_radius)
 	    	building.name = "warehouse";
 
 	 		//Posicionar BuildingB en el radio
-	 		var r = max_radius * Math.random();
+	 		var r = max_radius * Math.random() * 0.8;
 	  		var theta = Math.random() * 2 * Math.PI;
 
 	  		building.position.x = r * Math.cos(theta);
@@ -666,7 +672,7 @@ function checkPlayerInBounds()
 	if(warning_current){
 
 		// Computar transparencia de la esfera límite según la distancia
-		sphere_grid.material.opacity = ((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity;
+		sphere_grid.material.opacity = ((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity * grid_master_opacity;
 
 		if(curr_distance < distance_warn){
 			warning_current = false;
@@ -727,6 +733,13 @@ function animateRings()
 	}
 }
 
+function animateGrid(time)
+{
+	grid_opacity = Math.abs(Math.sin(time / 1000));
+	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
+
+}
+
 function update()
 {
 	// Actualizar antes/ahora ------------
@@ -734,14 +747,17 @@ function update()
 	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
 	antes = ahora;									// Actualizar antes
 
+
 	// ---------------------------------
 
 	// Si el usuario está activo:
 	if(playerActive){
+
 		applyPlayerMovement(deltaT); 	// Mover al usuario
 		cameraFollowPlayer();			// Seguir al usuario con la cámara
 		checkPlayerCollisions();		// Comprobar colisiones del usuario
 		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		animateGrid(ahora - startTime);
 	}
 
 	animateRings();
