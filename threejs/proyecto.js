@@ -365,16 +365,16 @@ function placeRing(ring){
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
 
-  		console.log("Building collision: " + (checkBuildingCollision(ring, false) != null))
+  		console.log("Building collision: " + (checkBuildingCollision(ring, true, 5) != null))
   		console.log("Ring collision: " + (checkRingCollision(ring, false) != null))
 	}
-	//while((checkBuildingCollision(ring, false) != null) && (checkRingCollision(ring, false) != null)); // Comprobar no-colision
-	while(false); // Comprobar no-colision
+	while((checkBuildingCollision(ring, true, 5) != null) && (checkRingCollision(ring, false) != null)); // Comprobar no-colision
+	//while(false); // Comprobar no-colision
 
 }
 
 // Indica con qué edificio está colisionando este objeto
-function checkBuildingCollision(object, useCenter)
+function checkBuildingCollision(object, useCenter, centerDistance = 1)
 {
 	// Usar centro del objeto
 	if(useCenter){
@@ -382,7 +382,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingA.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_buildingA[i].id)
+	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingA[i].id)
 	    		return list_buildingA[i];
 
 		}
@@ -391,7 +391,7 @@ function checkBuildingCollision(object, useCenter)
 		for(i=0; i < list_buildingB.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_buildingB[i].id)
+	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingB[i].id)
 	    		return list_buildingB[i];
 	    }
 	}
@@ -423,7 +423,7 @@ function checkBuildingCollision(object, useCenter)
 }
 
 // Indica con qué anillo está colisionando este objeto
-function checkRingCollision(object, useCenter)
+function checkRingCollision(object, useCenter, centerDistance = 1)
 {
 	// Usar centro del objeto
 	if(useCenter){
@@ -431,7 +431,7 @@ function checkRingCollision(object, useCenter)
 	    for(i=0; i < list_rings.length; i++){
 			var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
-	    	if (collider.distanceToPoint(object.position) < 1 && object.id != list_rings[i].id)
+	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_rings[i].id)
 	    		return list_rings[i];
 	    }
 
