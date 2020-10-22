@@ -351,16 +351,16 @@ function generateRings(max_radius)
 
 function placeRing(ring){
 	do{
-    	ring_instance.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
-    	ring_instance.name = "ring";
+    	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
+    	ring.name = "ring";
 
  		//Posicionar ring en el radio
  		var r = max_radius * Math.random();
   		var theta = Math.random() * 2 * Math.PI;
 
-  		ring_instance.position.x = r * Math.cos(theta);
-  		ring_instance.position.z = r * Math.sin(theta);
-  		ring_instance.rotation.y = theta;
+  		ring.position.x = r * Math.cos(theta);
+  		ring.position.z = r * Math.sin(theta);
+  		ring.rotation.y = theta;
 	}
 	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
 	while(false); // Comprobar no-colision
