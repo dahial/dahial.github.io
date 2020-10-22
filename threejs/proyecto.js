@@ -324,7 +324,7 @@ function generateBuildings(max_radius)
 
 function generateRings(max_radius)
 {
-	// BuildingA
+	// Rings
 	for(i=0; i < count_rings; i++){
 
     	var ring_instance = ring.clone();
@@ -359,7 +359,7 @@ function checkCollisionGeneric(object)
 	var objectBox = new THREE.Box3().setFromObject(object)
 
 	// Building A
-	for(int i=0; i < list_buildingA.length; i++){
+	for(i=0; i < list_buildingA.length; i++){
 		var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
     	if (collider.intersectsBox(objectBox))
@@ -368,7 +368,7 @@ function checkCollisionGeneric(object)
 	}
 
 	// Building B
-	for(int i=0; i < list_buildingB.length; i++){
+	for(i=0; i < list_buildingB.length; i++){
 		var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
     	if (collider.intersectsBox(objectBox))
@@ -376,7 +376,7 @@ function checkCollisionGeneric(object)
 
 
     // Rings
-    for(int i=0; i < list_rings.length; i++){
+    for(i=0; i < list_rings.length; i++){
 		var collider = new THREE.Box3().setFromObject(list_rings[i]);
 
     	if (collider.intersectsBox(objectBox))
@@ -570,7 +570,7 @@ function collectRing(object)
 	currentScore += ring_value;
 	maxScore = Math.max(currentScore, maxScore);
 	console.log(currentScore);
-	
+
 	placeRing(object);
 
 }
