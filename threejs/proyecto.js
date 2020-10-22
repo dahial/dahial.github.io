@@ -60,10 +60,11 @@ var cameraFov = 50;
 var cameraCurrentFov = cameraFov;
 var cameraMaxFov = 90;
 
-// Auxiliares de movimiento
+// Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
+var playerBoxVisual;
 
 // Acciones a realizar
 init();
@@ -149,8 +150,8 @@ function loadScene()
 		player.lookAt(0,500,0);
 		playerActive = true;
 
-		var boxVisual = new THREE.BoxHelper(player, 0x00ff00);
-		player.attach(boxVisual);
+		playerBoxVisual = new THREE.BoxHelper(player, 0x00ff00);
+		scene.add(boxVisual);
 
 		console.log( 'Player model loaded' );
 
@@ -504,6 +505,7 @@ function update()
 
 		applyPlayerMovement(deltaT);
 		cameraFollowPlayer();
+		playerBoxVisual.update();
 		checkPlayerCollisions();
 		checkPlayerInBounds();
 
