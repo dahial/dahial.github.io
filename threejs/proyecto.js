@@ -282,7 +282,7 @@ function loadScene()
     groundGridTexture.repeat.set(100,100);
     groundGridTexture.anisotropy = 16;
 
-    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0xff00cc, color: 0x0, opacity: 0 });
+    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0xff00cc, color: 0x0, opacity: 0.2 });
 
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
