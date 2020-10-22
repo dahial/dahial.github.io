@@ -643,7 +643,7 @@ function update()
 	}
 
 	// Rotar anillos
-	for(i=0; i < count_ring; i++)
+	for(i=0; i < count_rings; i++)
 		list_rings[i].rotation.y += ringRotation;
 
 	// Actualiza los FPS
