@@ -355,7 +355,6 @@ function generateRings()
 
 function placeRing(ring){
 	do{
-		console.log("Placing ring");
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
 
  		//Posicionar ring en el radio
