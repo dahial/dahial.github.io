@@ -354,6 +354,7 @@ function generateRings()
 
 function placeRing(ring){
 	do{
+		console.log("Placing ring");
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
 
  		//Posicionar ring en el radio
@@ -364,8 +365,7 @@ function placeRing(ring){
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
 	}
-	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
-	while(false); // Comprobar no-colision
+	while((checkBuildingCollision(ring_instance, false) != null) && (checkRingCollision(ring_instance, false) != null)); // Comprobar no-colision
 
 }
 
