@@ -15,6 +15,7 @@ var scene_radius = 500;
 var count_buildingA = 1;
 var count_buildingB = 1
 var count_rings = 1;
+var ring_radius = scene_radius - 25;
 var skyboxTexture;
 
 // Objetos prefabricados
@@ -277,7 +278,7 @@ function loadScene()
     generateBuildings(scene_radius - 25);
 
     // Añadir objetivos
-    generateRings(scene_radius - 25, count_rings);
+    generateRings();
 }
 
 function generateBuildings(max_radius)
@@ -335,7 +336,7 @@ function generateBuildings(max_radius)
 
 }
 
-function generateRings(max_radius)
+function generateRings()
 {
 	// Rings
 	for(i=0; i < count_rings; i++){
@@ -343,7 +344,7 @@ function generateRings(max_radius)
     	var ring_instance = ring.clone();
     	ring_instance.name = "ring";
 
-    	placeRing(ring_instance, max_radius);
+    	placeRing(ring_instance);
 
   		list_rings.push(ring_instance);
     	scene.add(ring_instance);
@@ -351,23 +352,17 @@ function generateRings(max_radius)
 
 }
 
-function placeRing(ring, max_radius){
+function placeRing(ring){
 	do{
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
 
  		//Posicionar ring en el radio
- 		var r = max_radius * Math.random();
+ 		var r = ring_radius * Math.random();
   		var theta = Math.random() * 2 * Math.PI;
 
   		ring.position.x = r * Math.cos(theta);
   		ring.position.z = r * Math.sin(theta);
   		ring.rotation.y = theta;
-
-
-		console.log("r = " + r);
-		console.log("theta = " + theta);
-		console.log("x = " + (r * Math.cos(theta)));
-		console.log("z = " + (r * Math.sin(theta)));
 	}
 	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
 	while(false); // Comprobar no-colision
