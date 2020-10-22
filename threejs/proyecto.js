@@ -83,7 +83,7 @@ var warning_current = false;
 var startTime;
 
 // Audio
-var audioListener new THREE.AudioListener();
+var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
 
 // Acciones a realizar
