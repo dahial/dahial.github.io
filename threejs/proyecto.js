@@ -277,14 +277,12 @@ function loadScene()
 
     // Construir el suelo exterior
     var groundGridTexture = loader.load('./images/proyecto/ground_grid.png');
-    var groundGridAlphaTexture = loader.load('./images/proyecto/ground_grid_alpha.png');
-    groundGridAlphaTexture.format = THREE.RGBAFormat;
     groundGridTexture.color = 0xffffff;
     groundGridTexture.wrapS = groundGridTexture.wrapT = THREE.RepeatWrapping;
-    groundGridTexture.repeat.set(250,250);
+    groundGridTexture.repeat.set(100,100);
     groundGridTexture.anisotropy = 16;
 
-    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, /*alphaMap: groundGridAlphaTexture,*/ side: THREE.DoubleSide, emissive: 0xff00dd, color: 0x0 });
+    var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0xff00cc, color: 0x0, opacity: 0.5 });
 
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
