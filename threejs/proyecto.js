@@ -324,12 +324,14 @@ function generateBuildings(max_radius)
 
 	    	building.name = "warehouse";
 
-	 		//Posicionar BuildingA en el radio
+	 		//Posicionar BuildingB en el radio
 	 		var r = max_radius * Math.random();
 	  		var theta = Math.random() * 2 * Math.PI;
 
 	  		building.position.x = r * Math.cos(theta);
 	  		building.position.z = r * Math.sin(theta);
+
+	  		console.log("Building collision: " + (checkBuildingCollision(building, false, true, false) != null))
   		}
   		while(checkBuildingCollision(building, false, true, false) != null); // Comprobar no-solapamiento de BuildingB entre si
   		//while(false);
