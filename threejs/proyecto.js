@@ -331,6 +331,7 @@ function generateBuildings(max_radius)
 	  		building.position.x = r * Math.cos(theta);
 	  		building.position.z = r * Math.sin(theta);
 
+    		console.log("i = " + i);
 	  		console.log("Building collision: " + (checkBuildingCollision(building, false, true, false) != null))
   		}
   		while(checkBuildingCollision(building, false, true, false) != null); // Comprobar no-solapamiento de BuildingB entre si
