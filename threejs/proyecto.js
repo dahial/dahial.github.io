@@ -64,7 +64,7 @@ var cameraMaxFov = 90;
 
 // Parametros anillos
 var ringMinY = 10;
-var ringMaxY = 125;
+var ringMaxY = 175;
 var ringRotation = 5/1000;
 
 // Auxiliares
@@ -165,9 +165,6 @@ function loadPrefabs() {
 		scene.add( player );
 		player.lookAt(0,500,0);
 		playerActive = true;
-
-		playerBoxVisual = new THREE.BoxHelper(player, 0x00ff00);
-		scene.add(playerBoxVisual);
 
 		console.log( 'Player model loaded' );
 
@@ -289,7 +286,6 @@ function generateBuildings(max_radius)
     	var building = building_A.clone();
 
     	do{
-    		console.log("placing buildingA");
 	    	var scale = 0.6 + Math.random()*0.4;
 	    	building.position.y = 125.5 * scale;
 	    	building.scale.y = scale;
@@ -304,7 +300,7 @@ function generateBuildings(max_radius)
 	  		building.position.z = r * Math.sin(theta);
 	  		//building.rotation.y = theta;
   		}
-  		while(checkBuildingCollision(building, false) != null); // Comprobar no-solapamiento de BuildingA entre si
+  		while(checkBuildingCollision(building, true, false, false) != null); // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingA.push(building);
     	scene.add(building);
@@ -315,22 +311,25 @@ function generateBuildings(max_radius)
 
     	var building = building_B.clone();
 
-    	var scale = 0.5 + Math.random()*0.5;
-    	building.position.y = 20.5 * scale;
-    	building.scale = new THREE.Vector3(scale,scale,scale);
+    	do{
+    		var scale = 0.5 + Math.random()*0.5;
+	    	building.position.y = 20.5 * scale;
+	    	building.scale = new THREE.Vector3(scale,scale,scale);
 
-    	building.name = "warehouse";
+	    	building.name = "warehouse";
 
- 		//Posicionar BuildingA en el radio
- 		var r = max_radius * Math.random();
-  		var theta = Math.random() * 2 * Math.PI;
+	 		//Posicionar BuildingA en el radio
+	 		var r = max_radius * Math.random();
+	  		var theta = Math.random() * 2 * Math.PI;
 
-  		building.position.x = r * Math.cos(theta);
-  		building.position.z = r * Math.sin(theta);
-  		//building.rotation.y = Math.random() * 2 * Math.PI;
+	  		building.position.x = r * Math.cos(theta);
+	  		building.position.z = r * Math.sin(theta);
+  		}
+  		while(checkBuildingCollision(building, false, true, false) != null); // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingB.push(building);
     	scene.add(building);
+
 	}
 
 }
@@ -367,54 +366,62 @@ function placeRing(ring){
   		console.log("Building collision: " + (checkBuildingCollision(ring, true, 5) != null))
   		console.log("Ring collision: " + (checkRingCollision(ring, false) != null))
 	}
-	while((checkBuildingCollision(ring, true, 5) != null) || (checkRingCollision(ring, false) != null)); // Comprobar no-colision
+	while((checkBuildingCollision(ring, true, true, true, 5) != null) || (checkRingCollision(ring, false) != null)); // Comprobar no-colision
 	//while(false); // Comprobar no-colision
 
 }
 
 // Indica con qué edificio está colisionando este objeto
-function checkBuildingCollision(object, useCenter, centerDistance = 1)
+function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1)
 {
 	// Usar centro del objeto
 	if(useCenter){
 		// Building A
-		for(i=0; i < list_buildingA.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+		if(checkA){
+			for(i=0; i < list_buildingA.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingA[i].id)
-	    		return list_buildingA[i];
+		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingA[i].id)
+		    		return list_buildingA[i];
 
+			}
 		}
 
 		// Building B
-		for(i=0; i < list_buildingB.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+		if(checkB){
+			for(i=0; i < list_buildingB.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingB[i].id)
-	    		return list_buildingB[i];
-	    }
+		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingB[i].id)
+		    		return list_buildingB[i];
+		    }
+		}
 	}
 	// Usar BoundingBox del objeto
 	else{
 		var objectBox = new THREE.Box3().setFromObject(object)
 
 		// Building A
-		for(i=0; i < list_buildingA.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+		if(checkA){
+			for(i=0; i < list_buildingA.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
 
-	    	if (collider.intersectsBox(objectBox) && object.id != list_buildingA[i].id)
-	    		return list_buildingA[i];
+		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingA[i].id)
+		    		return list_buildingA[i];
 
+			}
 		}
 
 
 		// Building B
-		for(i=0; i < list_buildingB.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+		if(checkB){
+			for(i=0; i < list_buildingB.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
 
-	    	if (collider.intersectsBox(objectBox) && object.id != list_buildingB[i].id)
-	    		return list_buildingB[i];
-	    }
+		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingB[i].id)
+		    		return list_buildingB[i];
+		    }
+		}
 	}
 	
 
@@ -464,8 +471,10 @@ currentKeys[0] = Up
 currentKeys[1] = Down
 currentKeys[2] = Left
 currentKeys[3] = Right
-currentKeys[2] = Q
-currentKeys[3] = E
+currentKeys[4] = A
+currentKeys[5] = D
+playerBoost = Space
+playerBrake = Shift
 */
 function onKeyDown(event)
 {
@@ -476,8 +485,8 @@ function onKeyDown(event)
 		case "ArrowDown": currentKeys[1] = true; break;
 		case "ArrowLeft": currentKeys[2] = true; break;
 		case "ArrowRight": currentKeys[3] = true; break;
-		case "q": currentKeys[4] = true; break;
-		case "e": currentKeys[5] = true; break;
+		case "a": currentKeys[4] = true; break;
+		case "d": currentKeys[5] = true; break;
 		case " ": playerBoost = true; break;
 	}
 }
@@ -491,8 +500,8 @@ function onKeyUp(event)
 		case "ArrowDown": currentKeys[1] = false; break;
 		case "ArrowLeft": currentKeys[2] = false; break;
 		case "ArrowRight": currentKeys[3] = false; break;
-		case "q": currentKeys[4] = false; break;
-		case "e": currentKeys[5] = false; break;
+		case "a": currentKeys[4] = false; break;
+		case "d": currentKeys[5] = false; break;
 		case " ": playerBoost = false; break;
 	}
 
@@ -589,7 +598,7 @@ function checkPlayerCollisions()
 	var collision;
 
 	// Comprobar colisión con edificios
-	collision = checkBuildingCollision(player, true);
+	collision = checkBuildingCollision(player, true, true, true);
 
 	if(collision != null)
 		playerCrashed(collision);
