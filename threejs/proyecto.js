@@ -149,6 +149,9 @@ function loadScene()
 		player.lookAt(0,500,0);
 		playerActive = true;
 
+		var boxVisual = new THREE.BoxHelper(player, 0xff0000);
+		player.add(boxVisual);
+
 		console.log( 'Player model loaded' );
 
 	},
