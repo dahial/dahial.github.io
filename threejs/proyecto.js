@@ -14,10 +14,21 @@ var fogFar = 500;
 var scene_radius = 500;
 var count_buildingA = 25;
 var count_buildingB = 10
+var count_rings = 25;
 
 // Objetos prefabricados
 var building_A;
 var building_B;
+var ring;
+
+// Objetos en escena
+var list_buildingA = list_buildingB = [];
+var rings = [];
+
+// Objetivo juego
+var value_ring = 100;
+var currentScore = 0;
+var maxScore = 0;
 
 // Parametros usuario
 var player = new THREE.Object3D();
@@ -36,7 +47,7 @@ var playerCurrentRotation = new THREE.Vector3(0,0,0);
 var playerRotationSpeed = Math.PI / 135;
 var playerRollAcc = 3 / 100000;
 var playerMaxRoll = 2 / 1000;
-var playerCurrentRoll = [0, 0];
+var playerCurrentRoll = [0, 0]; // [RollLeft, RollRight]
 var currentKeys = [false, false, false, false, false, false]; // [PitchUp, PitchDown, YawLeft, YawRight, RollLeft, RollRight]
 
 // Parametros camara
@@ -180,9 +191,9 @@ function loadScene()
 	directionalLight3.position.set( 150, 250, 500 );
 
 	directionalLight2.castShadow = true;
-	directionalLight2.shadow.mapSize.width = 1024;
-	directionalLight2.shadow.mapSize.height = 1024;
-	directionalLight2.shadow.camera.near = 0.5;
+	directionalLight2.shadow.mapSize.width = 2048;
+	directionalLight2.shadow.mapSize.height = 2048;
+	directionalLight2.shadow.camera.near = 0.1;
 	directionalLight2.shadow.camera.far = scene_radius * 2;
 	directionalLight2.shadow.camera.left = directionalLight2.shadow.camera.bottom = - scene_radius;
 	directionalLight2.shadow.camera.right = directionalLight2.shadow.camera.top = scene_radius;
@@ -261,6 +272,7 @@ function generateBuildings(max_radius)
   		building.position.z = r * Math.sin(theta);
   		building.rotation.y = theta;
 
+  		list_buildingA.push(building);
     	scene.add(building);
 	}
 
@@ -283,8 +295,21 @@ function generateBuildings(max_radius)
   		building.position.z = r * Math.sin(theta);
   		building.rotation.y = Math.random() * 2 * Math.PI;
 
+  		list_buildingB.push(building);
     	scene.add(building);
 	}
+
+}
+
+function generateRings(Nrings)
+{
+
+
+}
+
+function collectRing()
+{
+
 
 }
 
@@ -433,6 +458,9 @@ function update()
 		camera.lookAt(cameraLookTarget);
 
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
+
+		var playerbox = new THREE.Box3().setFromObjecT(player);
+		console.log(playerbox)
 	}
 
 	// Actualiza los FPS
