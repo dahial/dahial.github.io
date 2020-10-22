@@ -341,7 +341,7 @@ function generateRings(max_radius)
 
     	var ring_instance = ring.clone();
 
-    	placeRing(ring_instance);
+    	placeRing(ring_instance, max_radius);
 
   		list_rings.push(ring_instance);
     	scene.add(ring_instance);
@@ -349,7 +349,7 @@ function generateRings(max_radius)
 
 }
 
-function placeRing(ring){
+function placeRing(ring, max_radius){
 	do{
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
     	ring.name = "ring";
