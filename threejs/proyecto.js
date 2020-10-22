@@ -302,7 +302,8 @@ function generateBuildings(max_radius)
 	  		building.position.z = r * Math.sin(theta);
 	  		//building.rotation.y = theta;
   		}
-  		while(checkCollisionGeneric(building) != null); // Comprobar no-solapamiento de BuildingA entre si
+  		//while(checkCollisionGeneric(building) != null); // Comprobar no-solapamiento de BuildingA entre si
+  		while(false); // Comprobar no-solapamiento de BuildingA entre si
 
   		list_buildingA.push(building);
     	scene.add(building);
@@ -361,7 +362,8 @@ function placeRing(ring){
   		ring_instance.position.z = r * Math.sin(theta);
   		ring_instance.rotation.y = theta;
 	}
-	while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
+	//while(checkCollisionGeneric(ring_instance) != null); // Comprobar no-colision
+	while(false); // Comprobar no-colision
 }
 
 // Indica con qué objeto está colisionando este objeto
