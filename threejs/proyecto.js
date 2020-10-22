@@ -19,6 +19,7 @@ var ring_radius = scene_radius - 25;
 var skyboxTexture;
 var distance_warn = 800;
 var distance_oob = 1000;
+var sphere_max_opacity = 0.2;
 
 // Objetos prefabricados
 var building_A;
@@ -28,7 +29,7 @@ var ring;
 // Objetos en escena
 var list_buildingA = list_buildingB = [];
 var list_rings = [];
-var ground, ground_grid;
+var ground, ground_grid, sphere_grid;
 
 // Objetivo juego
 var ring_value = 100;
@@ -281,20 +282,19 @@ function loadScene()
     groundGridTexture.wrapS = groundGridTexture.wrapT = THREE.RepeatWrapping;
     groundGridTexture.repeat.set(100,100);
     groundGridTexture.anisotropy = 16;
-
     var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0x00ffff, color: 0x0, opacity: 0.2 });
-
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
     ground_grid.name = "ground";
-
-    var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.2 });
-    sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
-    
     ground_grid.rotation.x = -Math.PI / 2;
+
+    var sphereGridTexture = groundGridTexture.clone();
+    sphereGridTexture.repeat.set(100,50);
+    var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
+    sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
+    sphere_grid.name = "bounds";
 
     scene.add(ground_grid);
     scene.add(sphere_grid);
-
 
 	console.log("Generating buildings...");
     // Añadir edificios
@@ -660,6 +660,10 @@ function checkPlayerInBounds()
 	var curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
 
 	if(warning_current){
+
+		// Computar transparencia de la esfera según la distancia
+		sphere_grid.material.opacity = ((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity;
+
 		if(curr_distance < distance_warn){
 			warning_current = false;
 			changeWarning()
@@ -680,7 +684,10 @@ function changeWarning(){
 	if(warning_current)
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
 	else
+	{
+		sphere_grid.material.opacity = 0;
 		console.log("Regresando al terreno de juego");
+	}
 
 }
 
