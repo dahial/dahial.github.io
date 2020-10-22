@@ -2,8 +2,6 @@
 var renderer, scene, camera;
 // Monitor de recursos
 var stats;
-// Global GUI
-var effectController, h;
 // Objetos y tiempo
 var antes = Date.now();
 
@@ -84,6 +82,10 @@ var warning_current = false;
 // Tiempo
 var startTime;
 
+// Audio
+var audioListener new THREE.AudioListener();
+var music = new THREE.Audio( audioListener );
+
 // Acciones a realizar
 init();
 loadPrefabs();
@@ -111,6 +113,16 @@ function init()
 	// Camara
 	var ar = window.innerWidth / window.innerHeight;
 	setCameras(ar);
+	camera.add(audioListener); // Capturar el audio de la escena
+
+	// Inicializar música
+	var audioLoader = new THREE.AudioLoader();
+	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
+		music.setBuffer( buffer );
+		music.setLoop(true);
+		music.setVolume(0.5);
+		music.play();
+	});
 
 	// STATS --> stats.update() en update()
 	stats = new Stats();
