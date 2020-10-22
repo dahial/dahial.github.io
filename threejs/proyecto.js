@@ -284,6 +284,7 @@ function generateBuildings(max_radius)
     	var building = building_A.clone();
 
     	do{
+    		console.log("placing buildingA");
 	    	var scale = 0.6 + Math.random()*0.4;
 	    	building.position.y = 125.5 * scale;
 	    	building.scale.y = scale;
