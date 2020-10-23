@@ -828,8 +828,6 @@ function collectRing(object) {
 	else
 		updateScore(ring_value);
 
-	highScore = Math.max(currentScore, highScore);
-
 	placeRing(object);
 }
 
@@ -961,7 +959,7 @@ function countdown(time) {
 	remainingTime -= time;
 	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000) + 1);
 
-	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying && remainingTime > 1000 * 9){
+	if(remainingTime < 1000 * 10 && remainingTime > 1000 * 9 && !countdown_audio.isPlaying ){
 		countdown_audio.play();
 	}
 
