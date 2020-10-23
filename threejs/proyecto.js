@@ -900,7 +900,7 @@ function placePlayer() {
 	scene.add( player );
 	player.lookAt(0,500,0);
 
-	//gameActive = true;
+	gameActive = true;
 }
 
 function countdown(time) {
