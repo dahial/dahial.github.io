@@ -121,6 +121,7 @@ render();
 
 function init() {
 	document.getElementById( 'centertext' ).innerText = "Cargando...";
+	document.getElementById( 'highscore' ).innerText = "Record: 0";
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
