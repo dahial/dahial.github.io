@@ -48,12 +48,37 @@
 			pointer-events: none;
 			z-index: 1; /* TODO Solve this in HTML */
 		}
+		#instructions {
+			color:#ffffff;
+			background-color: rgba(0,0,0,0.5);
+			font-family: Helvetica;
+			font-size:200%;
+			font-weight:bold;
+			position: absolute;
+			bottom: 5%;
+			right: 5px;
+			width: 20%;
+			box-sizing: border-box;
+			text-align: left;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			pointer-events: none;
+			z-index: 1; /* TODO Solve this in HTML */
+		}
 	</style>
 </head>
 
 <body>
 	<div id="info">0</div>
 	<div id="warning"></div>
+	<div id="instructions">
+		<b>FLECHAS</b>: Orientar nave<br>
+		<b>Q/E</b>: Cabeceo<br>
+		<b>SHIFT</b>: Frenar<br>
+		<b>ESPACIO</b>: Acelerar
+	</div>
 	<div id="container"></div>
 	
 	<!--Bibliotecas de utilidad-->
