@@ -106,13 +106,11 @@ var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
 var warning_current = false;
 var gameActive = false;
-var playerLoaded = false;
 
 // Acciones a realizar
 init();
 loadPrefabs();
 loadScene();
-startGame();
 render();
 
 function init() {
@@ -239,8 +237,8 @@ function loadPrefabs() {
 		child.castShadow = true;
 		child.receiveShadow = true;
 		player.add(child);
-		console.log("gltfloader finished!");
-		playerLoaded = true;
+
+		startGame();
 	},
 	// called while loading is progressing
 	function ( xhr ) {
@@ -850,15 +848,7 @@ async function startGame() {
     generateBuildings(scene_radius - 25);
     generateRings();
 	console.log("Structures generated.")
-	/*
-	console.log("Creating player promise...")
-	// Usar Promise para esperar la carga del jugador
-    await new Promise(function(resolve, reject){
-    	while(!playerLoaded){console.log("Waiting...")};
-    	resolve("Player finished loading");
-    })
-	console.log("Player Loaded.")
-	*/
+	
 	console.log("Placing player...")
     placePlayer();
 
