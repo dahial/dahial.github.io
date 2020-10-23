@@ -856,7 +856,7 @@ function startGame() {
     generateRings();
 	console.log("Structures generated.")
 	
-	
+
 	console.log(player.position);
 	console.log("Placing player...")
     placePlayer();
@@ -936,10 +936,10 @@ function update() {
 	// Si el usuario está activo:
 	if(gameActive){
 
-		//applyPlayerMovement(); 			// Mover al usuario
-		//cameraFollowPlayer();			// Seguir al usuario con la cámara
-		//checkPlayerCollisions();		// Comprobar colisiones del usuario
-		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		applyPlayerMovement(); 			// Mover al usuario
+		cameraFollowPlayer();			// Seguir al usuario con la cámara
+		checkPlayerCollisions();		// Comprobar colisiones del usuario
+		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
 	}
 
