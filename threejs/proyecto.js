@@ -853,13 +853,10 @@ async function startGame() {
 
 	console.log("Creating player promise...")
 	// Usar Promise para esperar la carga del jugador
-    let playerLd = new Promise(function(resolve, reject){
-    	while(!playerLoaded){};
+    await new Promise(function(resolve, reject){
+    	while(!playerLoaded){console.log("Waiting...")};
     	resolve("Player finished loading");
     })
-
-	console.log("Waiting for player promise...")
-    await playerLd;
 	console.log("Player Loaded.")
 
 	console.log("Placing player...")
