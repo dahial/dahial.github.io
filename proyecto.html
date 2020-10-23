@@ -10,6 +10,24 @@
 			margin: 0px;
 			overflow: hidden;}
 		canvas{background-color: black;}
+		#time {
+			color:#ffffff;
+			text-shadow: 2px 2px 5px #000000;
+			font-family: "Lucida Console";
+			font-size:1000%;
+			font-weight:bold;
+			position: absolute;
+			top: 2%;
+			width: 25%%;
+			box-sizing: border-box;
+			text-align: center;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			pointer-events: none;
+			z-index: 1;
+		}
 		#score {
 			color:#aa2244;
 			text-shadow: 2px 2px 5px #110022;
@@ -28,6 +46,44 @@
 			user-select: none;
 			pointer-events: none;
 			z-index: 1;
+		}
+		#highscore {
+			color:#ffffff;
+			text-shadow: 2px 2px 5px #000000;
+			font-family: "Lucida Console";
+			font-size:400%;
+			font-weight:bold;
+			position: absolute;
+			top: 10%;
+			right: 5%;
+			width: 25%%;
+			box-sizing: border-box;
+			text-align: right;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			pointer-events: none;
+			z-index: 1;
+		}
+		#centertext {
+			color:#ffffff;
+			text-shadow: 2px 2px 5px #000000;
+			font-family: Helvetica;
+			font-size:600%;
+			font-weight:bold;
+			position: absolute;
+			bottom: 50%;
+			right: 0px;
+			width: 100%;
+			box-sizing: border-box;
+			text-align: center;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			pointer-events: none;
+			z-index: 1; 
 		}
 		#warning {
 			color:#bb0000;
@@ -72,7 +128,10 @@
 </head>
 
 <body>
-	<div id="score">0</div>
+	<div id="time"></div>
+	<div id="score"></div>
+	<div id="highscore"></div>
+	<div id="centertext"></div>
 	<div id="warning"></div>
 	<div id="instructions">
 		<b>FLECHAS</b>: Orientar nave<br>

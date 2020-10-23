@@ -2,8 +2,6 @@
 var renderer, scene, camera;
 // Monitor de recursos
 var stats;
-// Objetos y tiempo
-var antes = Date.now();
 
 var fogNear = 375;
 var fogFar = 500;
@@ -34,11 +32,11 @@ var ground, ground_grid, sphere_grid;
 var ring_value = 100;
 var superring_value = 500;
 var currentScore = 0;
-var maxScore = 0;
+var highScore = 0;
+var newHighScore = false;
 
 // Parametros usuario
 var player = new THREE.Object3D();
-var playerActive = false;
 var playerScale = 0.035;
 
 var playerDirection = new THREE.Vector3(0,0,0);
@@ -73,14 +71,10 @@ var ringMinY = 10;
 var ringMaxY = 175;
 var ringRotation = 15/1000;
 
-// Auxiliares
-var moveVector = new THREE.Vector3(0,0,1);
-var tmpQuaternion = new THREE.Quaternion();
-var EPS = 0.000001;
-var warning_current = false;
-
 // Tiempo
-var startTime;
+var antes = Date.now();
+var deltaT;
+var timeLimit = 120;
 var remainingTime;
 
 // Audio
@@ -106,15 +100,23 @@ var ringLongVolume = 0.5;
 var crashVolume = 0.5;
 var warningVolume = 0.5;
 
+// Auxiliares
+var moveVector = new THREE.Vector3(0,0,1);
+var tmpQuaternion = new THREE.Quaternion();
+var EPS = 0.000001;
+var warning_current = false;
+var playerLoaded = false;
+var gameActive = false;
 
 // Acciones a realizar
 init();
 loadPrefabs();
 loadScene();
+startGame();
 render();
 
 function init() {
-	console.log("init()");
+	document.getElementById( 'container' ).innerText = "Cargando...";
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
@@ -221,6 +223,7 @@ function loadPrefabs() {
     scene.background = skyboxTexture;
 
 	// Cargar jugador
+
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
@@ -233,16 +236,7 @@ function loadPrefabs() {
 		child.receiveShadow = true;
 		player.add(child);
 
-		player.position.set(500,500,500);
-		player.scale.set(playerScale, playerScale, playerScale);
-
-		scene.add( player );
-		player.lookAt(0,500,0);
-		playerActive = true;
-		startTime = Date.now();
-
-		console.log( 'Player model loaded' );
-
+		playerLoaded = true;
 	},
 	// called while loading is progressing
 	function ( xhr ) {
@@ -379,13 +373,6 @@ function loadScene() {
 
     scene.add(ground_grid);
     scene.add(sphere_grid);
-
-	console.log("Generating buildings...");
-    // Añadir edificios
-    generateBuildings(scene_radius - 25);
-
-    // Añadir objetivos
-    generateRings();
 }
 
 function generateBuildings(max_radius) {
@@ -480,7 +467,6 @@ function placeRing(ring){
 	//while(false); // Comprobar no-colision
 }
 
-// Indica con qué edificio está colisionando este objeto
 function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
@@ -535,7 +521,6 @@ function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistanc
 	return null;
 }
 
-// Indica con qué anillo está colisionando este objeto
 function checkRingCollision(object, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
@@ -780,7 +765,7 @@ function playerOOB() {
 	music.setVolume(musicBaseVolume * 0.5);
 
 	scene.remove(player);
-	playerActive = false;
+	gameActive = false;
 
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
@@ -792,7 +777,7 @@ function playerCrashed(object) {
 	updateScore(-1000);
 
 	scene.remove(player);
-	playerActive = false;
+	gameActive = false;
 
 
 	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
@@ -814,7 +799,7 @@ function collectRing(object) {
 	else
 		updateScore(ring_value);
 
-	maxScore = Math.max(currentScore, maxScore);
+	highScore = Math.max(currentScore, highScore);
 
 	placeRing(object);
 }
@@ -822,6 +807,12 @@ function collectRing(object) {
 function updateScore(delta) {
 	currentScore = Math.max(currentScore + delta, 0);
 	document.getElementById("score").innerHTML = "" + currentScore;
+
+	if(currentScore > highScore){
+		highScore = currentScore;
+		newHighScore = true;
+		document.getElementById("highscore").innerHTML = "Record: " + highScore;
+	}
 }
 
 function animateRings() {
@@ -838,22 +829,93 @@ function animateGrid(time) {
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
 }
 
+function startGame() {
+	
+	newHighScore = false;
+
+	cleanScene();
+
+    generateBuildings(scene_radius - 25);
+    generateRings();
+
+    while(!playerLoaded){}
+
+    placePlayer();
+
+	updateScore(0);
+
+	document.getElementById( 'centertext' ).innerText = "";
+
+	remainingTime = timeLimit * 1000;
+	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+}
+
+function cleanScene() {
+	var object;
+	// Eliminar edificios de la escena
+	object = scene.getObjectByName("RASCACIELOS");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("RASCACIELOS");
+	}
+
+	object = scene.getObjectByName("ALMACÉN");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("ALMACÉN");
+	}
+
+	list_buildingA = [];
+	list_buildingB = [];
+
+	// Eliminar anillos de la escena
+	object = scene.getObjectByName("ANILLO");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("ANILLO");
+	}
+
+	object = scene.getObjectByName("SUPERANILLO");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("SUPERANILLO");
+	}
+
+	list_rings = [];
+}
+
+function placePlayer() {
+	player.position.set(450,450,450);
+	scene.add( player );
+	player.lookAt(0,500,0);
+
+	gameActive = true;
+}
+
+function countdown(time) {
+
+	remainingTime -= time;
+	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+
+}
+
 function update() {
 	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
-	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
+	deltaT = (ahora - antes);					// Tiempo transcurrido en ms
 	antes = ahora;									// Actualizar antes
 
 
 	// ---------------------------------
 
 	// Si el usuario está activo:
-	if(playerActive){
+	if(gameActive){
 
-		applyPlayerMovement(deltaT); 	// Mover al usuario
+		applyPlayerMovement(); 	// Mover al usuario
 		cameraFollowPlayer();			// Seguir al usuario con la cámara
 		checkPlayerCollisions();		// Comprobar colisiones del usuario
 		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		countdown(deltaT);
 	}
 
 	animateRings();
