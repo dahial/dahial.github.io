@@ -866,6 +866,9 @@ function startGame() {
 	remainingTime = timeLimit * 1000;
 	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
 
+
+	console.log("GAME START");
+	console.log(player.position);
 	gameActive = true;
 }
 
@@ -934,7 +937,7 @@ function update() {
 		//applyPlayerMovement(); 			// Mover al usuario
 		//cameraFollowPlayer();			// Seguir al usuario con la cámara
 		//checkPlayerCollisions();		// Comprobar colisiones del usuario
-		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
 	}
 
