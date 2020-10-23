@@ -899,10 +899,13 @@ function cleanScene() {
 }
 
 function placePlayer() {
+
+	console.log(player.position);
 	player.position.set(500,500,500);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,500,0);
+	console.log(player.position);
 }
 
 function countdown(time) {
@@ -929,8 +932,6 @@ function update() {
 		checkPlayerCollisions();		// Comprobar colisiones del usuario
 		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
-
-		console.log(player.position);
 	}
 
 	animateRings();
