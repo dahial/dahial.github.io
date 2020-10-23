@@ -947,7 +947,7 @@ function countdown(time) {
 	remainingTime -= time;
 	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
 
-	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying;){
+	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying){
 		countdown_audio.play();
 	}
 
