@@ -96,7 +96,7 @@ ring_audio.context = audioContext;
 
 var musicBaseVolume = 0.25;
 var windBaseVolume = 0.5;
-var ringVolume = 0.75;
+var ringVolume = 0.5;
 
 // Acciones a realizar
 init();
@@ -258,14 +258,16 @@ function loadPrefabs() {
     building_A.receiveShadow = true;
 
     // Building B
-    var warehouseSideTexture = loader.load('./images/proyecto/pisometal_1024x1024.jpg');
+    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_diffuse.png');
+    var warehouseSideNormal = loader.load('./images/proyecto/warehouse_normal.jpg');
 
     warehouseSideTexture.color = 0xffddee;
-    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.MIrroredRepeatWrapping;
-    warehouseSideTexture.repeat.set(15,15);
+    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
+    warehouseSideTexture.repeat.set(10,10);
     warehouseSideTexture.anisotropy = 16;
 
-    var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
+    var warehouseMaterial = new THREE.MeshPhongMaterial( { map: warehouseSideTexture, normalMap: warehouseSideNormal, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
+
     building_B = new THREE.Mesh(new THREE.BoxGeometry(100, 40, 60), warehouseMaterial);
     building_B.castShadow = true;
     building_B.receiveShadow = true;
