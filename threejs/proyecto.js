@@ -83,7 +83,6 @@ var warning_current = false;
 var startTime;
 
 // Audio
-var audioContext = new THREE.AudioContext();
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
 
@@ -127,7 +126,6 @@ function init()
 		music.setBuffer( buffer );
 		music.setLoop(true);
 		music.setVolume(0.5);
-		music.context = audioContext;
 		music.play();
 	});
 
@@ -532,8 +530,8 @@ playerBrake = Shift
 function onKeyDown(event)
 {
 	// Inicializar contexto de audio al interactuar con la ventana
-	if(audioContext.state !== 'running')
-		audioContext.resume();
+	if(music.context.state !== 'running')
+		music.context.resume();
 
 	var keyCode = event.code;
 
