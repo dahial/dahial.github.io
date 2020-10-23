@@ -89,14 +89,17 @@ var audioContext = music.context;
 var wind_audio = new THREE.Audio( audioListener );
 var boost_audio = new THREE.Audio( audioListener );
 var ring_audio = new THREE.Audio( audioListener );
+var crash_audio = new THREE.Audio( audioListener );
 
 wind_audio.context = audioContext;
 boost_audio.context = audioContext;
 ring_audio.context = audioContext;
+crash_audio.context = audioContext;
 
 var musicBaseVolume = 0.15;
 var windBaseVolume = 0.5;
 var ringVolume = 0.5;
+var crashVolume = 0.5;
 
 // Acciones a realizar
 init();
@@ -152,6 +155,12 @@ function init()
 		ring_audio.setBuffer( buffer );
 		ring_audio.setLoop(false);
 		ring_audio.setVolume(ringVolume);
+	});
+
+	audioLoader.load( '../audio/crash.ogg', function( buffer ) {
+		crash_audio.setBuffer( buffer );
+		crash_audio.setLoop(false);
+		crash_audio.setVolume(crashVolume);
 	});
 
 
@@ -770,12 +779,16 @@ function changeWarning(){
 function playerOOB(){
 
 	console.log("Out of bounds");
+	crash_audio.play();
+	scene.remove(player);
 	playerActive = false;
 }
 
 function playerCrashed(object)
 {
 	console.log("Crashed with " + object.name);
+	crash_audio.play();
+	scene.remove(player);
 	playerActive = false;
 }
 
