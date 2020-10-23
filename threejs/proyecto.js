@@ -22,9 +22,8 @@ var ground_grid_opacity = 0.2;
 var grid_master_opacity = 1;
 
 // Objetos prefabricados
-var building_A;
-var building_B;
-var ring;
+var building_A, building_B;
+var ring, superring;
 
 // Objetos en escena
 var list_buildingA = list_buildingB = [];
@@ -33,6 +32,7 @@ var ground, ground_grid, sphere_grid;
 
 // Objetivo juego
 var ring_value = 100;
+var superring_value = 500;
 var currentScore = 0;
 var maxScore = 0;
 
@@ -89,17 +89,20 @@ var music = new THREE.Audio( audioListener );
 var audioContext = music.context;
 var wind_audio = new THREE.Audio( audioListener );
 var ring_audio = new THREE.Audio( audioListener );
+var ring_long_audio = new THREE.Audio( audioListener );
 var crash_audio = new THREE.Audio( audioListener );
 var warning_audio = new THREE.Audio( audioListener );
 
 wind_audio.context = audioContext;
 ring_audio.context = audioContext;
+ring_long_audio.context = audioContext;
 crash_audio.context = audioContext;
 warning_audio.context = audioContext;
 
 var musicBaseVolume = 0.15;
 var windBaseVolume = 0.5;
 var ringVolume = 0.5;
+var ringLongVolume = 0.5;
 var crashVolume = 0.5;
 var warningVolume = 0.5;
 
@@ -158,6 +161,12 @@ function init()
 		ring_audio.setBuffer( buffer );
 		ring_audio.setLoop(false);
 		ring_audio.setVolume(ringVolume);
+	});
+
+	audioLoader.load( '../audio/ring_long.ogg', function( buffer ) {
+		ring_long_audio.setBuffer( buffer );
+		ring_long_audio.setLoop(false);
+		ring_long_audio.setVolume(ringLongVolume);
 	});
 
 	audioLoader.load( '../audio/crash.ogg', function( buffer ) {
@@ -292,6 +301,10 @@ function loadPrefabs() {
     // Ring
     var ringMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, shininess: 15, specular: 0xffffff, emissive: 0xdddd00} );
     ring = new THREE.Mesh(new THREE.RingGeometry(5,10,3,1), ringMaterial);
+
+    // Super-ring
+    var superringMaterial = new THREE.MeshPhongMaterial( { color: 0xffcc00, side: THREE.DoubleSide, shininess: 15, specular: 0xffffff, emissive: 0xffdd00} );
+    superring = new THREE.Mesh(new THREE.RingGeometry(5,10,5,1), superringMaterial);
 
 }
 
@@ -451,6 +464,13 @@ function generateRings()
   		list_rings.push(ring_instance);
     	scene.add(ring_instance);
 	}
+
+	var ring_instance = superring.clone();
+	superring.name = "SUPERANILLO";
+
+	placeRing(superring);
+	list_rings.push(superring);
+	scene.add(superring);
 
 }
 
@@ -818,16 +838,23 @@ function playerCrashed(object)
 
 function collectRing(object)
 {
+
+	ring_audio.stop();
 	ring_audio.play();
 
-	currentScore += ring_value;
+	if(object.name == "SUPERANILLO"){
+		ring_long_audio.stop();
+		ring_long_audio.play();
+
+		currentScore += superring_value;
+	}
+	else
+		currentScore += ring_value;
+
 	maxScore = Math.max(currentScore, maxScore);
-	console.log("Score: " + currentScore);
+	document.getElementById("score").innerHTML = "" + currentScore;
 
 	placeRing(object);
-
-	document.getElementById("info").innerHTML = "" + currentScore;
-
 }
 
 function animateRings()
