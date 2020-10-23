@@ -328,7 +328,7 @@ function endGame(){
 	music.setVolume(musicBaseVolume * 0.5);
 	wind_audio.setVolume(windBaseVolume * 0);
 	gameActive = false;
-	currentKeys = [false, false, false, false, false, false];
+	playerCurrentRoll = [0, 0];
 
 	console.log("current = " + currentScore);
 	console.log("highest = " + highScore);
@@ -848,7 +848,9 @@ function playerCrashed(object) {
 	stopAudioLoops();
 
 	crash_audio.play();
-	instantiateExplosion(player.position, 0xaaaaaa, playerParticleCount);
+	instantiateExplosion(player.position, 0xff0000, playerParticleCount);
+	instantiateExplosion(player.position, 0xffaa00, playerParticleCount);
+	instantiateExplosion(player.position, 0x00ffff, playerParticleCount);
 	updateScore(-1000);
 
 	scene.remove(player);
@@ -916,8 +918,10 @@ function onKeyDown(event) {
 		case "KeyQ": currentKeys[4] = true; break;
 		case "KeyE": currentKeys[5] = true; break;
 		case "Space": playerBoost = true; 
-					wind_audio.setPlaybackRate(1.25);
-					wind_audio.setVolume(windBaseVolume * 1.5);
+					if(gameActive){
+						wind_audio.setPlaybackRate(1.25);
+						wind_audio.setVolume(windBaseVolume * 1.5);
+					}
 					break;
 		case "ShiftLeft": playerBrake = true; break;
 		case "KeyR": if(restart){
@@ -941,8 +945,10 @@ function onKeyUp(event) {
 		case "KeyQ": currentKeys[4] = false; break;
 		case "KeyE": currentKeys[5] = false; break;
 		case "Space": playerBoost = false;
-					wind_audio.setPlaybackRate(1);
-					wind_audio.setVolume(windBaseVolume);
+					if(gameActive){
+						wind_audio.setPlaybackRate(1);
+						wind_audio.setVolume(windBaseVolume);
+					}
 		break;
 		case "ShiftLeft": playerBrake = false; break;
 	}
