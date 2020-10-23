@@ -83,7 +83,7 @@ var warning_current = false;
 var startTime;
 
 // Audio
-var audioContext;
+var audioContext = new THREE.AudioContext();
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
 
@@ -101,7 +101,6 @@ function init()
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
 	window.addEventListener('keyup', onKeyUp );
-	window.addEventListener('load', windowLoad );
 
 	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
