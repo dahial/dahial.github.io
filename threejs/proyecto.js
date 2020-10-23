@@ -943,7 +943,7 @@ function endGame(){
 	if(currentScore > highScore){
 		highScore = currentScore;
 		document.getElementById("highscore").innerText = "Record: " + highScore;
-		document.getElementById("centertext").innerText = "Nuevo Record!<br>Presiona 'R' para volver a jugar.";
+		document.getElementById("centertext").innerText = "Nuevo Record!\nPresiona 'R' para volver a jugar.";
 	}
 	else
 		document.getElementById("centertext").innerHTML = "Presiona 'R' para volver a jugar.";
