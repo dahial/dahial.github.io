@@ -173,7 +173,6 @@ function initAudio(){
 		wind_audio.setBuffer( buffer );
 		wind_audio.setLoop(true);
 		wind_audio.setVolume(windBaseVolume);
-		wind_audio.play();
 	});
 
 	audioLoader.load( '../audio/ring.ogg', function( buffer ) {
@@ -615,8 +614,8 @@ function onKeyUp(event) {
 		case "KeyQ": currentKeys[4] = false; break;
 		case "KeyE": currentKeys[5] = false; break;
 		case "Space": playerBoost = false;
-		wind_audio.setPlaybackRate(1);
-		wind_audio.setVolume(windBaseVolume);
+					wind_audio.setPlaybackRate(1);
+					wind_audio.setVolume(windBaseVolume);
 		break;
 		case "ShiftLeft": playerBrake = false; break;
 	}
@@ -885,6 +884,10 @@ function startGame() {
 	gameActive = true;
 	restart = false;
 	pause = true;
+
+	wind_audio.setPlaybackRate(1);
+	wind_audio.setVolume(windBaseVolume);
+	wind_audio.play();
 }
 
 function cleanScene() {
