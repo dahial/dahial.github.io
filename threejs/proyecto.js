@@ -614,14 +614,14 @@ function updatePlayerRotation() {
 	playerCurrentRotation.z = 1;
 }
 
-function applyPlayerMovement(delta) {
+function applyPlayerMovement(deltaTime) {
 	updatePlayerRotation();
 
 	var lastQuaternion = new THREE.Quaternion();
 	var lastPosition = new THREE.Vector3();
 
 
-	var rotMult = delta * playerRotationSpeed;
+	var rotMult = deltaTime * playerRotationSpeed;
 
 	// Roll acceleration
 	if(currentKeys[4])
@@ -637,7 +637,7 @@ function applyPlayerMovement(delta) {
 
 	playerCurrentRoll[1] = THREE.MathUtils.clamp(playerCurrentRoll[1], 0, playerMaxRoll)
 
-	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * delta;
+	var rollMult = (playerCurrentRoll[1] - playerCurrentRoll[0]) * deltaTime;
 
 	// Move acceleration
 	playerPreviousBoost = playerCurrentBoost;
@@ -666,7 +666,7 @@ function applyPlayerMovement(delta) {
 			playerCurrentBoost -= playerBoostAcceleration;
 	}
 
-	var moveMult = delta * playerSpeed * playerCurrentBoost;
+	var moveMult = deltaTime * playerSpeed * playerCurrentBoost;
 
 	// Apply translation and rotation
 	player.translateX( moveVector.x * moveMult );
@@ -935,10 +935,10 @@ function update() {
 	// Si el usuario está activo:
 	if(gameActive){
 
-		//applyPlayerMovement(); 			// Mover al usuario
+		applyPlayerMovement(deltaT); 			// Mover al usuario
 		cameraFollowPlayer();			// Seguir al usuario con la cámara
-		//checkPlayerCollisions();		// Comprobar colisiones del usuario
-		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		checkPlayerCollisions();		// Comprobar colisiones del usuario
+		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
 	}
 
