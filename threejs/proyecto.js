@@ -116,7 +116,7 @@ startGame();
 render();
 
 function init() {
-	document.getElementById( 'container' ).innerText = "Cargando...";
+	document.getElementById( 'centertext' ).innerText = "Cargando...";
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
@@ -142,6 +142,19 @@ function init() {
 	setCameras(ar);
 	camera.add(audioListener); // Capturar el audio de la escena
 
+	// Audio
+	initAudio();
+
+	// STATS --> stats.update() en update()
+	stats = new Stats();
+	stats.setMode( 0 );					// Muestra FPS
+	stats.domElement.style.position = 'absolute';		// Abajo izquierda
+	stats.domElement.style.bottom = '0px';
+	stats.domElement.style.left = '0px';
+	document.getElementById( 'container' ).appendChild( stats.domElement );
+}
+
+function initAudio(){
 	// Inicializar audio
 	var audioLoader = new THREE.AudioLoader();
 	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
@@ -181,15 +194,6 @@ function init() {
 		warning_audio.setLoop(true);
 		warning_audio.setVolume(warningVolume);
 	});
-
-
-	// STATS --> stats.update() en update()
-	stats = new Stats();
-	stats.setMode( 0 );					// Muestra FPS
-	stats.domElement.style.position = 'absolute';		// Abajo izquierda
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.left = '0px';
-	document.getElementById( 'container' ).appendChild( stats.domElement );
 }
 
 function setCameras(ar) {
@@ -375,6 +379,8 @@ function loadScene() {
 
     scene.add(ground_grid);
     scene.add(sphere_grid);
+
+	console.log("Scene loaded.")
 }
 
 function generateBuildings(max_radius) {
@@ -832,7 +838,8 @@ function animateGrid(time) {
 }
 
 function startGame() {
-	
+	console.log("STARTING NEW GAME")
+
 	newHighScore = false;
 
 	console.log("Cleaning scene...")
