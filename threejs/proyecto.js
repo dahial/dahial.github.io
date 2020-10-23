@@ -813,6 +813,8 @@ function collectRing(object)
 
 	placeRing(object);
 
+	document.getElementById("info").innerHTML = "" + currentScore;
+
 }
 
 function animateRings()
