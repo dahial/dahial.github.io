@@ -101,9 +101,7 @@ function init()
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
 	window.addEventListener('keyup', onKeyUp );
-	window.onload() = function() {
-		audioContext = new audioContext();
-	};
+	window.addEventListener('load', windowLoad );
 
 	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
@@ -144,6 +142,11 @@ function init()
 
 
 
+}
+
+function windowLoad(){
+	console.log("Creating AudioContext");
+	audioContext = new AudioContext();
 }
 
 function setCameras(ar) {
