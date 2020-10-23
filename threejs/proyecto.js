@@ -240,9 +240,6 @@ function loadPrefabs() {
 		child.receiveShadow = true;
 		player.add(child);
 
-		console.log("Placing player...")
-    	placePlayer();
-
 		startGame();
 	},
 	// called while loading is progressing
@@ -840,7 +837,7 @@ function animateGrid(time) {
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
 }
 
-async function startGame() {
+function startGame() {
 	console.log("STARTING NEW GAME")
 
 	newHighScore = false;
@@ -854,8 +851,8 @@ async function startGame() {
     generateRings();
 	console.log("Structures generated.")
 	
-	//console.log("Placing player...")
-    //placePlayer();
+	console.log("Placing player...")
+    placePlayer();
 
 	updateScore(0);
 
