@@ -264,11 +264,11 @@ function loadPrefabs() {
     warehouseSideTexture.color = 0xffffff;
     //warehouseSideTexture.color = 0xffddee;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
-    warehouseSideTexture.repeat.set(10,10);
+    warehouseSideTexture.repeat.set(3,3);
     warehouseSideTexture.anisotropy = 16;
 
     warehouseSideNormal.wrapS = warehouseSideNormal.wrapT = THREE.RepeatWrapping;
-    warehouseSideNormal.repeat.set(10,10);
+    warehouseSideNormal.repeat.set(3,3);
     warehouseSideNormal.anisotropy = 16;
 
     var warehouseMaterial = new THREE.MeshPhongMaterial( { map: warehouseSideTexture, normalMap: warehouseSideNormal, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
