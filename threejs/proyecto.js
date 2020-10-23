@@ -857,7 +857,6 @@ function startGame() {
 	console.log("Structures generated.")
 	
 
-	console.log(player.position);
 	console.log("Placing player...")
     placePlayer();
 
@@ -910,7 +909,7 @@ function cleanScene() {
 
 function placePlayer() {
 
-	player.position.set(450,450,450);
+	player.position = new THREE.Vector3(450,450,450);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,450,0);
@@ -936,10 +935,10 @@ function update() {
 	// Si el usuario está activo:
 	if(gameActive){
 
-		applyPlayerMovement(); 			// Mover al usuario
-		cameraFollowPlayer();			// Seguir al usuario con la cámara
-		checkPlayerCollisions();		// Comprobar colisiones del usuario
-		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		//applyPlayerMovement(); 			// Mover al usuario
+		//cameraFollowPlayer();			// Seguir al usuario con la cámara
+		//checkPlayerCollisions();		// Comprobar colisiones del usuario
+		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
 	}
 
