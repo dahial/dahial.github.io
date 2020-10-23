@@ -203,7 +203,7 @@ function initAudio(){
 
 	audioLoader.load( '../audio/countdown.ogg', function( buffer ) {
 		countdown_audio.setBuffer( buffer );
-		countdown_audio.setLoop(true);
+		countdown_audio.setLoop(false);
 		countdown_audio.setVolume(warningVolume);
 	});
 }
@@ -879,7 +879,7 @@ function startGame() {
 	document.getElementById( 'centertext' ).innerText = "";
 
 	remainingTime = timeLimit * 1000;
-	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000)+1);
 
 	console.log("GAME START");
 	gameActive = true;
