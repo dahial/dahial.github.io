@@ -94,7 +94,7 @@ wind_audio.context = audioContext;
 boost_audio.context = audioContext;
 ring_audio.context = audioContext;
 
-var musicBaseVolume = 0.25;
+var musicBaseVolume = 0.15;
 var windBaseVolume = 0.5;
 var ringVolume = 0.5;
 
@@ -578,7 +578,10 @@ function onKeyDown(event)
 		case "ArrowRight": currentKeys[3] = true; break;
 		case "KeyQ": currentKeys[4] = true; break;
 		case "KeyE": currentKeys[5] = true; break;
-		case "Space": playerBoost = true; break;
+		case "Space": playerBoost = true; 
+		wind_audio.pitch = 1.25;
+		wind_audio.setVolume(windBaseVolume * 1.5);
+		break;
 		case "ShiftLeft": playerBrake = true; break;
 	}
 }
@@ -594,7 +597,10 @@ function onKeyUp(event)
 		case "ArrowRight": currentKeys[3] = false; break;
 		case "KeyQ": currentKeys[4] = false; break;
 		case "KeyE": currentKeys[5] = false; break;
-		case "Space": playerBoost = false; break;
+		case "Space": playerBoost = false;
+		wind_audio.pitch = 1;
+		wind_audio.setVolume(windBaseVolume);
+		break;
 		case "ShiftLeft": playerBrake = false; break;
 	}
 
