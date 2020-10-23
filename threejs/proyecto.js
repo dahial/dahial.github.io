@@ -117,9 +117,9 @@ var pause = false;
 
 // PARTICULAS
 // Gracias a Xanmia de https://codepen.io/Xanmia/ por la implementación de la explosión por particulas
-var particleSpeed = 40;
-var totalParticles = 50;
-var particleSize = 10;
+var particleSpeed = 20;
+var totalParticles = 40;
+var particleSize = 2;
 var sizeRandomness = 4000;
 var dirs = [];
 var parts = [];
