@@ -261,10 +261,15 @@ function loadPrefabs() {
     var warehouseSideTexture = loader.load('./images/proyecto/warehouse_diffuse.jpg');
     var warehouseSideNormal = loader.load('./images/proyecto/warehouse_normal.jpg');
 
-    warehouseSideTexture.color = 0xffddee;
+    warehouseSideTexture.color = 0xffffff;
+    //warehouseSideTexture.color = 0xffddee;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
     warehouseSideTexture.repeat.set(10,10);
     warehouseSideTexture.anisotropy = 16;
+
+    warehouseSideNormal.wrapS = warehouseSideNormal.wrapT = THREE.RepeatWrapping;
+    warehouseSideNormal.repeat.set(10,10);
+    warehouseSideNormal.anisotropy = 16;
 
     var warehouseMaterial = new THREE.MeshPhongMaterial( { map: warehouseSideTexture, normalMap: warehouseSideNormal, side: THREE.DoubleSide, shininess: 5, specular: 0x887788 });
 
@@ -318,6 +323,9 @@ function loadScene()
     groundTexture.anisotropy = 16;
 
     var groundNormalMap = loader.load('./images/proyecto/ground_normal.png');
+    groundNormalMap.wrapS = groundNormalMap.wrapT = THREE.RepeatWrapping;
+    groundNormalMap.repeat.set(75,75);
+    groundNormalMap.anisotropy = 16;
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
