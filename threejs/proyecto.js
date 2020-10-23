@@ -119,7 +119,8 @@ var pause = false;
 // PARTICULAS
 // Gracias a Xanmia de https://codepen.io/Xanmia/ por la implementación de la explosión por particulas
 var particleSpeed = 20;
-var totalParticles = 40;
+var ringParticleCount = 40;
+var playerParticleCount = 500;
 var particleSize = 2;
 var sizeRandomness = 4000;
 var dirs = [];
@@ -816,7 +817,7 @@ function playerCrashed(object) {
 	stopAudioLoops();
 
 	crash_audio.play();
-	instantiateExplosion(player.position, 0xaaaaaa);
+	instantiateExplosion(player.position, 0xaaaaaa, playerParticleCount);
 	updateScore(-1000);
 
 	scene.remove(player);
@@ -838,11 +839,14 @@ function collectRing(object) {
 		ring_long_audio.play();
 
 		updateScore(superring_value);
-	}
-	else
-		updateScore(ring_value);
 
-	instantiateExplosion(object.position, 0xffff00);
+		instantiateExplosion(object.position, 0xff8800, ringParticleCount);
+	}
+	else{
+		updateScore(ring_value);
+		instantiateExplosion(object.position, 0xffff00, ringParticleCount);
+	}
+
 
 	placeRing(object);
 }
@@ -964,15 +968,15 @@ function placePlayer() {
 	camera.lookAt(cameraLookTarget);
 }
 
-function instantiateExplosion(position, color){
-	parts.push(new particleExplosion(position, color));
+function instantiateExplosion(position, color, particleCount){
+	parts.push(new particleExplosion(position, color, particleCount));
 }
 
-function particleExplosion(position, color){
+function particleExplosion(position, color, particleCount){
 
 	var geometry = new THREE.Geometry();
   
-  	for (p = 0; p < totalParticles; p++) { 
+  	for (p = 0; p < particleCount; p++) { 
 	    var vertex = new THREE.Vector3();
 	    vertex.x = position.x;
 	    vertex.y = position.y;
@@ -995,7 +999,7 @@ function particleExplosion(position, color){
 
   this.update = function(){
     if (this.status == true){
-      var pCount = totalParticles;
+      var pCount = particleCount;
       while(pCount--) {
         var particle =  this.object.geometry.vertices[pCount]
         particle.y += dirs[pCount].y;
