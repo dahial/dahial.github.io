@@ -105,8 +105,8 @@ var moveVector = new THREE.Vector3(0,0,1);
 var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
 var warning_current = false;
-var playerLoaded = false;
 var gameActive = false;
+var playerLoading = new Promise();
 
 // Acciones a realizar
 init();
@@ -209,7 +209,7 @@ function setCameras(ar) {
 }
 
 function loadPrefabs() {
-	console.log("loadPrefabs()");
+	console.log("Creating prefabs...");
 
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
@@ -240,7 +240,7 @@ function loadPrefabs() {
 		child.receiveShadow = true;
 		player.add(child);
 
-		playerLoaded = true;
+		playerLoading.resolve(1);
 	},
 	// called while loading is progressing
 	function ( xhr ) {
@@ -299,10 +299,12 @@ function loadPrefabs() {
     // Super-ring
     var superringMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, side: THREE.DoubleSide, shininess: 15, specular: 0xffcc88, emissive: 0xff8800} );
     superring = new THREE.Mesh(new THREE.RingGeometry(6,10,5,1), superringMaterial);
+
+	console.log("Prefabs created.");
 }
 
 function loadScene() {
-	console.log("loadScene()");
+	console.log("Loading scene...");
 
 	// Cargador de texturas
 	const loader = new THREE.TextureLoader();
@@ -835,19 +837,21 @@ function animateGrid(time) {
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
 }
 
-function startGame() {
+async function startGame() {
 	console.log("STARTING NEW GAME")
 
 	newHighScore = false;
 
 	console.log("Cleaning scene...")
 	cleanScene();
+	console.log("Scene cleaned.")
 
 	console.log("Generating structures...")
     generateBuildings(scene_radius - 25);
     generateRings();
+	console.log("Structures generated.")
 
-    while(!playerLoaded){ }
+    await playerLoading;
 
 	console.log("Placing player...")
     placePlayer();
