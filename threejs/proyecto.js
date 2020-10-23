@@ -36,15 +36,11 @@ var highScore = 0;
 var newHighScore = false;
 
 // Parametros usuario
-var jugador = new THREE.Object3D();
+var player = new THREE.Object3D();
 var playerScale = 0.035;
-var dummy = new THREE.Object3D();
-var domby = new THREE.Object3D();
 
 console.log("Top level print");
-console.log(jugador.position);
-console.log(dummy.position);
-console.log(domby.position);
+console.log(player.position);
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
@@ -215,7 +211,7 @@ function setCameras(ar) {
 }
 
 function loadPrefabs() {
-	console.log(jugador.position);
+	console.log(player.position);
 	console.log(dummy.position);
 	console.log("Creating prefabs...");
 
@@ -247,7 +243,7 @@ function loadPrefabs() {
 		
 		child.castShadow = true;
 		child.receiveShadow = true;
-		jugador.add(child);
+		player.add(child);
 
 		startGame();
 	},
@@ -675,17 +671,17 @@ function applyPlayerMovement(delta) {
 	var moveMult = delta * playerSpeed * playerCurrentBoost;
 
 	// Apply translation and rotation
-	jugador.translateX( moveVector.x * moveMult );
-	jugador.translateY( moveVector.y * moveMult );
-	jugador.translateZ( moveVector.z * moveMult );
+	player.translateX( moveVector.x * moveMult );
+	player.translateY( moveVector.y * moveMult );
+	player.translateZ( moveVector.z * moveMult );
 
 	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rollMult, 1 ).normalize();
-	jugador.quaternion.multiply( tmpQuaternion );
+	player.quaternion.multiply( tmpQuaternion );
 
-	lastQuaternion.copy( jugador.quaternion );
-	lastPosition.copy( jugador.position );
+	lastQuaternion.copy( player.quaternion );
+	lastPosition.copy( player.position );
 	
-	jugador.getWorldDirection(playerDirection);
+	player.getWorldDirection(playerDirection);
 }
 
 function updateCameraFov() {
@@ -697,16 +693,16 @@ function updateCameraFov() {
 }
 
 function cameraFollowPlayer() {
-	cameraTarget.subVectors(jugador.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
+	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
 			camera.position.addVectors(camera.position, cameraDiff.multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
 
-		cameraLookTarget.addVectors(jugador.position, playerDirection.multiplyScalar(cameraDistance));
+		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
 		//camera.up.set(player.up.x, player.up.y, player.up.z);
-		camera.up = new THREE.Vector3(0,1,0).transformDirection(jugador.matrixWorld);
+		camera.up = new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld);
 		camera.lookAt(cameraLookTarget);
 
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
@@ -716,23 +712,23 @@ function checkPlayerCollisions() {
 	var collision;
 
 	// Comprobar colisión con edificios
-	collision = checkBuildingCollision(jugador, true, true, true);
+	collision = checkBuildingCollision(player, true, true, true);
 
 	if(collision != null)
 		playerCrashed(collision);
 
 	// Comprobar colisión con anillos
-	collision = checkRingCollision(jugador, false);
+	collision = checkRingCollision(player, false);
 
 	if(collision != null)
 		collectRing(collision);
 }
 
 function checkPlayerInBounds() {
-	if(jugador.position.y <= 0)
+	if(player.position.y <= 0)
 		playerCrashed(ground);
 
-	var curr_distance = jugador.position.distanceTo(new THREE.Vector3(0,0,0));
+	var curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
 
 	if(warning_current){
 
@@ -781,7 +777,7 @@ function playerOOB() {
 	crash_audio.play();
 	music.setVolume(musicBaseVolume * 0.5);
 
-	scene.remove(jugador);
+	scene.remove(player);
 	gameActive = false;
 
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
@@ -793,7 +789,7 @@ function playerCrashed(object) {
 	music.setVolume(musicBaseVolume * 0.5);
 	updateScore(-1000);
 
-	scene.remove(jugador);
+	scene.remove(player);
 	gameActive = false;
 
 
@@ -909,15 +905,10 @@ function cleanScene() {
 
 function placePlayer() {
 
-	console.log(jugador.position);
-	jugador.position = new THREE.Vector3(450,450,450);
-	console.log(jugador.position);
-	jugador.scale.set(playerScale, playerScale, playerScale);
-	console.log(jugador.position);
-	scene.add( jugador );
-	console.log(jugador.position);
-	jugador.lookAt(0,450,0);
-	console.log(jugador.position);
+	player.position = new THREE.Vector3(450,450,450);
+	player.scale.set(playerScale, playerScale, playerScale);
+	scene.add( player );
+	player.lookAt(0,450,0);;
 }
 
 function countdown(time) {
@@ -939,10 +930,10 @@ function update() {
 	// Si el usuario está activo:
 	if(gameActive){
 
-		applyPlayerMovement(); 			// Mover al usuario
-		cameraFollowPlayer();			// Seguir al usuario con la cámara
-		checkPlayerCollisions();		// Comprobar colisiones del usuario
-		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
+		//applyPlayerMovement(); 			// Mover al usuario
+		//cameraFollowPlayer();			// Seguir al usuario con la cámara
+		//checkPlayerCollisions();		// Comprobar colisiones del usuario
+		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
 	}
 
