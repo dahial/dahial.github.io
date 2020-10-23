@@ -856,8 +856,7 @@ function playerCrashed(object) {
 	scene.remove(player);
 	endGame();
 
-
-	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
+	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name + "\n-1000 Puntos";
 }
 
 function playerOOB() {
