@@ -81,19 +81,18 @@ var warning_current = false;
 
 // Tiempo
 var startTime;
+var remainingTime;
 
 // Audio
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
 var audioContext = music.context;
 var wind_audio = new THREE.Audio( audioListener );
-var boost_audio = new THREE.Audio( audioListener );
 var ring_audio = new THREE.Audio( audioListener );
 var crash_audio = new THREE.Audio( audioListener );
 var warning_audio = new THREE.Audio( audioListener );
 
 wind_audio.context = audioContext;
-boost_audio.context = audioContext;
 ring_audio.context = audioContext;
 crash_audio.context = audioContext;
 warning_audio.context = audioContext;
@@ -103,6 +102,7 @@ var windBaseVolume = 0.5;
 var ringVolume = 0.5;
 var crashVolume = 0.5;
 var warningVolume = 0.5;
+
 
 // Acciones a realizar
 init();
@@ -183,11 +183,6 @@ function init()
 
 
 
-}
-
-function windowLoad(){
-	console.log("Creating AudioContext");
-	audioContext = new AudioContext();
 }
 
 function setCameras(ar) {
@@ -347,7 +342,7 @@ function loadScene()
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
     ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
-    ground.name = "ground";
+    ground.name = "SUELO";
     
     ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
@@ -362,7 +357,7 @@ function loadScene()
     groundGridTexture.anisotropy = 16;
     var groundGridMaterial = new THREE.MeshLambertMaterial( { map: groundGridTexture, transparent: true, side: THREE.DoubleSide, emissive: 0x00ffff, color: 0x0, opacity: ground_grid_opacity });
     ground_grid = new THREE.Mesh(new THREE.RingGeometry(scene_radius, distance_oob, 64, 16), groundGridMaterial);
-    ground_grid.name = "ground";
+    ground_grid.name = "SUELO";
     ground_grid.rotation.x = -Math.PI / 2;
 
     // Construir la esfera límite
@@ -373,7 +368,7 @@ function loadScene()
     sphereGridTexture.anisotropy = 16;
     var sphereGridMaterial = new THREE.MeshLambertMaterial( { map: sphereGridTexture, transparent: true, side: THREE.BackSide, emissive: 0x00ffff, color: 0x0, opacity: 0.0 });
     sphere_grid = new THREE.Mesh(new THREE.SphereGeometry(distance_oob, 64, 64, 0, Math.PI*2, 0, Math.PI/2), sphereGridMaterial)
-    sphere_grid.name = "bounds";
+    sphere_grid.name = "LÍMITE";
 
     scene.add(ground_grid);
     scene.add(sphere_grid);
@@ -398,7 +393,7 @@ function generateBuildings(max_radius)
 	    	building.position.y = 125.5 * scale;
 	    	building.scale.y = scale;
 
-	    	building.name = "skyscraper";
+	    	building.name = "RASCACIELOS";
 
 	 		//Posicionar BuildingA en el radio
 	 		var r = max_radius * Math.random();
@@ -424,7 +419,7 @@ function generateBuildings(max_radius)
 	    	building.position.y = 20.5 * scale;
 	    	building.scale = new THREE.Vector3(scale,scale,scale);
 
-	    	building.name = "warehouse";
+	    	building.name = "ALMACÉN";
 
 	 		//Posicionar BuildingB en el radio
 	 		var r = max_radius * Math.random() * 0.8;
@@ -449,7 +444,7 @@ function generateRings()
 	for(i=0; i < count_rings; i++){
 
     	var ring_instance = ring.clone();
-    	ring_instance.name = "ring";
+    	ring_instance.name = "ANILLO";
 
     	placeRing(ring_instance);
 
@@ -774,35 +769,51 @@ function checkPlayerInBounds()
 	}
 }
 
+function stopAudioLoops()
+{
+	var wind_audio.stop();
+	var warning_audio.stop();
+}
+
 function changeWarning(){
 	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
 		warning_audio.play();
-		document.getElementById("warning").style.display = "block";
+		document.getElementById("warning").innerText = "¡Regresa a la zona de vuelo!";
 	}
 	else
 	{
 		sphere_grid.material.opacity = 0;
 		console.log("Regresando al terreno de juego");
 		warning_audio.stop();
-		document.getElementById("warning").style.display = "block";
+		document.getElementById("warning").innerText = "";
 	}
 
 }
 
 function playerOOB(){
-	console.log("Out of bounds");
+
+	stopAudioLoops();
 	crash_audio.play();
+	music.setVolume(musicBaseVolume * 0.5);
+
 	scene.remove(player);
 	playerActive = false;
+
+	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
 
 function playerCrashed(object)
 {
-	console.log("Crashed with " + object.name);
+	stopAudioLoops();
 	crash_audio.play();
+	music.setVolume(musicBaseVolume * 0.5);
+
 	scene.remove(player);
 	playerActive = false;
+
+
+	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
 }
 
 function collectRing(object)
