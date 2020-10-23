@@ -85,6 +85,8 @@ var startTime;
 // Audio
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
+var wind = new THREE.Audio( audioListener );
+var boost = new THREE.Audio( audioListener );
 
 // Acciones a realizar
 init();
@@ -120,7 +122,7 @@ function init()
 	setCameras(ar);
 	camera.add(audioListener); // Capturar el audio de la escena
 
-	// Inicializar música
+	// Inicializar audio
 	var audioLoader = new THREE.AudioLoader();
 	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
 		music.setBuffer( buffer );
@@ -128,6 +130,7 @@ function init()
 		music.setVolume(0.5);
 		music.play();
 	});
+
 
 	// STATS --> stats.update() en update()
 	stats = new Stats();
@@ -232,7 +235,7 @@ function loadPrefabs() {
     building_A.receiveShadow = true;
 
     // Building B
-    var warehouseSideTexture = loader.load('./images/proyecto/pisometal_1024x1024.png');
+    var warehouseSideTexture = loader.load('./images/proyecto/pisometal_1024x1024.jpg');
 
     warehouseSideTexture.color = 0xffddee;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.MIrroredRepeatWrapping;
