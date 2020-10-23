@@ -57,6 +57,7 @@ var playerRollAcc = 3 / 100000;
 var playerMaxRoll = 2 / 1000;
 var playerCurrentRoll = [0, 0]; // [RollLeft, RollRight]
 var currentKeys = [false, false, false, false, false, false]; // [PitchUp, PitchDown, YawLeft, YawRight, RollLeft, RollRight]
+var inverted = false;
 
 // Parametros camara
 var cameraTarget = new THREE.Vector3();
@@ -610,6 +611,7 @@ function onKeyDown(event) {
 					}
 					break;
 		case "Escape": if(pause) togglePause(); break;
+		case "KeyI": inverted = !inverted; break;
 	}
 }
 
@@ -633,7 +635,10 @@ function onKeyUp(event) {
 
 function updatePlayerRotation() {
 
-	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	if(inverted)
+		playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
+	else
+		playerCurrentRotation.x = (currentKeys[1] - currentKeys[0]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
 	playerCurrentRotation.z = 1;
 }
