@@ -120,7 +120,7 @@ var pause = false;
 // Gracias a Xanmia de https://codepen.io/Xanmia/ por la implementación de la explosión por particulas
 var particleSpeed = 20;
 var ringParticleCount = 40;
-var playerParticleCount = 500;
+var playerParticleCount = 50; // x3
 var particleSize = 2;
 var sizeRandomness = 4000;
 var dirs = [];
