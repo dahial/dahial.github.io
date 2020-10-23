@@ -73,7 +73,7 @@ var ringRotation = 15/1000;
 
 // Tiempo
 var antes = Date.now();
-var startTime = Dare.now();
+var startTime = Date.now();
 var deltaT;
 var timeLimit = 120;
 var remainingTime;
