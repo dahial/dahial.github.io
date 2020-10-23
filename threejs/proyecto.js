@@ -90,16 +90,19 @@ var wind_audio = new THREE.Audio( audioListener );
 var boost_audio = new THREE.Audio( audioListener );
 var ring_audio = new THREE.Audio( audioListener );
 var crash_audio = new THREE.Audio( audioListener );
+var warning_audio = new THREE.Audio( audioListener );
 
 wind_audio.context = audioContext;
 boost_audio.context = audioContext;
 ring_audio.context = audioContext;
 crash_audio.context = audioContext;
+warning_audio.context = audioContext;
 
 var musicBaseVolume = 0.15;
 var windBaseVolume = 0.5;
 var ringVolume = 0.5;
 var crashVolume = 0.5;
+var warningVolume = 0.5;
 
 // Acciones a realizar
 init();
@@ -161,6 +164,12 @@ function init()
 		crash_audio.setBuffer( buffer );
 		crash_audio.setLoop(false);
 		crash_audio.setVolume(crashVolume);
+	});
+
+	audioLoader.load( '../audio/warning.ogg', function( buffer ) {
+		warning_audio.setBuffer( buffer );
+		warning_audio.setLoop(true);
+		warning_audio.setVolume(warningVolume);
 	});
 
 
@@ -766,18 +775,20 @@ function checkPlayerInBounds()
 }
 
 function changeWarning(){
-	if(warning_current)
+	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
+		warning_audio.play();
+	}
 	else
 	{
 		sphere_grid.material.opacity = 0;
 		console.log("Regresando al terreno de juego");
+		warning_audio.stop();
 	}
 
 }
 
 function playerOOB(){
-
 	console.log("Out of bounds");
 	crash_audio.play();
 	scene.remove(player);
