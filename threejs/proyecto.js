@@ -675,17 +675,17 @@ function applyPlayerMovement(delta) {
 	var moveMult = delta * playerSpeed * playerCurrentBoost;
 
 	// Apply translation and rotation
-	player.translateX( moveVector.x * moveMult );
-	player.translateY( moveVector.y * moveMult );
-	player.translateZ( moveVector.z * moveMult );
+	jugador.translateX( moveVector.x * moveMult );
+	jugador.translateY( moveVector.y * moveMult );
+	jugador.translateZ( moveVector.z * moveMult );
 
 	tmpQuaternion.set( playerCurrentRotation.x * rotMult, playerCurrentRotation.y * rotMult, playerCurrentRotation.z * rollMult, 1 ).normalize();
-	player.quaternion.multiply( tmpQuaternion );
+	jugador.quaternion.multiply( tmpQuaternion );
 
-	lastQuaternion.copy( player.quaternion );
-	lastPosition.copy( player.position );
+	lastQuaternion.copy( jugador.quaternion );
+	lastPosition.copy( jugador.position );
 	
-	player.getWorldDirection(playerDirection);
+	jugador.getWorldDirection(playerDirection);
 }
 
 function updateCameraFov() {
@@ -697,16 +697,16 @@ function updateCameraFov() {
 }
 
 function cameraFollowPlayer() {
-	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
+	cameraTarget.subVectors(jugador.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
 			camera.position = cameraTarget; // Si cerca del objetivo, saltar al objetivo
 		else
 			camera.position.addVectors(camera.position, cameraDiff.multiplyScalar(cameraSpeed)); // Si lejos del objetivo, avanzar hacia el objetivo
 
-		cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
+		cameraLookTarget.addVectors(jugador.position, playerDirection.multiplyScalar(cameraDistance));
 		//camera.up.set(player.up.x, player.up.y, player.up.z);
-		camera.up = new THREE.Vector3(0,1,0).transformDirection(player.matrixWorld);
+		camera.up = new THREE.Vector3(0,1,0).transformDirection(jugador.matrixWorld);
 		camera.lookAt(cameraLookTarget);
 
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
@@ -716,23 +716,23 @@ function checkPlayerCollisions() {
 	var collision;
 
 	// Comprobar colisión con edificios
-	collision = checkBuildingCollision(player, true, true, true);
+	collision = checkBuildingCollision(jugador, true, true, true);
 
 	if(collision != null)
 		playerCrashed(collision);
 
 	// Comprobar colisión con anillos
-	collision = checkRingCollision(player, false);
+	collision = checkRingCollision(jugador, false);
 
 	if(collision != null)
 		collectRing(collision);
 }
 
 function checkPlayerInBounds() {
-	if(player.position.y <= 0)
+	if(jugador.position.y <= 0)
 		playerCrashed(ground);
 
-	var curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
+	var curr_distance = jugador.position.distanceTo(new THREE.Vector3(0,0,0));
 
 	if(warning_current){
 
@@ -781,7 +781,7 @@ function playerOOB() {
 	crash_audio.play();
 	music.setVolume(musicBaseVolume * 0.5);
 
-	scene.remove(player);
+	scene.remove(jugador);
 	gameActive = false;
 
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
@@ -793,7 +793,7 @@ function playerCrashed(object) {
 	music.setVolume(musicBaseVolume * 0.5);
 	updateScore(-1000);
 
-	scene.remove(player);
+	scene.remove(jugador);
 	gameActive = false;
 
 
@@ -909,15 +909,15 @@ function cleanScene() {
 
 function placePlayer() {
 
-	console.log(player.position);
-	player.position = new THREE.Vector3(450,450,450);
-	console.log(player.position);
-	player.scale.set(playerScale, playerScale, playerScale);
-	console.log(player.position);
-	scene.add( player );
-	console.log(player.position);
-	player.lookAt(0,450,0);
-	console.log(player.position);
+	console.log(jugador.position);
+	jugador.position = new THREE.Vector3(450,450,450);
+	console.log(jugador.position);
+	jugador.scale.set(playerScale, playerScale, playerScale);
+	console.log(jugador.position);
+	scene.add( jugador );
+	console.log(jugador.position);
+	jugador.lookAt(0,450,0);
+	console.log(jugador.position);
 }
 
 function countdown(time) {
