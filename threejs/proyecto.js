@@ -115,6 +115,15 @@ var gameActive = false;
 var restart = false;
 var pause = false;
 
+// PARTICULAS
+// Gracias a Xanmia de https://codepen.io/Xanmia/ por la implementación de la explosión por particulas
+var particleSpeed = 80;
+var totalParticles = 1000;
+var particleSize = 10;
+var sizeRandomness = 4000;
+var dirs = [];
+var parts = [];
+
 // Acciones a realizar
 init();
 loadPrefabs();
@@ -791,7 +800,6 @@ function toggleWarning() {
 function playerOOB() {
 
 	stopAudioLoops();
-	crash_audio.play();
 
 	scene.remove(player);
 	endGame();
@@ -801,7 +809,9 @@ function playerOOB() {
 
 function playerCrashed(object) {
 	stopAudioLoops();
+
 	crash_audio.play();
+	instantiateExplosion(player.position, 0xaaaaaa);
 	updateScore(-1000);
 
 	scene.remove(player);
@@ -826,6 +836,8 @@ function collectRing(object) {
 	}
 	else
 		updateScore(ring_value);
+
+	instantiateExplosion(object.position, 0xffff00);
 
 	placeRing(object);
 }
@@ -947,9 +959,52 @@ function placePlayer() {
 	camera.lookAt(cameraLookTarget);
 }
 
-function particleEffect(position, color){
+function instantiateExplosion(position, color){
+	parts.push(new ExplodeAnimation(position, color));
+}
 
+function particleExplosion(position, color){
 
+	var geometry = new THREE.Geometry();
+  
+  	for (p = 0; p < totalParticles; p++) { 
+	    var vertex = new THREE.Vector3();
+	    vertex.x = position.x;
+	    vertex.y = position.y;
+	    vertex.z = position.z;
+	  
+	    geometry.vertices.push( vertex );
+	    dirs.push({x:(Math.random() * particleSpeed)-(particleSpeed/2),y:(Math.random() * particleSpeed)-(particleSpeed/2),z:(Math.random() * particleSpeed)-(particleSpeed/2)});
+	  }
+  var material = new THREE.ParticleBasicMaterial( { size: particleSize,  color: color});
+  var particles = new THREE.ParticleSystem( geometry, material );
+  
+  this.object = particles;
+  this.status = true;
+  
+  this.xDir = (Math.random() * movementSpeed)-(movementSpeed/2);
+  this.yDir = (Math.random() * movementSpeed)-(movementSpeed/2);
+  this.zDir = (Math.random() * movementSpeed)-(movementSpeed/2);
+  
+  scene.add( this.object ); 
+
+  this.update = function(){
+    if (this.status == true){
+      var pCount = totalParticles;
+      while(pCount--) {
+        var particle =  this.object.geometry.vertices[pCount]
+        particle.y += dirs[pCount].y;
+        particle.x += dirs[pCount].x;
+        particle.z += dirs[pCount].z;
+      }
+      this.object.geometry.verticesNeedUpdate = true;
+    }
+  }
+}
+
+function updateParticles(){
+	var pCount = parts.length;
+          while(pCount--) { parts[pCount].update(); }
 }
 
 function endGame(){
@@ -992,11 +1047,13 @@ function togglePause() {
 	currentKeys = [false, false, false, false, false, false];
 	if(gameActive){
 		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \"Esc\" para reanudar";
-	music.setVolume(musicBaseVolume * 0.5);
+		music.setVolume(musicBaseVolume * 0.5);
+		wind_audio.setVolume(windBaseVolume * 0);
 	}
 	else{
 		document.getElementById("centertext").innerHTML = "";
 		music.setVolume(musicBaseVolume);
+		wind_audio.setVolume(windBaseVolume);
 	}
 
 	gameActive = !gameActive;
@@ -1019,8 +1076,12 @@ function update() {
 		countdown(deltaT);
 	}
 
-	animateRings();
-	animateGrid(ahora - startTime);
+	if(gameActive || !pause){
+		animateRings();
+		animateGrid(ahora - startTime);
+	}
+
+	updateParticles();
 
 	// Actualiza los FPS
 	stats.update();
