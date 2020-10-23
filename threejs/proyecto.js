@@ -750,7 +750,9 @@ function checkPlayerInBounds() {
 }
 
 function stopAudioLoops() {
-	wind_audio.stop();
+	if(wind_audio.isPlaying)
+		wind_audio.stop();
+	if(warning_audio.isPlaying)
 	warning_audio.stop();
 }
 
