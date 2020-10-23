@@ -83,6 +83,7 @@ var warning_current = false;
 var startTime;
 
 // Audio
+var audioContext;
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
 
@@ -95,6 +96,14 @@ render();
 function init()
 {
 	console.log("init()");
+
+	// Callbacks
+	window.addEventListener('resize', updateAspectRatio );
+	window.addEventListener('keydown', onKeyDown );
+	window.addEventListener('keyup', onKeyUp );
+	window.onLoad(){
+		audioContext = new audioContext();
+	}
 
 	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
@@ -121,7 +130,7 @@ function init()
 		music.setBuffer( buffer );
 		music.setLoop(true);
 		music.setVolume(0.5);
-		music.context.resume();
+		music.context = audioContext;
 		music.play();
 	});
 
@@ -133,10 +142,7 @@ function init()
 	stats.domElement.style.left = '0px';
 	document.getElementById( 'container' ).appendChild( stats.domElement );
 
-	// Callbacks
-	window.addEventListener('resize', updateAspectRatio );
-	window.addEventListener('keydown', onKeyDown );
-	window.addEventListener('keyup', onKeyUp );
+
 
 }
 
@@ -523,6 +529,9 @@ playerBrake = Shift
 */
 function onKeyDown(event)
 {
+	if(audioContext.state !== 'running')
+		audioContext.resume();
+
 	var keyCode = event.code;
 
 	switch(keyCode){
