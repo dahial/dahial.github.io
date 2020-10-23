@@ -36,13 +36,15 @@ var highScore = 0;
 var newHighScore = false;
 
 // Parametros usuario
-var player = new THREE.Object3D();
+var palayer = new THREE.Object3D();
 var playerScale = 0.035;
 var dummy = new THREE.Object3D();
+var domby = new THREE.Object3D();
 
 console.log("Top level print");
-console.log(player.position);
+console.log(palayer.position);
 console.log(dummy.position);
+console.log(domby.position);
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
