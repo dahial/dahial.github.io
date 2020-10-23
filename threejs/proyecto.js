@@ -578,7 +578,7 @@ function onKeyDown(event)
 		case "KeyQ": currentKeys[4] = true; break;
 		case "KeyE": currentKeys[5] = true; break;
 		case "Space": playerBoost = true; 
-		wind_audio.pitch = 1.25;
+		wind_audio.setPlaybackRate(1.25);
 		wind_audio.setVolume(windBaseVolume * 1.5);
 		break;
 		case "ShiftLeft": playerBrake = true; break;
@@ -597,7 +597,7 @@ function onKeyUp(event)
 		case "KeyQ": currentKeys[4] = false; break;
 		case "KeyE": currentKeys[5] = false; break;
 		case "Space": playerBoost = false;
-		wind_audio.pitch = 1;
+		wind_audio.setPlaybackRate(1);
 		wind_audio.setVolume(windBaseVolume);
 		break;
 		case "ShiftLeft": playerBrake = false; break;
