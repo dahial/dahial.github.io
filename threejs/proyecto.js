@@ -38,6 +38,7 @@ var newHighScore = false;
 // Parametros usuario
 var player = new THREE.Object3D();
 var playerScale = 0.035;
+var dummy = new THREE.Object3D();
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
@@ -209,6 +210,7 @@ function setCameras(ar) {
 
 function loadPrefabs() {
 	console.log(player.position);
+	console.log(dummy.position);
 	console.log("Creating prefabs...");
 
 	const loader = new THREE.TextureLoader();
