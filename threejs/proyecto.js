@@ -261,8 +261,7 @@ function loadPrefabs() {
     var warehouseSideTexture = loader.load('./images/proyecto/warehouse_diffuse.jpg');
     var warehouseSideNormal = loader.load('./images/proyecto/warehouse_normal.jpg');
 
-    warehouseSideTexture.color = 0xffffff;
-    //warehouseSideTexture.color = 0xffddee;
+    warehouseSideTexture.color = 0xaaaacc;
     warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
     warehouseSideTexture.repeat.set(3,3);
     warehouseSideTexture.anisotropy = 16;
