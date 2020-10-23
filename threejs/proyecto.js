@@ -10,7 +10,7 @@ var fogFar = 500;
 
 // Parametros escena
 var scene_radius = 500;
-var count_buildingA = 45;
+var count_buildingA = 50;
 var count_buildingB = 20
 var count_rings = 20;
 var ring_radius = scene_radius - 25;
@@ -113,8 +113,7 @@ loadPrefabs();
 loadScene();
 render();
 
-function init()
-{
+function init() {
 	console.log("init()");
 
 	// Callbacks
@@ -189,9 +188,6 @@ function init()
 	stats.domElement.style.bottom = '0px';
 	stats.domElement.style.left = '0px';
 	document.getElementById( 'container' ).appendChild( stats.domElement );
-
-
-
 }
 
 function setCameras(ar) {
@@ -305,11 +301,9 @@ function loadPrefabs() {
     // Super-ring
     var superringMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, side: THREE.DoubleSide, shininess: 15, specular: 0xffcc88, emissive: 0xff8800} );
     superring = new THREE.Mesh(new THREE.RingGeometry(6,10,5,1), superringMaterial);
-
 }
 
-function loadScene()
-{
+function loadScene() {
 	console.log("loadScene()");
 
 	// Cargador de texturas
@@ -394,15 +388,14 @@ function loadScene()
     generateRings();
 }
 
-function generateBuildings(max_radius)
-{
+function generateBuildings(max_radius) {
 	// BuildingA
 	for(j=0; j < count_buildingA; j++){
 
     	var building = building_A.clone();
 
     	do{
-	    	var scale = 0.6 + Math.random()*0.4;
+	    	var scale = 0.3 + Math.random()*0.7;
 	    	building.position.y = 125.5 * scale;
 	    	building.scale.y = scale;
 
@@ -448,7 +441,6 @@ function generateBuildings(max_radius)
     	scene.add(building);
 
 	}
-
 }
 
 function generateRings()
@@ -828,9 +820,13 @@ function playerCrashed(object)
 
 function collectRing(object)
 {
+	if(ring_audio.isPlaying)
+		ring_audio.stop();
 	ring_audio.play();
 
 	if(object.name == "SUPERANILLO"){
+		if(ring_long_audio.isPlaying)
+			ring_long_audio.stop();
 		ring_long_audio.play();
 		currentScore += superring_value;
 	}
