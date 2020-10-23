@@ -960,7 +960,7 @@ function placePlayer() {
 }
 
 function instantiateExplosion(position, color){
-	parts.push(new ExplodeAnimation(position, color));
+	parts.push(new particleExplosion(position, color));
 }
 
 function particleExplosion(position, color){
