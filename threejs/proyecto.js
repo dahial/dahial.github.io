@@ -443,8 +443,7 @@ function generateBuildings(max_radius) {
 	}
 }
 
-function generateRings()
-{
+function generateRings() {
 	// Rings
 	for(i=0; i < count_rings; i++){
 
@@ -463,7 +462,6 @@ function generateRings()
 	placeRing(superring);
 	list_rings.push(superring);
 	scene.add(superring);
-
 }
 
 function placeRing(ring){
@@ -480,12 +478,10 @@ function placeRing(ring){
 	}
 	while((checkBuildingCollision(ring, true, true, true, 5) != null) || (checkRingCollision(ring, false) != null)); // Comprobar no-colision
 	//while(false); // Comprobar no-colision
-
 }
 
 // Indica con qué edificio está colisionando este objeto
-function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1)
-{
+function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
 		// Building A
@@ -540,8 +536,7 @@ function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistanc
 }
 
 // Indica con qué anillo está colisionando este objeto
-function checkRingCollision(object, useCenter, centerDistance = 1)
-{
+function checkRingCollision(object, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
 	    // Rings
@@ -570,15 +565,13 @@ function checkRingCollision(object, useCenter, centerDistance = 1)
 	return null;
 }
 
-function updateAspectRatio()
-{
+function updateAspectRatio() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	camera.aspect = window.innerWidth/window.innerHeight;
 	camera.updateProjectionMatrix();
 }
 
-function onKeyDown(event)
-{
+function onKeyDown(event) {
 	// Inicializar contexto de audio al interactuar con la ventana
 	if(music.context.state !== 'running')
 		music.context.resume();
@@ -600,8 +593,7 @@ function onKeyDown(event)
 	}
 }
 
-function onKeyUp(event)
-{
+function onKeyUp(event) {
 	var keyCode = event.code;
 
 	switch(keyCode){
@@ -617,20 +609,16 @@ function onKeyUp(event)
 		break;
 		case "ShiftLeft": playerBrake = false; break;
 	}
-
 }
 
-function updatePlayerRotation()
-{
+function updatePlayerRotation() {
 
 	playerCurrentRotation.x = (currentKeys[0] - currentKeys[1]) * playerRotationSpeed;
 	playerCurrentRotation.y = (currentKeys[2] - currentKeys[3]) * playerRotationSpeed;
 	playerCurrentRotation.z = 1;
-
 }
 
-function applyPlayerMovement(delta)
-{
+function applyPlayerMovement(delta) {
 	updatePlayerRotation();
 
 	var lastQuaternion = new THREE.Quaternion();
@@ -696,11 +684,9 @@ function applyPlayerMovement(delta)
 	lastPosition.copy( player.position );
 	
 	player.getWorldDirection(playerDirection);
-
 }
 
-function updateCameraFov()
-{
+function updateCameraFov() {
 	if((playerCurrentBoost != playerPreviousBoost) && playerCurrentBoost >= 1){
 		var newFov = cameraFov + ((playerCurrentBoost - 1) / (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
 		camera.fov = newFov;
@@ -708,8 +694,7 @@ function updateCameraFov()
 	}
 }
 
-function cameraFollowPlayer()
-{
+function cameraFollowPlayer() {
 	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
 		cameraDiff.subVectors(cameraTarget, camera.position);
 		if(cameraDiff.length() < 0.25)
@@ -725,8 +710,7 @@ function cameraFollowPlayer()
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
 }
 
-function checkPlayerCollisions()
-{
+function checkPlayerCollisions() {
 	var collision;
 
 	// Comprobar colisión con edificios
@@ -740,11 +724,9 @@ function checkPlayerCollisions()
 
 	if(collision != null)
 		collectRing(collision);
-
 }
 
-function checkPlayerInBounds()
-{
+function checkPlayerInBounds() {
 	if(player.position.y <= 0)
 		playerCrashed(ground);
 
@@ -771,13 +753,12 @@ function checkPlayerInBounds()
 	}
 }
 
-function stopAudioLoops()
-{
+function stopAudioLoops() {
 	wind_audio.stop();
 	warning_audio.stop();
 }
 
-function toggleWarning(){
+function toggleWarning() {
 	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
 		warning_audio.play();
@@ -790,10 +771,9 @@ function toggleWarning(){
 		warning_audio.stop();
 		document.getElementById("warning").innerText = "";
 	}
-
 }
 
-function playerOOB(){
+function playerOOB() {
 
 	stopAudioLoops();
 	crash_audio.play();
@@ -805,11 +785,11 @@ function playerOOB(){
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
 
-function playerCrashed(object)
-{
+function playerCrashed(object) {
 	stopAudioLoops();
 	crash_audio.play();
 	music.setVolume(musicBaseVolume * 0.5);
+	updateScore(-1000);
 
 	scene.remove(player);
 	playerActive = false;
@@ -818,29 +798,33 @@ function playerCrashed(object)
 	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
 }
 
-function collectRing(object)
-{
+function collectRing(object) {
 	if(ring_audio.isPlaying)
 		ring_audio.stop();
 	ring_audio.play();
 
 	if(object.name == "SUPERANILLO"){
+
 		if(ring_long_audio.isPlaying)
 			ring_long_audio.stop();
 		ring_long_audio.play();
-		currentScore += superring_value;
+
+		updateScore(superring_value);
 	}
 	else
-		currentScore += ring_value;
+		updateScore(ring_value);
 
 	maxScore = Math.max(currentScore, maxScore);
-	document.getElementById("score").innerHTML = "" + currentScore;
 
 	placeRing(object);
 }
 
-function animateRings()
-{
+function updateScore(delta) {
+	currentScore = Math.max(currentScore + delta, 0);
+	document.getElementById("score").innerHTML = "" + currentScore;
+}
+
+function animateRings() {
 	// Rotar anillos
 	for(i=0; i < list_rings.length; i++){
 		list_rings[i].rotation.x += ringRotation * 0.8;
@@ -849,14 +833,12 @@ function animateRings()
 	}
 }
 
-function animateGrid(time)
-{
+function animateGrid(time) {
 	grid_master_opacity = Math.abs(Math.sin(time / 1000));
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
 }
 
-function update()
-{
+function update() {
 	// Actualizar antes/ahora ------------
 	var ahora = Date.now();							// Hora actual
 	var deltaT = (ahora - antes);					// Tiempo transcurrido en ms
