@@ -291,6 +291,7 @@ function startGame() {
 
 	currentScore = 0;
 	newHighScore = false;
+	var playerCurrentBoost = 1;	
 
 	console.log("Cleaning scene...")
 	cleanScene();
