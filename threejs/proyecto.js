@@ -40,6 +40,10 @@ var player = new THREE.Object3D();
 var playerScale = 0.035;
 var dummy = new THREE.Object3D();
 
+console.log("Top level print");
+console.log(player.position);
+console.log(dummy.position);
+
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
 var playerCurrentBoost = 1;
