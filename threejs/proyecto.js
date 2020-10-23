@@ -929,7 +929,14 @@ function placePlayer() {
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,450,0);
-	camera.lookAt(player.position);
+
+	player.getWorldDirection(playerDirection);
+
+	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1)));
+	cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
+
+	camera.position = cameraTarget;
+	camera.lookAt(cameraLookTarget);
 }
 
 function particleEffect(position, color){
