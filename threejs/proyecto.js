@@ -771,8 +771,8 @@ function checkPlayerInBounds()
 
 function stopAudioLoops()
 {
-	var wind_audio.stop();
-	var warning_audio.stop();
+	wind_audio.stop();
+	warning_audio.stop();
 }
 
 function changeWarning(){
