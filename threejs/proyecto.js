@@ -940,6 +940,7 @@ function particleEffect(position, color){
 
 function endGame(){
 	gameActive = false;
+	currentKeys = [false, false, false, false, false, false];
 
 	if(currentScore > highScore){
 		highScore = currentScore;
@@ -970,8 +971,11 @@ function countdown(time) {
 }
 
 function togglePause() {
-	if(gameActive)
+	currentKeys = [false, false, false, false, false, false];
+	if(gameActive){
 		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \\\"Esc\\\" para reanudar";
+		if(audio)
+	}
 	else
 		document.getElementById("centertext").innerHTML = "";
 
