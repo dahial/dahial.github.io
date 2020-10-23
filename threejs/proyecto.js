@@ -36,13 +36,13 @@ var highScore = 0;
 var newHighScore = false;
 
 // Parametros usuario
-var palayer = new THREE.Object3D();
+var player = new THREE.Object3D();
 var playerScale = 0.035;
 var dummy = new THREE.Object3D();
 var domby = new THREE.Object3D();
 
 console.log("Top level print");
-console.log(palayer.position);
+console.log(player.position);
 console.log(dummy.position);
 console.log(domby.position);
 
