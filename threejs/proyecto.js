@@ -101,9 +101,9 @@ function init()
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
 	window.addEventListener('keyup', onKeyUp );
-	window.onLoad() = function() {
+	window.onload() = function() {
 		audioContext = new audioContext();
-	}
+	};
 
 	// Inicializar el renderer
 	renderer = new THREE.WebGLRenderer({antialias: true});
