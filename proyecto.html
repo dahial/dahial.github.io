@@ -28,12 +28,30 @@
 			pointer-events: none;
 			z-index: 1; /* TODO Solve this in HTML */
 		}
+		#warning {
+			color:#ff0000;
+			text-shadow: 2px 2px 5px #000000;
+			font-size:600%;
+			font-weight:bold;
+			position: absolute;
+			bottom: 50%;
+			right: 0px;
+			width: 100%;
+			box-sizing: border-box;
+			text-align: right;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			pointer-events: none;
+			z-index: 1; /* TODO Solve this in HTML */
+		}
 	</style>
 </head>
 
 <body>
-	<div id="info">0<br/>
-	</div>
+	<div id="info">0</div>
+	<div id="warning">Regresa a la zona de vuelo!</div>
 	<div id="container"></div>
 	
 	<!--Bibliotecas de utilidad-->
