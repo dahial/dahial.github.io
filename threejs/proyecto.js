@@ -929,6 +929,8 @@ function update() {
 		checkPlayerCollisions();		// Comprobar colisiones del usuario
 		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
 		countdown(deltaT);
+
+		console.log(player.position);
 	}
 
 	animateRings();
