@@ -896,11 +896,11 @@ function cleanScene() {
 }
 
 function placePlayer() {
-	player.position.set(450,450,450);
-	scene.add( player );
-	player.lookAt(0,500,0);
+	//player.position.set(450,450,450);
+	//scene.add( player );
+	//player.lookAt(0,500,0);
 
-	gameActive = true;
+	//gameActive = true;
 }
 
 function countdown(time) {
@@ -947,7 +947,6 @@ function render()
 	renderer.clear();
 
 	// Renderizar la cámara perspectiva en la totalidad del canvas
-	renderer.setViewport(0,0,
-						 window.innerWidth,window.innerHeight);
+	renderer.setViewport(0,0,window.innerWidth,window.innerHeight);
 	renderer.render( scene, camera );
 }
