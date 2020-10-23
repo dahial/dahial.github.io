@@ -303,8 +303,8 @@ function loadPrefabs() {
     ring = new THREE.Mesh(new THREE.RingGeometry(5,10,3,1), ringMaterial);
 
     // Super-ring
-    var superringMaterial = new THREE.MeshPhongMaterial( { color: 0xffaa00, side: THREE.DoubleSide, shininess: 15, specular: 0xffcc88, emissive: 0xffaa00} );
-    superring = new THREE.Mesh(new THREE.RingGeometry(5,10,5,1), superringMaterial);
+    var superringMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, side: THREE.DoubleSide, shininess: 15, specular: 0xffcc88, emissive: 0xff8800} );
+    superring = new THREE.Mesh(new THREE.RingGeometry(6,10,5,1), superringMaterial);
 
 }
 
@@ -828,13 +828,10 @@ function playerCrashed(object)
 
 function collectRing(object)
 {
-	//ring_audio.stop();
 	ring_audio.play();
 
 	if(object.name == "SUPERANILLO"){
-		//ring_long_audio.stop();
 		ring_long_audio.play();
-
 		currentScore += superring_value;
 	}
 	else
@@ -860,7 +857,6 @@ function animateGrid(time)
 {
 	grid_master_opacity = Math.abs(Math.sin(time / 1000));
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
-
 }
 
 function update()
