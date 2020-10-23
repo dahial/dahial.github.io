@@ -237,6 +237,8 @@ function loadPrefabs() {
 		player.add(child);
 
 		playerLoaded = true;
+
+    	placePlayer();
 	},
 	// called while loading is progressing
 	function ( xhr ) {
@@ -838,9 +840,9 @@ function startGame() {
     generateBuildings(scene_radius - 25);
     generateRings();
 
-    while(!playerLoaded){ yield null; }
+    //while(!playerLoaded){ yield null; }
 
-    placePlayer();
+    //placePlayer();
 
 	updateScore(0);
 
