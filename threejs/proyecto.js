@@ -114,6 +114,7 @@ var EPS = 0.000001;
 var warning_current = false;
 var gameActive = false;
 var restart = false;
+var pause = false;
 
 // Acciones a realizar
 init();
@@ -601,6 +602,7 @@ function onKeyDown(event) {
 						startGame();
 					}
 					break;
+		case "Escape": if(pause) togglePause(); break;
 	}
 }
 
@@ -885,6 +887,8 @@ function startGame() {
 
 	console.log("GAME START");
 	gameActive = true;
+	restart = false;
+	pause = true;
 }
 
 function cleanScene() {
@@ -948,6 +952,7 @@ function endGame(){
 	document.getElementById( 'time' ).innerText = "";
 
 	restart = true;
+	pause = false;
 }
 
 function countdown(time) {
@@ -962,6 +967,15 @@ function countdown(time) {
 	if(remainingTime <= 0)
 		endGame();
 
+}
+
+function togglePause() {
+	if(gameActive)
+		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \\\"Esc\\\" para reanudar";
+	else
+		document.getElementById("centertext").innerHTML = "";
+
+	gameActive = !gameActive;
 }
 
 function update() {
