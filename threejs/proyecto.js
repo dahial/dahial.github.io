@@ -270,7 +270,7 @@ function loadPrefabs() {
     warehouseSideNormal.repeat.set(3,3);
     warehouseSideNormal.anisotropy = 16;
 
-    var warehouseMaterial = new THREE.MeshPhongMaterial( { map: warehouseSideTexture, normalMap: warehouseSideNormal, side: THREE.DoubleSide, shininess: 5, specular: 0x887788, emissive: 0x4444aa });
+    var warehouseMaterial = new THREE.MeshPhongMaterial( { map: warehouseSideTexture, normalMap: warehouseSideNormal, envMap: skyboxTexture, reflectivity: 0.35, side: THREE.DoubleSide, shininess: 15, specular: 0x4444aa });
 
     building_B = new THREE.Mesh(new THREE.BoxGeometry(100, 40, 60), warehouseMaterial);
     building_B.castShadow = true;
