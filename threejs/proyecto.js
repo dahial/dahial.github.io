@@ -935,7 +935,7 @@ function placePlayer() {
 	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1)));
 	cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
 
-	camera.position = cameraTarget;
+	camera.position.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
 	camera.lookAt(cameraLookTarget);
 }
 
