@@ -101,7 +101,7 @@ function init()
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
 	window.addEventListener('keyup', onKeyUp );
-	window.onLoad(){
+	window.onLoad() = function() {
 		audioContext = new audioContext();
 	}
 
@@ -529,6 +529,7 @@ playerBrake = Shift
 */
 function onKeyDown(event)
 {
+	// Inicializar contexto de audio al interactuar con la ventana
 	if(audioContext.state !== 'running')
 		audioContext.resume();
 
