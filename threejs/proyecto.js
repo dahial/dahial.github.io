@@ -230,6 +230,7 @@ function loadPrefabs() {
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
+		console.log("Player mesh loaded.")
 
 		child = gltf.scene.children[0];
 		while (!child.isMesh)
@@ -238,6 +239,9 @@ function loadPrefabs() {
 		child.castShadow = true;
 		child.receiveShadow = true;
 		player.add(child);
+
+		console.log("Placing player...")
+    	placePlayer();
 
 		startGame();
 	},
@@ -850,8 +854,8 @@ async function startGame() {
     generateRings();
 	console.log("Structures generated.")
 	
-	console.log("Placing player...")
-    placePlayer();
+	//console.log("Placing player...")
+    //placePlayer();
 
 	updateScore(0);
 
@@ -859,6 +863,8 @@ async function startGame() {
 
 	remainingTime = timeLimit * 1000;
 	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+
+	gameActive = true;
 }
 
 function cleanScene() {
@@ -899,8 +905,6 @@ function placePlayer() {
 	player.position.set(500,500,500);
 	scene.add( player );
 	player.lookAt(0,500,0);
-
-	gameActive = true;
 }
 
 function countdown(time) {
