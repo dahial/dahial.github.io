@@ -912,7 +912,7 @@ function placePlayer() {
 	player.position.set(450,450,450);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
-	//player.lookAt(0,450,0);
+	player.lookAt(0,450,0);
 	camera.lookAt(player.position);
 }
 
@@ -935,7 +935,7 @@ function update() {
 	// Si el usuario está activo:
 	if(gameActive){
 
-		applyPlayerMovement(); 			// Mover al usuario
+		//applyPlayerMovement(); 			// Mover al usuario
 		cameraFollowPlayer();			// Seguir al usuario con la cámara
 		//checkPlayerCollisions();		// Comprobar colisiones del usuario
 		//checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
