@@ -840,13 +840,14 @@ function collectRing(object) {
 
 		updateScore(superring_value);
 
-		instantiateExplosion(object.position, 0xff8800, ringParticleCount);
+		instantiateExplosion(object.position, 0xffaa00, ringParticleCount*2);
+		instantiateExplosion(object.position, 0xff8800, ringParticleCount*2);
 	}
 	else{
 		updateScore(ring_value);
-		instantiateExplosion(object.position, 0xffff00, ringParticleCount);
 	}
 
+	instantiateExplosion(object.position, 0xffff00, ringParticleCount);
 
 	placeRing(object);
 }
