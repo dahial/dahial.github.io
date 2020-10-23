@@ -912,7 +912,7 @@ function placePlayer() {
 	player.position.set(450,450,450);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
-	player.lookAt(0,450,0);
+	//player.lookAt(0,450,0);
 	camera.lookAt(player.position);
 }
 
