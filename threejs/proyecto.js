@@ -239,7 +239,7 @@ function loadPrefabs() {
 		child.castShadow = true;
 		child.receiveShadow = true;
 		player.add(child);
-
+		console.log("gltfloader finished!");
 		playerLoaded = true;
 	},
 	// called while loading is progressing
@@ -850,7 +850,7 @@ async function startGame() {
     generateBuildings(scene_radius - 25);
     generateRings();
 	console.log("Structures generated.")
-
+	/*
 	console.log("Creating player promise...")
 	// Usar Promise para esperar la carga del jugador
     await new Promise(function(resolve, reject){
@@ -858,7 +858,7 @@ async function startGame() {
     	resolve("Player finished loading");
     })
 	console.log("Player Loaded.")
-
+	*/
 	console.log("Placing player...")
     placePlayer();
 
