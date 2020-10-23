@@ -85,8 +85,18 @@ var startTime;
 // Audio
 var audioListener = new THREE.AudioListener();
 var music = new THREE.Audio( audioListener );
-var wind = new THREE.Audio( audioListener );
-var boost = new THREE.Audio( audioListener );
+var audioContext = music.context;
+var wind_audio = new THREE.Audio( audioListener );
+var boost_audio = new THREE.Audio( audioListener );
+var ring_audio = new THREE.Audio( audioListener );
+
+wind_audio.context = audioContext;
+boost_audio.context = audioContext;
+ring_audio.context = audioContext;
+
+var musicBaseVolume = 0.25;
+var windBaseVolume = 0.5;
+var ringVolume = 0.75;
 
 // Acciones a realizar
 init();
@@ -127,8 +137,21 @@ function init()
 	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
 		music.setBuffer( buffer );
 		music.setLoop(true);
-		music.setVolume(0.5);
+		music.setVolume(musicBaseVolume);
 		music.play();
+	});
+
+	audioLoader.load( '../audio/wind_loop.ogg', function( buffer ) {
+		wind_audio.setBuffer( buffer );
+		wind_audio.setLoop(true);
+		wind_audio.setVolume(windBaseVolume);
+		wind_audio.play();
+	});
+
+	audioLoader.load( '../audio/ring.ogg', function( buffer ) {
+		ring_audio.setBuffer( buffer );
+		ring_audio.setLoop(false);
+		ring_audio.setVolume(ringVolume);
 	});
 
 
@@ -743,6 +766,8 @@ function playerCrashed(object)
 
 function collectRing(object)
 {
+	ring_audio.play();
+
 	currentScore += ring_value;
 	maxScore = Math.max(currentScore, maxScore);
 	console.log("Score: " + currentScore);
