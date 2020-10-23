@@ -289,7 +289,6 @@ function startGame() {
 	document.getElementById("centertext").innerHTML = "Cargando...";
 	document.getElementById("warning").innerHTML = "";
 
-	parts = dirs = [];
 	currentScore = 0;
 	newHighScore = false;
 
@@ -302,6 +301,7 @@ function startGame() {
     generateRings();
 	console.log("Structures generated.")
 	
+
 	console.log("Placing player...")
     placePlayer();
 
@@ -322,8 +322,6 @@ function startGame() {
 	wind_audio.setVolume(windBaseVolume);
 	wind_audio.play();
 	music.setVolume(musicBaseVolume);
-
-
 }
 
 function endGame(){
@@ -850,9 +848,9 @@ function playerCrashed(object) {
 	stopAudioLoops();
 
 	crash_audio.play();
-	instantiateExplosion(player.position, 0xff0000, playerParticleCount*3);
-	instantiateExplosion(player.position, 0xffaa00, playerParticleCount*3);
-	instantiateExplosion(player.position, 0x00ffff, playerParticleCount*3);
+	instantiateExplosion(player.position, 0xff0000, playerParticleCount);
+	instantiateExplosion(player.position, 0xffaa00, playerParticleCount);
+	instantiateExplosion(player.position, 0x00ffff, playerParticleCount);
 	updateScore(-1000);
 
 	scene.remove(player);
@@ -1060,8 +1058,8 @@ function particleExplosion(position, color, particleCount){
 	    geometry.vertices.push( vertex );
 	    dirs.push({x:(Math.random() * particleSpeed)-(particleSpeed/2),y:(Math.random() * particleSpeed)-(particleSpeed/2),z:(Math.random() * particleSpeed)-(particleSpeed/2)});
 	  }
-  var material = new THREE.PointsMaterial( { size: particleSize,  color: color});
-  var particles = new THREE.Points( geometry, material );
+  var material = new THREE.ParticleBasicMaterial( { size: particleSize,  color: color});
+  var particles = new THREE.ParticleSystem( geometry, material );
   
   this.object = particles;
   this.status = true;
