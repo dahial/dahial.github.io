@@ -75,7 +75,7 @@ var ringRotation = 15/1000;
 var antes = Date.now();
 var startTime = Date.now();
 var deltaT;
-var timeLimit = 15;
+var timeLimit = 90;
 var remainingTime;
 
 // Audio
