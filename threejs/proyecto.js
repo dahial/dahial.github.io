@@ -835,13 +835,16 @@ function startGame() {
 	
 	newHighScore = false;
 
+	console.log("Cleaning scene...")
 	cleanScene();
 
+	console.log("Generating structures...")
     generateBuildings(scene_radius - 25);
     generateRings();
 
     //while(!playerLoaded){ yield null; }
 
+	console.log("Placing player...")
     //placePlayer();
 
 	updateScore(0);
