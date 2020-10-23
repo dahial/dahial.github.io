@@ -38,6 +38,8 @@ var newHighScore = false;
 // Parametros usuario
 var player = new THREE.Object3D();
 var playerScale = 0.035;
+var playerRadius = 450;
+var playerHeight = 350;
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
@@ -924,10 +926,17 @@ function cleanScene() {
 }
 
 function placePlayer() {
-	player.position.set(450,450,450);
+	//Posicionar al usuario en el radio
+	var r = playerRadius * Math.random();
+	var theta = Math.random() * 2 * Math.PI;
+
+	player.position.x = r * Math.cos(theta);
+	player.position.y = playerHeight;
+	player.position.z = r * Math.cos(theta);
+
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
-	player.lookAt(0,450,0);
+	player.lookAt(0,playerHeight,0);
 
 	player.getWorldDirection(playerDirection);
 
