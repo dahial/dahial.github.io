@@ -838,7 +838,7 @@ function startGame() {
     generateBuildings(scene_radius - 25);
     generateRings();
 
-    while(!playerLoaded){}
+    while(!playerLoaded){ yield null; }
 
     placePlayer();
 
