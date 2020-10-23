@@ -778,12 +778,14 @@ function changeWarning(){
 	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
 		warning_audio.play();
+		document.getElementById("warning").style.display = "block";
 	}
 	else
 	{
 		sphere_grid.material.opacity = 0;
 		console.log("Regresando al terreno de juego");
 		warning_audio.stop();
+		document.getElementById("warning").style.display = "block";
 	}
 
 }
