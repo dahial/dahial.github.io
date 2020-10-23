@@ -171,52 +171,6 @@ function init() {
 	document.getElementById( 'container' ).appendChild( stats.domElement );
 }
 
-function initAudio(){
-	// Inicializar audio
-	var audioLoader = new THREE.AudioLoader();
-	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
-		music.setBuffer( buffer );
-		music.setLoop(true);
-		music.setVolume(musicBaseVolume);
-		music.play();
-	});
-
-	audioLoader.load( '../audio/wind_loop.ogg', function( buffer ) {
-		wind_audio.setBuffer( buffer );
-		wind_audio.setLoop(true);
-		wind_audio.setVolume(windBaseVolume);
-	});
-
-	audioLoader.load( '../audio/ring.ogg', function( buffer ) {
-		ring_audio.setBuffer( buffer );
-		ring_audio.setLoop(false);
-		ring_audio.setVolume(ringVolume);
-	});
-
-	audioLoader.load( '../audio/ring_long.ogg', function( buffer ) {
-		ring_long_audio.setBuffer( buffer );
-		ring_long_audio.setLoop(false);
-		ring_long_audio.setVolume(ringLongVolume);
-	});
-
-	audioLoader.load( '../audio/crash.ogg', function( buffer ) {
-		crash_audio.setBuffer( buffer );
-		crash_audio.setLoop(false);
-		crash_audio.setVolume(crashVolume);
-	});
-
-	audioLoader.load( '../audio/warning.ogg', function( buffer ) {
-		warning_audio.setBuffer( buffer );
-		warning_audio.setLoop(true);
-		warning_audio.setVolume(warningVolume);
-	});
-
-	audioLoader.load( '../audio/countdown.ogg', function( buffer ) {
-		countdown_audio.setBuffer( buffer );
-		countdown_audio.setLoop(false);
-		countdown_audio.setVolume(warningVolume);
-	});
-}
 
 function setCameras(ar) {
 
@@ -325,6 +279,108 @@ function loadPrefabs() {
 
 	console.log("Prefabs created.");
 }
+
+
+///////////// CONTROL DEL JUEGO
+
+function startGame() {
+	console.log("STARTING NEW GAME")
+
+	document.getElementById("centertext").innerHTML = "Cargando...";
+	document.getElementById("warning").innerHTML = "";
+
+	currentScore = 0;
+	newHighScore = false;
+
+	console.log("Cleaning scene...")
+	cleanScene();
+	console.log("Scene cleaned.")
+
+	console.log("Generating structures...")
+    generateBuildings(scene_radius - 25);
+    generateRings();
+	console.log("Structures generated.")
+	
+
+	console.log("Placing player...")
+    placePlayer();
+
+	updateScore(0);
+
+	document.getElementById( 'centertext' ).innerText = "";
+	document.getElementById( 'highscore' ).innerText = "Record: " + highScore;
+
+	remainingTime = timeLimit * 1000;
+	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000)+1);
+
+	console.log("GAME START");
+	gameActive = true;
+	restart = false;
+	pause = true;
+
+	wind_audio.setPlaybackRate(1);
+	wind_audio.setVolume(windBaseVolume);
+	wind_audio.play();
+	music.setVolume(musicBaseVolume);
+}
+
+function endGame(){
+	music.setVolume(musicBaseVolume * 0.5);
+	gameActive = false;
+	currentKeys = [false, false, false, false, false, false];
+
+	console.log("current = " + currentScore);
+	console.log("highest = " + highScore);
+
+	if(currentScore > highScore){
+		highScore = currentScore;
+		document.getElementById("highscore").innerText = "Record: " + highScore;
+		document.getElementById("centertext").innerText = "Nuevo Record!\nPresiona 'R' para volver a jugar.";
+	}
+	else
+		document.getElementById("centertext").innerHTML = "Presiona 'R' para volver a jugar.";
+
+	document.getElementById( 'time' ).innerText = "";
+
+	restart = true;
+	pause = false;
+}
+
+function togglePause() {
+	currentKeys = [false, false, false, false, false, false];
+	if(gameActive){
+		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \"Esc\" para reanudar";
+		music.setVolume(musicBaseVolume * 0.5);
+		wind_audio.setVolume(windBaseVolume * 0);
+	}
+	else{
+		document.getElementById("centertext").innerHTML = "";
+		music.setVolume(musicBaseVolume);
+		wind_audio.setVolume(windBaseVolume);
+	}
+
+	gameActive = !gameActive;
+}
+
+function updateScore(delta) {
+	currentScore = Math.max(currentScore + delta, 0);
+	document.getElementById("score").innerHTML = "" + currentScore;
+}
+
+function countdown(time) {
+
+	remainingTime -= time;
+	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000) + 1);
+
+	if(remainingTime < 1000 * 10 && remainingTime > 1000 * 9 && !countdown_audio.isPlaying ){
+		countdown_audio.play();
+	}
+
+	if(remainingTime <= 0)
+		endGame();
+}
+
+///////////// CREACIÓN DE LA ESCENA
 
 function loadScene() {
 	console.log("Loading scene...");
@@ -498,141 +554,64 @@ function placeRing(ring){
 	//while(false); // Comprobar no-colision
 }
 
-function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1) {
-	// Usar centro del objeto
-	if(useCenter){
-		// Building A
-		if(checkA){
-			for(i=0; i < list_buildingA.length; i++){
-				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
-
-		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingA[i].id)
-		    		return list_buildingA[i];
-
-			}
-		}
-
-		// Building B
-		if(checkB){
-			for(i=0; i < list_buildingB.length; i++){
-				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
-
-		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingB[i].id)
-		    		return list_buildingB[i];
-		    }
-		}
+function cleanScene() {
+	var object;
+	// Eliminar edificios de la escena
+	object = scene.getObjectByName("RASCACIELOS");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("RASCACIELOS");
 	}
-	// Usar BoundingBox del objeto
-	else{
-		var objectBox = new THREE.Box3().setFromObject(object)
 
-		// Building A
-		if(checkA){
-			for(i=0; i < list_buildingA.length; i++){
-				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
-
-		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingA[i].id)
-		    		return list_buildingA[i];
-
-			}
-		}
-
-		// Building B
-		if(checkB){
-			for(i=0; i < list_buildingB.length; i++){
-				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
-
-		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingB[i].id)
-		    		return list_buildingB[i];
-		    }
-		}
+	object = scene.getObjectByName("ALMACÉN");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("ALMACÉN");
 	}
-	
 
-	return null;
+	list_buildingA = [];
+	list_buildingB = [];
+
+	// Eliminar anillos de la escena
+	object = scene.getObjectByName("ANILLO");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("ANILLO");
+	}
+
+	object = scene.getObjectByName("SUPERANILLO");
+	while(object != null){
+		scene.remove(object);
+		object = scene.getObjectByName("SUPERANILLO");
+	}
+
+	list_rings = [];
 }
 
-function checkRingCollision(object, useCenter, centerDistance = 1) {
-	// Usar centro del objeto
-	if(useCenter){
-	    // Rings
-	    for(i=0; i < list_rings.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+function placePlayer() {
+	//Posicionar al usuario en el radio
+	var r = playerRadius;
+	var theta = Math.random() * 2 * Math.PI;
 
-	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_rings[i].id)
-	    		return list_rings[i];
-	    }
+	player.position.x = r * Math.cos(theta);
+	player.position.y = playerHeight;
+	player.position.z = r * Math.cos(theta);
 
-	}
-	// Usar BoundingBox del objeto
-	else{
-		var objectBox = new THREE.Box3().setFromObject(object)
+	player.scale.set(playerScale, playerScale, playerScale);
+	scene.add( player );
+	player.lookAt(0,playerHeight,0);
 
-	    // Rings
-	    for(i=0; i < list_rings.length; i++){
-			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+	player.getWorldDirection(playerDirection);
 
-	    	if (collider.intersectsBox(objectBox) && object.id != list_rings[i].id)
-	    		return list_rings[i];
-	    }
-	}
-	
+	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1)));
+	cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
 
-	return null;
+	camera.position.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
+	camera.lookAt(cameraLookTarget);
 }
 
-function updateAspectRatio() {
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	camera.aspect = window.innerWidth/window.innerHeight;
-	camera.updateProjectionMatrix();
-}
+//////////// MOVIMIENTO DEL USUARIO
 
-function onKeyDown(event) {
-	// Inicializar contexto de audio al interactuar con la ventana
-	if(music.context.state !== 'running')
-		music.context.resume();
-
-	var keyCode = event.code;
-
-	switch(keyCode){
-		case "ArrowUp": currentKeys[0] = true; break;
-		case "ArrowDown": currentKeys[1] = true; break;
-		case "ArrowLeft": currentKeys[2] = true; break;
-		case "ArrowRight": currentKeys[3] = true; break;
-		case "KeyQ": currentKeys[4] = true; break;
-		case "KeyE": currentKeys[5] = true; break;
-		case "Space": playerBoost = true; 
-					wind_audio.setPlaybackRate(1.25);
-					wind_audio.setVolume(windBaseVolume * 1.5);
-					break;
-		case "ShiftLeft": playerBrake = true; break;
-		case "KeyR": if(restart){
-						restart = false;
-						startGame();
-					}
-					break;
-		case "Escape": if(pause) togglePause(); break;
-		case "KeyI": inverted = !inverted; break;
-	}
-}
-
-function onKeyUp(event) {
-	var keyCode = event.code;
-
-	switch(keyCode){
-		case "ArrowUp": currentKeys[0] = false; break;
-		case "ArrowDown": currentKeys[1] = false; break;
-		case "ArrowLeft": currentKeys[2] = false; break;
-		case "ArrowRight": currentKeys[3] = false; break;
-		case "KeyQ": currentKeys[4] = false; break;
-		case "KeyE": currentKeys[5] = false; break;
-		case "Space": playerBoost = false;
-					wind_audio.setPlaybackRate(1);
-					wind_audio.setVolume(windBaseVolume);
-		break;
-		case "ShiftLeft": playerBrake = false; break;
-	}
-}
 
 function updatePlayerRotation() {
 
@@ -736,6 +715,91 @@ function cameraFollowPlayer() {
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
 }
 
+//////////// DETECCIÓN DE COLISIÓN
+
+function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1) {
+	// Usar centro del objeto
+	if(useCenter){
+		// Building A
+		if(checkA){
+			for(i=0; i < list_buildingA.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+
+		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingA[i].id)
+		    		return list_buildingA[i];
+
+			}
+		}
+
+		// Building B
+		if(checkB){
+			for(i=0; i < list_buildingB.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+		    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_buildingB[i].id)
+		    		return list_buildingB[i];
+		    }
+		}
+	}
+	// Usar BoundingBox del objeto
+	else{
+		var objectBox = new THREE.Box3().setFromObject(object)
+
+		// Building A
+		if(checkA){
+			for(i=0; i < list_buildingA.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingA[i]);
+
+		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingA[i].id)
+		    		return list_buildingA[i];
+
+			}
+		}
+
+		// Building B
+		if(checkB){
+			for(i=0; i < list_buildingB.length; i++){
+				var collider = new THREE.Box3().setFromObject(list_buildingB[i]);
+
+		    	if (collider.intersectsBox(objectBox) && object.id != list_buildingB[i].id)
+		    		return list_buildingB[i];
+		    }
+		}
+	}
+	
+
+	return null;
+}
+
+function checkRingCollision(object, useCenter, centerDistance = 1) {
+	// Usar centro del objeto
+	if(useCenter){
+	    // Rings
+	    for(i=0; i < list_rings.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+
+	    	if (collider.distanceToPoint(object.position) < centerDistance && object.id != list_rings[i].id)
+	    		return list_rings[i];
+	    }
+
+	}
+	// Usar BoundingBox del objeto
+	else{
+		var objectBox = new THREE.Box3().setFromObject(object)
+
+	    // Rings
+	    for(i=0; i < list_rings.length; i++){
+			var collider = new THREE.Box3().setFromObject(list_rings[i]);
+
+	    	if (collider.intersectsBox(objectBox) && object.id != list_rings[i].id)
+	    		return list_rings[i];
+	    }
+	}
+	
+
+	return null;
+}
+
 function checkPlayerCollisions() {
 	var collision;
 
@@ -779,40 +843,6 @@ function checkPlayerInBounds() {
 	}
 }
 
-function stopAudioLoops() {
-	if(wind_audio.isPlaying)
-		wind_audio.stop();
-	if(warning_audio.isPlaying)
-		warning_audio.stop();
-	if(countdown_audio.isPlaying)
-		countdown_audio.stop();
-}
-
-function toggleWarning() {
-	if(warning_current){
-		console.log("ATENCIÓN: Abandonando el terreno de juego");
-		warning_audio.play();
-		document.getElementById("warning").innerText = "¡Regresa a la zona de vuelo!";
-	}
-	else
-	{
-		sphere_grid.material.opacity = 0;
-		console.log("Regresando al terreno de juego");
-		warning_audio.stop();
-		document.getElementById("warning").innerText = "";
-	}
-}
-
-function playerOOB() {
-
-	stopAudioLoops();
-
-	scene.remove(player);
-	endGame();
-
-	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
-}
-
 function playerCrashed(object) {
 	stopAudioLoops();
 
@@ -825,6 +855,16 @@ function playerCrashed(object) {
 
 
 	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
+}
+
+function playerOOB() {
+
+	stopAudioLoops();
+
+	scene.remove(player);
+	endGame();
+
+	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
 
 function collectRing(object) {
@@ -852,11 +892,136 @@ function collectRing(object) {
 	placeRing(object);
 }
 
-function updateScore(delta) {
-	currentScore = Math.max(currentScore + delta, 0);
-	document.getElementById("score").innerHTML = "" + currentScore;
+/////////// GESTIÓN DE EVENTOS DEL NAVEGADOR
 
+function updateAspectRatio() {
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	camera.aspect = window.innerWidth/window.innerHeight;
+	camera.updateProjectionMatrix();
 }
+
+function onKeyDown(event) {
+	// Inicializar contexto de audio al interactuar con la ventana
+	if(music.context.state !== 'running')
+		music.context.resume();
+
+	var keyCode = event.code;
+
+	switch(keyCode){
+		case "ArrowUp": currentKeys[0] = true; break;
+		case "ArrowDown": currentKeys[1] = true; break;
+		case "ArrowLeft": currentKeys[2] = true; break;
+		case "ArrowRight": currentKeys[3] = true; break;
+		case "KeyQ": currentKeys[4] = true; break;
+		case "KeyE": currentKeys[5] = true; break;
+		case "Space": playerBoost = true; 
+					wind_audio.setPlaybackRate(1.25);
+					wind_audio.setVolume(windBaseVolume * 1.5);
+					break;
+		case "ShiftLeft": playerBrake = true; break;
+		case "KeyR": if(restart){
+						restart = false;
+						startGame();
+					}
+					break;
+		case "Escape": if(pause) togglePause(); break;
+		case "KeyI": inverted = !inverted; break;
+	}
+}
+
+function onKeyUp(event) {
+	var keyCode = event.code;
+
+	switch(keyCode){
+		case "ArrowUp": currentKeys[0] = false; break;
+		case "ArrowDown": currentKeys[1] = false; break;
+		case "ArrowLeft": currentKeys[2] = false; break;
+		case "ArrowRight": currentKeys[3] = false; break;
+		case "KeyQ": currentKeys[4] = false; break;
+		case "KeyE": currentKeys[5] = false; break;
+		case "Space": playerBoost = false;
+					wind_audio.setPlaybackRate(1);
+					wind_audio.setVolume(windBaseVolume);
+		break;
+		case "ShiftLeft": playerBrake = false; break;
+	}
+}
+
+////////// INTERFAZ Y AUDIO
+
+function initAudio(){
+	// Inicializar audio
+	var audioLoader = new THREE.AudioLoader();
+	audioLoader.load( '../audio/music_loop.ogg', function( buffer ) {
+		music.setBuffer( buffer );
+		music.setLoop(true);
+		music.setVolume(musicBaseVolume);
+		music.play();
+	});
+
+	audioLoader.load( '../audio/wind_loop.ogg', function( buffer ) {
+		wind_audio.setBuffer( buffer );
+		wind_audio.setLoop(true);
+		wind_audio.setVolume(windBaseVolume);
+	});
+
+	audioLoader.load( '../audio/ring.ogg', function( buffer ) {
+		ring_audio.setBuffer( buffer );
+		ring_audio.setLoop(false);
+		ring_audio.setVolume(ringVolume);
+	});
+
+	audioLoader.load( '../audio/ring_long.ogg', function( buffer ) {
+		ring_long_audio.setBuffer( buffer );
+		ring_long_audio.setLoop(false);
+		ring_long_audio.setVolume(ringLongVolume);
+	});
+
+	audioLoader.load( '../audio/crash.ogg', function( buffer ) {
+		crash_audio.setBuffer( buffer );
+		crash_audio.setLoop(false);
+		crash_audio.setVolume(crashVolume);
+	});
+
+	audioLoader.load( '../audio/warning.ogg', function( buffer ) {
+		warning_audio.setBuffer( buffer );
+		warning_audio.setLoop(true);
+		warning_audio.setVolume(warningVolume);
+	});
+
+	audioLoader.load( '../audio/countdown.ogg', function( buffer ) {
+		countdown_audio.setBuffer( buffer );
+		countdown_audio.setLoop(false);
+		countdown_audio.setVolume(warningVolume);
+	});
+}
+
+function stopAudioLoops() {
+	if(wind_audio.isPlaying)
+		wind_audio.stop();
+	if(warning_audio.isPlaying)
+		warning_audio.stop();
+	if(countdown_audio.isPlaying)
+		countdown_audio.stop();
+}
+
+function toggleWarning() {
+	if(warning_current){
+		console.log("ATENCIÓN: Abandonando el terreno de juego");
+		warning_audio.play();
+		document.getElementById("warning").innerText = "¡Regresa a la zona de vuelo!";
+	}
+	else
+	{
+		sphere_grid.material.opacity = 0;
+		console.log("Regresando al terreno de juego");
+		warning_audio.stop();
+		document.getElementById("warning").innerText = "";
+	}
+}
+
+////////// ANIMACIÓN
+
 
 function animateRings() {
 	// Rotar anillos
@@ -870,103 +1035,6 @@ function animateRings() {
 function animateGrid(time) {
 	grid_master_opacity = Math.abs(Math.sin(time / 1000));
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
-}
-
-function startGame() {
-	console.log("STARTING NEW GAME")
-
-	document.getElementById("centertext").innerHTML = "Cargando...";
-	document.getElementById("warning").innerHTML = "";
-
-	currentScore = 0;
-	newHighScore = false;
-
-	console.log("Cleaning scene...")
-	cleanScene();
-	console.log("Scene cleaned.")
-
-	console.log("Generating structures...")
-    generateBuildings(scene_radius - 25);
-    generateRings();
-	console.log("Structures generated.")
-	
-
-	console.log("Placing player...")
-    placePlayer();
-
-	updateScore(0);
-
-	document.getElementById( 'centertext' ).innerText = "";
-	document.getElementById( 'highscore' ).innerText = "Record: " + highScore;
-
-	remainingTime = timeLimit * 1000;
-	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000)+1);
-
-	console.log("GAME START");
-	gameActive = true;
-	restart = false;
-	pause = true;
-
-	wind_audio.setPlaybackRate(1);
-	wind_audio.setVolume(windBaseVolume);
-	wind_audio.play();
-	music.setVolume(musicBaseVolume);
-}
-
-function cleanScene() {
-	var object;
-	// Eliminar edificios de la escena
-	object = scene.getObjectByName("RASCACIELOS");
-	while(object != null){
-		scene.remove(object);
-		object = scene.getObjectByName("RASCACIELOS");
-	}
-
-	object = scene.getObjectByName("ALMACÉN");
-	while(object != null){
-		scene.remove(object);
-		object = scene.getObjectByName("ALMACÉN");
-	}
-
-	list_buildingA = [];
-	list_buildingB = [];
-
-	// Eliminar anillos de la escena
-	object = scene.getObjectByName("ANILLO");
-	while(object != null){
-		scene.remove(object);
-		object = scene.getObjectByName("ANILLO");
-	}
-
-	object = scene.getObjectByName("SUPERANILLO");
-	while(object != null){
-		scene.remove(object);
-		object = scene.getObjectByName("SUPERANILLO");
-	}
-
-	list_rings = [];
-}
-
-function placePlayer() {
-	//Posicionar al usuario en el radio
-	var r = playerRadius * Math.random();
-	var theta = Math.random() * 2 * Math.PI;
-
-	player.position.x = r * Math.cos(theta);
-	player.position.y = playerHeight;
-	player.position.z = r * Math.cos(theta);
-
-	player.scale.set(playerScale, playerScale, playerScale);
-	scene.add( player );
-	player.lookAt(0,playerHeight,0);
-
-	player.getWorldDirection(playerDirection);
-
-	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1)));
-	cameraLookTarget.addVectors(player.position, playerDirection.multiplyScalar(cameraDistance));
-
-	camera.position.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
-	camera.lookAt(cameraLookTarget);
 }
 
 function instantiateExplosion(position, color, particleCount){
@@ -1017,57 +1085,7 @@ function updateParticles(){
           while(pCount--) { parts[pCount].update(); }
 }
 
-function endGame(){
-	music.setVolume(musicBaseVolume * 0.5);
-	gameActive = false;
-	currentKeys = [false, false, false, false, false, false];
-
-	console.log("current = " + currentScore);
-	console.log("highest = " + highScore);
-
-	if(currentScore > highScore){
-		highScore = currentScore;
-		document.getElementById("highscore").innerText = "Record: " + highScore;
-		document.getElementById("centertext").innerText = "Nuevo Record!\nPresiona 'R' para volver a jugar.";
-	}
-	else
-		document.getElementById("centertext").innerHTML = "Presiona 'R' para volver a jugar.";
-
-	document.getElementById( 'time' ).innerText = "";
-
-	restart = true;
-	pause = false;
-}
-
-function countdown(time) {
-
-	remainingTime -= time;
-	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000) + 1);
-
-	if(remainingTime < 1000 * 10 && remainingTime > 1000 * 9 && !countdown_audio.isPlaying ){
-		countdown_audio.play();
-	}
-
-	if(remainingTime <= 0)
-		endGame();
-
-}
-
-function togglePause() {
-	currentKeys = [false, false, false, false, false, false];
-	if(gameActive){
-		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \"Esc\" para reanudar";
-		music.setVolume(musicBaseVolume * 0.5);
-		wind_audio.setVolume(windBaseVolume * 0);
-	}
-	else{
-		document.getElementById("centertext").innerHTML = "";
-		music.setVolume(musicBaseVolume);
-		wind_audio.setVolume(windBaseVolume);
-	}
-
-	gameActive = !gameActive;
-}
+////////// BUCLE DE RENDERIZADO
 
 function update() {
 	// Actualizar antes/ahora ------------
