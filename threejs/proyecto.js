@@ -232,11 +232,11 @@ function loadPrefabs() {
     building_A.receiveShadow = true;
 
     // Building B
-    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_tile.png');
+    var warehouseSideTexture = loader.load('./images/proyecto/pisometal_1024x1024.png');
 
     warehouseSideTexture.color = 0xffddee;
-    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.RepeatWrapping;
-    warehouseSideTexture.repeat.set(10,20);
+    warehouseSideTexture.wrapS = warehouseSideTexture.wrapT = THREE.MIrroredRepeatWrapping;
+    warehouseSideTexture.repeat.set(15,15);
     warehouseSideTexture.anisotropy = 16;
 
     var warehouseMaterial = new THREE.MeshPhongMaterial({ map: warehouseSideTexture, side: THREE.DoubleSide, shininess: 1, specular: 0x887788 });
