@@ -793,7 +793,7 @@ function playerOOB() {
 	music.setVolume(musicBaseVolume * 0.5);
 
 	scene.remove(player);
-	gameActive = false;
+	endGame();
 
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
@@ -805,7 +805,7 @@ function playerCrashed(object) {
 	updateScore(-1000);
 
 	scene.remove(player);
-	gameActive = false;
+	endGame();
 
 
 	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name;
@@ -920,12 +920,16 @@ function cleanScene() {
 }
 
 function placePlayer() {
-
 	player.position.set(450,450,450);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,450,0);
 	camera.lookAt(player.position);
+}
+
+function particleEffect(position, color){
+
+
 }
 
 function endGame(){
@@ -945,7 +949,7 @@ function endGame(){
 function countdown(time) {
 
 	remainingTime -= time;
-	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000) + 1);
 
 	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying){
 		countdown_audio.play();
