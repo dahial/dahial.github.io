@@ -856,6 +856,8 @@ function startGame() {
     generateRings();
 	console.log("Structures generated.")
 	
+	
+	console.log(player.position);
 	console.log("Placing player...")
     placePlayer();
 
@@ -908,7 +910,7 @@ function cleanScene() {
 
 function placePlayer() {
 
-	player.position = new THREE.Vector3(450,450,450);
+	player.position.set(450,450,450);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,450,0);
