@@ -258,7 +258,7 @@ function loadPrefabs() {
     building_A.receiveShadow = true;
 
     // Building B
-    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_diffuse.png');
+    var warehouseSideTexture = loader.load('./images/proyecto/warehouse_diffuse.jpg');
     var warehouseSideNormal = loader.load('./images/proyecto/warehouse_normal.jpg');
 
     warehouseSideTexture.color = 0xffddee;
