@@ -121,7 +121,6 @@ render();
 
 function init() {
 	document.getElementById( 'centertext' ).innerText = "Cargando...";
-	document.getElementById( 'highscore' ).innerText = "Record: 0";
 
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
@@ -876,6 +875,7 @@ function startGame() {
 	updateScore(0);
 
 	document.getElementById( 'centertext' ).innerText = "";
+	document.getElementById( 'highscore' ).innerText = "Record: " + highScore;
 
 	remainingTime = timeLimit * 1000;
 	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000)+1);
