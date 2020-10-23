@@ -903,6 +903,7 @@ function cleanScene() {
 
 function placePlayer() {
 	player.position.set(500,500,500);
+	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,500,0);
 }
