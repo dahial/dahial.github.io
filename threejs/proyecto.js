@@ -939,6 +939,9 @@ function endGame(){
 	gameActive = false;
 	currentKeys = [false, false, false, false, false, false];
 
+	console.log("current = " + currentScore);
+	console.log("highest = " + highScore);
+
 	if(currentScore > highScore){
 		highScore = currentScore;
 		document.getElementById("highscore").innerText = "Record: " + highScore;
