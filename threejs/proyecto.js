@@ -982,9 +982,9 @@ function particleExplosion(position, color){
   this.object = particles;
   this.status = true;
   
-  this.xDir = (Math.random() * movementSpeed)-(movementSpeed/2);
-  this.yDir = (Math.random() * movementSpeed)-(movementSpeed/2);
-  this.zDir = (Math.random() * movementSpeed)-(movementSpeed/2);
+  this.xDir = (Math.random() * particleSpeed)-(particleSpeed/2);
+  this.yDir = (Math.random() * particleSpeed)-(particleSpeed/2);
+  this.zDir = (Math.random() * particleSpeed)-(particleSpeed/2);
   
   scene.add( this.object ); 
 
