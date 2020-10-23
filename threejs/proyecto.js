@@ -900,12 +900,15 @@ function cleanScene() {
 
 function placePlayer() {
 
+	console.log(player.position);
 	player.position = new THREE.Vector3(450,450,450);
+	console.log(player.position);
 	player.scale.set(playerScale, playerScale, playerScale);
+	console.log(player.position);
 	scene.add( player );
+	console.log(player.position);
 	player.lookAt(0,450,0);
 	console.log(player.position);
-	console.log(list_rings[0].position);
 }
 
 function countdown(time) {
