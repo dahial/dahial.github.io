@@ -768,7 +768,9 @@ function stopAudioLoops() {
 	if(wind_audio.isPlaying)
 		wind_audio.stop();
 	if(warning_audio.isPlaying)
-	warning_audio.stop();
+		warning_audio.stop();
+	if(countdown_audio.isPlaying)
+		countdown_audio.stop();
 }
 
 function toggleWarning() {
