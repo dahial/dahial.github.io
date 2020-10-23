@@ -790,7 +790,6 @@ function playerOOB() {
 
 	stopAudioLoops();
 	crash_audio.play();
-	music.setVolume(musicBaseVolume * 0.5);
 
 	scene.remove(player);
 	endGame();
@@ -801,7 +800,6 @@ function playerOOB() {
 function playerCrashed(object) {
 	stopAudioLoops();
 	crash_audio.play();
-	music.setVolume(musicBaseVolume * 0.5);
 	updateScore(-1000);
 
 	scene.remove(player);
@@ -888,6 +886,7 @@ function startGame() {
 	wind_audio.setPlaybackRate(1);
 	wind_audio.setVolume(windBaseVolume);
 	wind_audio.play();
+	music.setVolume(musicBaseVolume);
 }
 
 function cleanScene() {
@@ -945,6 +944,7 @@ function particleEffect(position, color){
 }
 
 function endGame(){
+	music.setVolume(musicBaseVolume * 0.5);
 	gameActive = false;
 	currentKeys = [false, false, false, false, false, false];
 
@@ -983,9 +983,12 @@ function togglePause() {
 	currentKeys = [false, false, false, false, false, false];
 	if(gameActive){
 		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \"Esc\" para reanudar";
+	music.setVolume(musicBaseVolume * 0.5);
 	}
-	else
+	else{
 		document.getElementById("centertext").innerHTML = "";
+		music.setVolume(musicBaseVolume);
+	}
 
 	gameActive = !gameActive;
 }
