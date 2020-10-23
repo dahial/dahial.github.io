@@ -78,7 +78,7 @@ var ringRotation = 15/1000;
 var antes = Date.now();
 var startTime = Date.now();
 var deltaT;
-var timeLimit = 120;
+var timeLimit = 15;
 var remainingTime;
 
 // Audio
@@ -90,12 +90,14 @@ var ring_audio = new THREE.Audio( audioListener );
 var ring_long_audio = new THREE.Audio( audioListener );
 var crash_audio = new THREE.Audio( audioListener );
 var warning_audio = new THREE.Audio( audioListener );
+var countdown_audio = new THREE.Audio( audioListener );
 
 wind_audio.context = audioContext;
 ring_audio.context = audioContext;
 ring_long_audio.context = audioContext;
 crash_audio.context = audioContext;
 warning_audio.context = audioContext;
+countdown_audio.context = audioContext;
 
 var musicBaseVolume = 0.15;
 var windBaseVolume = 0.5;
@@ -103,6 +105,7 @@ var ringVolume = 0.5;
 var ringLongVolume = 0.5;
 var crashVolume = 0.5;
 var warningVolume = 0.5;
+var countdownVolume = 0.5;
 
 // Auxiliares
 var moveVector = new THREE.Vector3(0,0,1);
@@ -110,6 +113,7 @@ var tmpQuaternion = new THREE.Quaternion();
 var EPS = 0.000001;
 var warning_current = false;
 var gameActive = false;
+var restart = false;
 
 // Acciones a realizar
 init();
@@ -195,6 +199,12 @@ function initAudio(){
 		warning_audio.setBuffer( buffer );
 		warning_audio.setLoop(true);
 		warning_audio.setVolume(warningVolume);
+	});
+
+	audioLoader.load( '../audio/countdown.ogg', function( buffer ) {
+		countdown_audio.setBuffer( buffer );
+		countdown_audio.setLoop(true);
+		countdown_audio.setVolume(warningVolume);
 	});
 }
 
@@ -582,10 +592,15 @@ function onKeyDown(event) {
 		case "KeyQ": currentKeys[4] = true; break;
 		case "KeyE": currentKeys[5] = true; break;
 		case "Space": playerBoost = true; 
-		wind_audio.setPlaybackRate(1.25);
-		wind_audio.setVolume(windBaseVolume * 1.5);
-		break;
+					wind_audio.setPlaybackRate(1.25);
+					wind_audio.setVolume(windBaseVolume * 1.5);
+					break;
 		case "ShiftLeft": playerBrake = true; break;
+		case "KeyR": if(restart){
+						restart = false;
+						startGame();
+					}
+					break;
 	}
 }
 
@@ -821,11 +836,6 @@ function updateScore(delta) {
 	currentScore = Math.max(currentScore + delta, 0);
 	document.getElementById("score").innerHTML = "" + currentScore;
 
-	if(currentScore > highScore){
-		highScore = currentScore;
-		newHighScore = true;
-		document.getElementById("highscore").innerHTML = "Record: " + highScore;
-	}
 }
 
 function animateRings() {
@@ -845,6 +855,10 @@ function animateGrid(time) {
 function startGame() {
 	console.log("STARTING NEW GAME")
 
+	document.getElementById("centertext").innerHTML = "Cargando...";
+	document.getElementById("warning").innerHTML = "";
+
+	currentScore = 0;
 	newHighScore = false;
 
 	console.log("Cleaning scene...")
@@ -867,9 +881,7 @@ function startGame() {
 	remainingTime = timeLimit * 1000;
 	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
 
-
 	console.log("GAME START");
-	console.log(player.position);
 	gameActive = true;
 }
 
@@ -916,10 +928,31 @@ function placePlayer() {
 	camera.lookAt(player.position);
 }
 
+function endGame(){
+	gameActive = false;
+
+	if(currentScore > highScore){
+		highScore = currentScore;
+		document.getElementById("highscore").innerHTML = "Record: " + highScore;
+		document.getElementById("centertext").innerHTML = "Nuevo Record!<br>Presiona 'R' para volver a jugar.";
+	}
+	else
+		document.getElementById("centertext").innerHTML = "Presiona 'R' para volver a jugar.";
+
+	restart = true;
+}
+
 function countdown(time) {
 
 	remainingTime -= time;
 	document.getElementById( 'time' ).innerText = "" + parseInt(remainingTime / 1000);
+
+	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying;){
+		countdown_audio.play();
+	}
+
+	if(remainingTime <= 0)
+		endGame();
 
 }
 
@@ -928,8 +961,6 @@ function update() {
 	var ahora = Date.now();							// Hora actual
 	deltaT = (ahora - antes);					// Tiempo transcurrido en ms
 	antes = ahora;									// Actualizar antes
-
-
 	// ---------------------------------
 
 	// Si el usuario está activo:
