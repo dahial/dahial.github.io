@@ -943,6 +943,8 @@ function endGame(){
 	else
 		document.getElementById("centertext").innerHTML = "Presiona 'R' para volver a jugar.";
 
+	document.getElementById( 'time' ).innerText = "";
+
 	restart = true;
 }
 
