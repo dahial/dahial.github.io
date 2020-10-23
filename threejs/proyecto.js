@@ -900,12 +900,12 @@ function cleanScene() {
 
 function placePlayer() {
 
-	console.log(player.position);
 	player.position.set(500,500,500);
 	player.scale.set(playerScale, playerScale, playerScale);
 	scene.add( player );
 	player.lookAt(0,500,0);
 	console.log(player.position);
+	console.log(list_rings[0].position);
 }
 
 function countdown(time) {
