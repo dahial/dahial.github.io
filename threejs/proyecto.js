@@ -36,13 +36,13 @@ var highScore = 0;
 var newHighScore = false;
 
 // Parametros usuario
-var player = new THREE.Object3D();
+var jugador = new THREE.Object3D();
 var playerScale = 0.035;
 var dummy = new THREE.Object3D();
 var domby = new THREE.Object3D();
 
 console.log("Top level print");
-console.log(player.position);
+console.log(jugador.position);
 console.log(dummy.position);
 console.log(domby.position);
 
@@ -215,7 +215,7 @@ function setCameras(ar) {
 }
 
 function loadPrefabs() {
-	console.log(player.position);
+	console.log(jugador.position);
 	console.log(dummy.position);
 	console.log("Creating prefabs...");
 
@@ -247,7 +247,7 @@ function loadPrefabs() {
 		
 		child.castShadow = true;
 		child.receiveShadow = true;
-		player.add(child);
+		jugador.add(child);
 
 		startGame();
 	},
