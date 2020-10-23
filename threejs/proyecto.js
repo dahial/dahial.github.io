@@ -303,7 +303,7 @@ function loadPrefabs() {
     ring = new THREE.Mesh(new THREE.RingGeometry(5,10,3,1), ringMaterial);
 
     // Super-ring
-    var superringMaterial = new THREE.MeshPhongMaterial( { color: 0xffcc00, side: THREE.DoubleSide, shininess: 15, specular: 0xffffff, emissive: 0xffdd00} );
+    var superringMaterial = new THREE.MeshPhongMaterial( { color: 0xffaa00, side: THREE.DoubleSide, shininess: 15, specular: 0xffcc88, emissive: 0xffaa00} );
     superring = new THREE.Mesh(new THREE.RingGeometry(5,10,5,1), superringMaterial);
 
 }
@@ -585,16 +585,6 @@ function updateAspectRatio()
 	camera.updateProjectionMatrix();
 }
 
-/* 
-currentKeys[0] = Up
-currentKeys[1] = Down
-currentKeys[2] = Left
-currentKeys[3] = Right
-currentKeys[4] = Q
-currentKeys[5] = E
-playerBoost = Space
-playerBrake = Shift
-*/
 function onKeyDown(event)
 {
 	// Inicializar contexto de audio al interactuar con la ventana
@@ -775,7 +765,7 @@ function checkPlayerInBounds()
 
 		if(curr_distance < distance_warn){
 			warning_current = false;
-			changeWarning()
+			toggleWarning()
 		}
 
 		else if(curr_distance > distance_oob)
@@ -784,7 +774,7 @@ function checkPlayerInBounds()
 	else{
 		if(curr_distance > distance_warn){
 			warning_current = true;
-			changeWarning()
+			toggleWarning()
 		}
 	}
 }
@@ -795,7 +785,7 @@ function stopAudioLoops()
 	warning_audio.stop();
 }
 
-function changeWarning(){
+function toggleWarning(){
 	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
 		warning_audio.play();
@@ -838,12 +828,11 @@ function playerCrashed(object)
 
 function collectRing(object)
 {
-
-	ring_audio.stop();
+	//ring_audio.stop();
 	ring_audio.play();
 
 	if(object.name == "SUPERANILLO"){
-		ring_long_audio.stop();
+		//ring_long_audio.stop();
 		ring_long_audio.play();
 
 		currentScore += superring_value;
@@ -860,7 +849,7 @@ function collectRing(object)
 function animateRings()
 {
 	// Rotar anillos
-	for(i=0; i < count_rings; i++){
+	for(i=0; i < list_rings.length; i++){
 		list_rings[i].rotation.x += ringRotation * 0.8;
 		list_rings[i].rotation.y += ringRotation * 1.2;
 		list_rings[i].rotation.z += ringRotation * 1.0;
@@ -891,10 +880,10 @@ function update()
 		cameraFollowPlayer();			// Seguir al usuario con la cámara
 		checkPlayerCollisions();		// Comprobar colisiones del usuario
 		checkPlayerInBounds();			// Comprobar que el usuario sigue en el terreno de juego
-		animateGrid(ahora - startTime);
 	}
 
 	animateRings();
+	animateGrid(ahora - startTime);
 
 	// Actualiza los FPS
 	stats.update();
