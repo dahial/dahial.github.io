@@ -208,6 +208,7 @@ function setCameras(ar) {
 }
 
 function loadPrefabs() {
+	console.log(player.position);
 	console.log("Creating prefabs...");
 
 	const loader = new THREE.TextureLoader();
