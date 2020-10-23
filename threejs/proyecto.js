@@ -39,9 +39,6 @@ var newHighScore = false;
 var player = new THREE.Object3D();
 var playerScale = 0.035;
 
-console.log("Top level print");
-console.log(player.position);
-
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
 var playerCurrentBoost = 1;
@@ -961,7 +958,7 @@ function countdown(time) {
 	remainingTime -= time;
 	document.getElementById( 'time' ).innerText = "" + parseInt((remainingTime / 1000) + 1);
 
-	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying){
+	if(remainingTime < 1000 * 10 && !countdown_audio.isPlaying && remainingTime > 1000 * 9){
 		countdown_audio.play();
 	}
 
@@ -973,8 +970,7 @@ function countdown(time) {
 function togglePause() {
 	currentKeys = [false, false, false, false, false, false];
 	if(gameActive){
-		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \\\"Esc\\\" para reanudar";
-		if(audio)
+		document.getElementById("centertext").innerHTML = "Pausa<br>Presiona \"Esc\" para reanudar";
 	}
 	else
 		document.getElementById("centertext").innerHTML = "";
