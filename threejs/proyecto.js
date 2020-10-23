@@ -326,6 +326,7 @@ function startGame() {
 
 function endGame(){
 	music.setVolume(musicBaseVolume * 0.5);
+	wind_audio.setVolume(windBaseVolume * 0);
 	gameActive = false;
 	currentKeys = [false, false, false, false, false, false];
 
@@ -997,8 +998,6 @@ function initAudio(){
 }
 
 function stopAudioLoops() {
-	if(wind_audio.isPlaying)
-		wind_audio.stop();
 	if(warning_audio.isPlaying)
 		warning_audio.stop();
 	if(countdown_audio.isPlaying)
