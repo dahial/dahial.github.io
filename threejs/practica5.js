@@ -116,12 +116,12 @@ function loadScene()
 	const cubeloader = new THREE.CubeTextureLoader();
 
 	var textura_habitacion = cubeloader.load([
-      './images/posX.png',
-      './images/negX.png',
-      './images/posY.png',
-      './images/negY.png',
-      './images/posZ.png',
-      './images/negZ.png',
+      './images/posX.jpg',
+      './images/negX.jpg',
+      './images/posY.jpg',
+      './images/negY.jpg',
+      './images/posZ.jpg',
+      './images/negZ.jpg',
     ]);
 
 	var textura_suelo = loader.load('./images/pisometalico_1024.jpg');
