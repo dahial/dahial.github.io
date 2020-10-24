@@ -128,7 +128,7 @@ function loadScene()
 	var textura_metal = loader.load('./images/metal_128.jpg');
 	var textura_madera = loader.load('./images/wood512.jpg');
 
-	textura_suelo.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+	textura_suelo.wrapS = textura_suelo.wrapT = THREE.RepeatWrapping;
     textura_suelo.repeat.set(2,2);
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
