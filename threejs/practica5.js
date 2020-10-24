@@ -30,6 +30,7 @@ function init()
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.autoClear = false; 
+   	renderer.shadowMap.enabled = true;
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 	// Crear el grafo de escena
@@ -92,8 +93,8 @@ function loadScene()
 	pointLight.position.set(100, 100, 100);
 	//scene.add(pointLight);
 
-	var spotLight = new THREE.SpotLight (0xffffcc, 0.25);
-	spotLight.position.set(-100, 200, 100);
+	var spotLight = new THREE.SpotLight (0xffffcc, 0.75);
+	spotLight.position.set(-300, 500, 300);
 	spotLight.lookAt(0,0,0);
 
 	spotLight.castShadow = true;
@@ -155,7 +156,7 @@ function loadScene()
 	var material_habitacion = [material_posX, material_negX, material_posY, material_negY, material_posZ, material_negZ];
 
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
-	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
+	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide, shininess: 50, specular: 0xffffcc });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: mapa_entorno, reflectivity: 1, shininess: 15});
 
