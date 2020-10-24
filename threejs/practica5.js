@@ -17,43 +17,6 @@ var planta;
 var init_poi = new THREE.Vector3(0,100,0);
 var velX = velZ = 2;
 
-// Debido a problemas de compatibilidad con Three.js r120, importamos el Shader directamente
-const ShaderLib = {
-	cube: {
-
-		uniforms: mergeUniforms( [
-			UniformsLib.envmap,
-			{
-				opacity: { value: 1.0 }
-			}
-		] ),
-
-		vertexShader: ShaderChunk.cube_vert,
-		fragmentShader: ShaderChunk.cube_frag
-	}
-};
-
-ShaderLib.physical = {
-
-	uniforms: mergeUniforms( [
-		ShaderLib.standard.uniforms,
-		{
-			clearcoat: { value: 0 },
-			clearcoatMap: { value: null },
-			clearcoatRoughness: { value: 0 },
-			clearcoatRoughnessMap: { value: null },
-			clearcoatNormalScale: { value: new Vector2( 1, 1 ) },
-			clearcoatNormalMap: { value: null },
-			sheen: { value: new Color( 0x000000 ) },
-			transmission: { value: 0 },
-			transmissionMap: { value: null },
-		}
-	] ),
-
-	vertexShader: ShaderChunk.meshphysical_vert,
-	fragmentShader: ShaderChunk.meshphysical_frag
-};
-
 // Acciones a realizar
 init();
 loadScene();
@@ -160,6 +123,7 @@ function loadScene()
       path + 'negz.jpg',
     ]);
 
+
 	var textura_suelo = loader.load(path + 'pisometalico_1024.jpg');
 	var textura_metal = loader.load(path + 'metal_128.jpg');
 	var textura_madera = loader.load(path + 'wood512.jpg');
@@ -169,6 +133,15 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
+
+    // Debido a problemas de compatibilidad con THREE.js r120, no podemos usar THREE.ShaderLib
+    // Por eso construimos la sala de forma tradicional
+	var material_habitacion = [new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[0], side: THREE.BackSide}),
+		new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[1], side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[2], side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[3], side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[4], side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[5], side: THREE.BackSide })];
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
@@ -311,24 +284,9 @@ function loadScene()
 	robot.attach(base);
 
 	// Organizacion de la escena
+    scene.add(habitacion);
 	scene.add(suelo);
 	scene.add(robot);
-
-	// Habitación
-    var shader = ShaderLib.cube;
-    shader.uniforms.tCube.value = mapa_entorno;
-
-	var material_habitacion = new THREE.ShaderMaterial({
-	    fragmentShader: shader.fragmentShader,
-	    vertexShader: shader.vertexShader,
-	    uniforms: shader.uniforms,
-	    depthWrite: false,
-	    side: THREE.BackSide
-	});
-
-    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
-    habitacion.position.y = 0;
-    scene.add(habitacion);
 
 	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
 	
