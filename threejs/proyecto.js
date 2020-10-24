@@ -203,7 +203,7 @@ function loadPrefabs() {
     ]);
     scene.background = skyboxTexture;
 
-	// Cargar jugador
+	// Cargar jugador e iniciar partida cuando haya cargado
 
 	gltfloader.load('ship.gltf',
 	// called when the resource is loaded
@@ -507,8 +507,8 @@ function generateBuildings(max_radius) {
 
     	do{
     		var scale = 0.5 + Math.random()*0.5;
-	    	building.position.y = 20.5 * scale;
 	    	building.scale = new THREE.Vector3(scale,scale,scale);
+	    	building.position.y = 20.5 * scale;
 
 	    	building.name = "ALMACÉN";
 
