@@ -553,16 +553,18 @@ function generateRings() {
 
 // Reposiciona el anillo "ring" en la escena
 function placeRing(ring){
-	do{
-    	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
-
+	do{	
  		//Posicionar ring en el radio
  		var r = ring_radius * Math.random();
   		var theta = Math.random() * 2 * Math.PI;
 
   		ring.position.x = r * Math.cos(theta);
+  		ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
   		ring.position.z = r * Math.sin(theta);
+
+  		ring.rotation.x = Math.random() * 2 * Math.PI
   		ring.rotation.y = theta;
+  		ring.rotation.z = Math.random() * 2 * Math.PI
 	}
 	while((checkBuildingCollision(ring, true, true, true, 5) != null) || (checkRingCollision(ring, false) != null)); // Comprobar no-colision
 	//while(false); // Comprobar no-colision
