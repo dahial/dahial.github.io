@@ -114,45 +114,30 @@ function loadScene()
 	// Texturas
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
+	var path = './images/';
 
-	// Cargar habitación
 	var textura_habitacion = cubeloader.load([
-      './images/posx.jpg',
-      './images/negx.jpg',
-      './images/posy.jpg',
-      './images/negy.jpg',
-      './images/posz.jpg',
-      './images/negz.jpg',
-    ],
-    // Al acabar la carga, genera la habitacion
-    function(textura){
-    	var shader = THREE.ShaderLib.cube;
-	    shader.uniforms.tCube.value = textura;
+      path + 'posx.jpg',
+      path + 'negx.jpg',
+      path + 'posy.jpg',
+      path + 'negy.jpg',
+      path + 'posz.jpg',
+      path + 'negz.jpg',
+    ]);
 
-	    var material_habitacion = new THREE.ShaderMaterial({
-	       fragmentShader: shader.fragmentShader,
-	       vertexShader: shader.vertexShader,
-	       uniforms: shader.uniforms,
-	       depthWrite: false,
-	       side: THREE.BackSide
-	    });
-
-	    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
-	    scene.add(habitacion);
-    });
-
-	var textura_suelo = loader.load('./images/pisometalico_1024.jpg');
-	var textura_metal = loader.load('./images/metal_128.jpg');
-	var textura_madera = loader.load('./images/wood512.jpg');
+	var textura_suelo = loader.load(path + 'pisometalico_1024.jpg');
+	var textura_metal = loader.load(path + 'metal_128.jpg');
+	var textura_madera = loader.load(path + 'wood512.jpg');
 
 	textura_suelo.wrapS = textura_suelo.wrapT = THREE.RepeatWrapping;
     textura_suelo.repeat.set(2,2);
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
+	var material_habitacion = new THREE.MeshLambertMaterial({ map: envMap, side: THREE.DoubleSide });
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
-	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal });
-	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera, side: THREE.DoubleSide });
+	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
+	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: textura_habitacion, reflectivity: 1, shininess: 15});
 
 	// Geometrías
@@ -211,8 +196,11 @@ function loadScene()
 		new THREE.Face3(6,11,10)
 	);
 
+	geo_pinza.computeFaceNormals()
+
 	// Objetos
 
+	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
@@ -289,6 +277,7 @@ function loadScene()
 	robot.attach(base);
 
 	// Organizacion de la escena
+	scene.add(habitacion);
 	scene.add(suelo);
 	scene.add(robot);
 
