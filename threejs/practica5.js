@@ -10,7 +10,7 @@ var effectController, h;
 var antes = Date.now();
 
 // Variables globales
-var suelo, robot;
+var suelo, robot, habitacion;
 var l = b = -150;
 var r = t = -l;
 var planta;
@@ -115,7 +115,7 @@ function loadScene()
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
 
-	var envMap = cubeloader.load([
+	var textura_habitacion = cubeloader.load([
       './images/posX.png',
       './images/negX.png',
       './images/posY.png',
@@ -133,12 +133,11 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
-	var material = new THREE.MeshBasicMaterial({color:'white', wireframe:true});
-
-	var material_suelo = new THREE.MeshLambertMaterial({ color:'gray', wireframe: true });
+	var material_habitacion = new THREE.MeshBasicMaterial({ map: textura_habitacion });
+	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera, side: THREE.DoubleSide });
-	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: envMap, reflectivity: 1, shininess: 15})
+	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: textura_habitacion, reflectivity: 1, shininess: 15})
 
 	// Geometrías
 	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
@@ -197,8 +196,11 @@ function loadScene()
 
 	// Objetos
 
+	habitacion = new THREE.Mesh(new THREE.MeshBasicMaterial(), )
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
+
+	suelo.receiveShadow = true;
 
 	var pinzaIz = new THREE.Mesh(geo_pinza, material_metal); pinzaIz.name = "pinzaIz";
 	var pinzaDe = pinzaIz.clone(); pinzaDe.name = "pinzaDe";
@@ -273,6 +275,8 @@ function loadScene()
 	// Organizacion de la escena
 	scene.add(suelo);
 	scene.add(robot);
+
+	robot.traverse( function (parte) {parte.castShadow = true; parte.receiveShadow = true});
 	
 	//Coordinates.drawGrid({size:6,scale:1});
 	//Coordinates.drawGrid({size:6,scale:1, orientation:"y"});
