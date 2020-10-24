@@ -92,7 +92,7 @@ function loadScene()
 	pointLight.position.set(100, 100, 100);
 	//scene.add(pointLight);
 
-	var spotLight = new THREE.SpotLight (0xffffaa, 0.5);
+	var spotLight = new THREE.SpotLight (0xffffcc, 0.25);
 	spotLight.position.set(-100, 500, 100);
 	spotLight.lookAt(0,0,0);
 
@@ -101,6 +101,7 @@ function loadScene()
 	spotLight.shadow.mapSize.width = 2048;
 	spotLight.shadow.mapSize.height = 2048;
 
+	luzFocal.angle = Math.PI / 4; 
 	spotLight.shadow.camera.near = 0.1;
 	spotLight.shadow.camera.far = 1000;
 	spotLight.shadow.camera.fov = 50;
