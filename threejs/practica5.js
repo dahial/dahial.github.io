@@ -114,31 +114,23 @@ function loadScene()
 	const cubeloader = new THREE.CubeTextureLoader();
 	var path = './images/';
 
-	// Cargar habitación
-	// Debido a problemas de compatibilidad con THREE.js r120, no podemos usar THREE.ShaderLib
-    // Por eso construimos la sala de forma tradicional
-	var mapa_entorno;
-	cubeloader.load([
+	var mapa_entorno = cubeloader.load([
       path + 'posx.jpg',
       path + 'negx.jpg',
       path + 'posy.jpg',
       path + 'negy.jpg',
       path + 'posz.jpg',
       path + 'negz.jpg',
-    ],
-    function(texture) {
-    	mapa_entorno = texture;
-    	var material_habitacion = [new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[0], side: THREE.BackSide}),
-			new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[1], side: THREE.BackSide }),
-			new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[2], side: THREE.BackSide }),
-			new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[3], side: THREE.BackSide }),
-			new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[4], side: THREE.BackSide }),
-			new THREE.MeshBasicMaterial({ map: mapa_entorno.texture[5], side: THREE.BackSide })];
+    ]);
 
-			var geo_habitacion = new THREE.BoxGeometry(1000,1000,1000);
-			habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
-    });
-
+    // Debido a problemas de compatibilidad con THREE.js r120, no podemos usar THREE.ShaderLib
+    // Por eso construimos la sala de forma tradicional
+    var textura_posX = loader.load(path + 'posx.jpg');
+    var textura_negX = loader.load(path + 'negx.jpg');
+    var textura_posY = loader.load(path + 'posy.jpg');
+    var textura_negY = loader.load(path + 'negy.jpg');
+    var textura_posZ = loader.load(path + 'posz.jpg');
+    var textura_negZ = loader.load(path + 'negz.jpg');
 
 	var textura_suelo = loader.load(path + 'pisometalico_1024.jpg');
 	var textura_metal = loader.load(path + 'metal_128.jpg');
@@ -149,12 +141,24 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
+
+    // Debido a problemas de compatibilidad con THREE.js r120, no podemos usar THREE.ShaderLib
+    // Por eso construimos la sala de forma tradicional
+	var material_posX = new THREE.MeshBasicMaterial({map: textura_posX, side: THREE.BackSide});
+	var material_negX = new THREE.MeshBasicMaterial({map: textura_negX, side: THREE.BackSide});
+	var material_posY = new THREE.MeshBasicMaterial({map: textura_posY, side: THREE.BackSide});
+	var material_negY = new THREE.MeshBasicMaterial({map: textura_negY, side: THREE.BackSide});
+	var material_posZ = new THREE.MeshBasicMaterial({map: textura_posZ, side: THREE.BackSide});
+	var material_negZ = new THREE.MeshBasicMaterial({map: textura_negZ, side: THREE.BackSide});
+	var material_habitacion = [material_posX, material_negX, material_posY, material_negY, material_posZ, material_negZ];
+
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: mapa_entorno, reflectivity: 1, shininess: 15});
 
 	// Geometrías
+	var geo_habitacion = new THREE.BoxGeometry(1000,1000,1000);
 	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
 
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
@@ -211,7 +215,9 @@ function loadScene()
 
 	geo_pinza.computeFaceNormals()
 
-	// Objetos	
+	// Objetos
+
+	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
