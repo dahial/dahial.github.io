@@ -437,7 +437,9 @@ function loadScene() {
 
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
-    ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
+    //ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
+    ground = new THREE.Mesh(new THREE.CylinderGeometry(scene_radius, scene_radius, 5, 64), groundMaterial);
+    ground.position.y = -2.5;
     ground.name = "SUELO";
     
     ground.rotation.x = -Math.PI / 2;
