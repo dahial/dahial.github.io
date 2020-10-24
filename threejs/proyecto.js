@@ -171,7 +171,6 @@ function init() {
 	document.getElementById( 'container' ).appendChild( stats.domElement );
 }
 
-
 function setCameras(ar) {
 
 	// Camara perspectiva
@@ -184,6 +183,7 @@ function setCameras(ar) {
 	scene.add(camera);
 }
 
+// Importa materiales y genera objetos prefabricados duplicables
 function loadPrefabs() {
 	console.log("Creating prefabs...");
 
@@ -280,9 +280,10 @@ function loadPrefabs() {
 	console.log("Prefabs created.");
 }
 
-
+/////////////
 ///////////// CONTROL DEL JUEGO
 
+// Desencadena el inicio de una partida
 function startGame() {
 	console.log("STARTING NEW GAME")
 
@@ -325,6 +326,7 @@ function startGame() {
 	music.setVolume(musicBaseVolume);
 }
 
+// Desencadena el fin de una partida
 function endGame(){
 	music.setVolume(musicBaseVolume * 0.5);
 	wind_audio.setVolume(windBaseVolume * 0);
@@ -348,6 +350,7 @@ function endGame(){
 	pause = false;
 }
 
+// Alterna la función de Pausa del juego
 function togglePause() {
 	currentKeys = [false, false, false, false, false, false];
 	if(gameActive){
@@ -364,11 +367,13 @@ function togglePause() {
 	gameActive = !gameActive;
 }
 
+// Actualiza la puntuación sumándole "delta" a la puntuación actual
 function updateScore(delta) {
 	currentScore = Math.max(currentScore + delta, 0);
 	document.getElementById("score").innerHTML = "" + currentScore;
 }
 
+// Gestiona el contador de la partida
 function countdown(time) {
 
 	remainingTime -= time;
@@ -382,8 +387,10 @@ function countdown(time) {
 		endGame();
 }
 
+/////////////
 ///////////// CREACIÓN DE LA ESCENA
 
+// Carga los objetos estáticos de la escena
 function loadScene() {
 	console.log("Loading scene...");
 
@@ -464,6 +471,7 @@ function loadScene() {
 	console.log("Scene loaded.")
 }
 
+// Genera las estructuras de la escena en un radio "max_radius"
 function generateBuildings(max_radius) {
 	// BuildingA
 	for(j=0; j < count_buildingA; j++){
@@ -519,6 +527,7 @@ function generateBuildings(max_radius) {
 	}
 }
 
+// Genera los anillos a recoger en la escena
 function generateRings() {
 	// Rings
 	for(i=0; i < count_rings; i++){
@@ -540,6 +549,7 @@ function generateRings() {
 	scene.add(superring);
 }
 
+// Reposiciona el anillo "ring" en la escena
 function placeRing(ring){
 	do{
     	ring.position.y = ringMinY + (ringMaxY - ringMinY) * Math.random();
@@ -556,6 +566,7 @@ function placeRing(ring){
 	//while(false); // Comprobar no-colision
 }
 
+// Limpia los objetos dinámicos de la escena, dejándola igual que en el paso loadScene()
 function cleanScene() {
 	var object;
 	// Eliminar edificios de la escena
@@ -590,6 +601,7 @@ function cleanScene() {
 	list_rings = [];
 }
 
+// Coloca al jugador en la escena y reposiciona la cámara
 function placePlayer() {
 	//Posicionar al usuario en el radio
 	var r = playerRadius;
@@ -612,9 +624,10 @@ function placePlayer() {
 	camera.lookAt(cameraLookTarget);
 }
 
+/////////////
 //////////// MOVIMIENTO DEL USUARIO
 
-
+// Precomputa el cabeceo y la guiñada del jugador
 function updatePlayerRotation() {
 
 	if(inverted)
@@ -625,6 +638,7 @@ function updatePlayerRotation() {
 	playerCurrentRotation.z = 1;
 }
 
+// Computa la rotación final del jugador (con alabeo), y su traslación en el tiempo
 function applyPlayerMovement(deltaTime) {
 	updatePlayerRotation();
 
@@ -693,6 +707,7 @@ function applyPlayerMovement(deltaTime) {
 	player.getWorldDirection(playerDirection);
 }
 
+// Actualiza el ángulo de apertura de la cámara dependiendo de la velocidad del jugador, para simular velocidad
 function updateCameraFov() {
 	if((playerCurrentBoost != playerPreviousBoost) && playerCurrentBoost >= 1){
 		var newFov = cameraFov + ((playerCurrentBoost - 1) / (playerMaxBoost - 1)) * (cameraMaxFov - cameraFov);
@@ -701,6 +716,7 @@ function updateCameraFov() {
 	}
 }
 
+// Actualiza la posición de la camara, intentando seguirle el rastro al jugador y mirar justo en frente de él
 function cameraFollowPlayer() {
 	cameraTarget.subVectors(player.position, playerDirection.multiplyScalar(cameraDistance / Math.max(playerCurrentBoost, 1))); // Objetivo de la cámara = detrás del usuario (más cerca si está acelerando, igual si frena)
 		cameraDiff.subVectors(cameraTarget, camera.position);
@@ -717,8 +733,10 @@ function cameraFollowPlayer() {
 		updateCameraFov(); // Cambiar angulo de visión si el usuario acelera
 }
 
+/////////////
 //////////// DETECCIÓN DE COLISIÓN
 
+// Devuelve el primer edificio con el que "object" colisiona
 function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
@@ -773,6 +791,7 @@ function checkBuildingCollision(object, checkA, checkB, useCenter, centerDistanc
 	return null;
 }
 
+// Devuelve el primer anillo con el que "object" colisiona
 function checkRingCollision(object, useCenter, centerDistance = 1) {
 	// Usar centro del objeto
 	if(useCenter){
@@ -802,6 +821,7 @@ function checkRingCollision(object, useCenter, centerDistance = 1) {
 	return null;
 }
 
+// Comprueba si el jugador está en colisión con un edificio o un anillo
 function checkPlayerCollisions() {
 	var collision;
 
@@ -818,6 +838,7 @@ function checkPlayerCollisions() {
 		collectRing(collision);
 }
 
+// Comprueba si el jugador sigue en la zona de vuelo
 function checkPlayerInBounds() {
 	if(player.position.y <= 0)
 		playerCrashed(ground);
@@ -826,8 +847,7 @@ function checkPlayerInBounds() {
 
 	if(warning_current){
 
-		// Computar transparencia de la esfera límite según la distancia
-		sphere_grid.material.opacity = ((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity * grid_master_opacity;
+		
 
 		if(curr_distance < distance_warn){
 			warning_current = false;
@@ -845,6 +865,7 @@ function checkPlayerInBounds() {
 	}
 }
 
+// Ejecutado cuando el jugador se estrella
 function playerCrashed(object) {
 	stopAudioLoops();
 
@@ -860,6 +881,7 @@ function playerCrashed(object) {
 	document.getElementById("warning").innerText = "Te estrellaste con: " + object.name + "\n-1000 Puntos";
 }
 
+// Ejecutado cuando el jugador abandona la zona de vuelo
 function playerOOB() {
 
 	stopAudioLoops();
@@ -870,6 +892,7 @@ function playerOOB() {
 	document.getElementById("warning").innerText = "Abandonaste la zona de vuelo.";
 }
 
+// Ejecutado cuando el jugador recoge un anillo
 function collectRing(object) {
 	if(ring_audio.isPlaying)
 		ring_audio.stop();
@@ -895,6 +918,7 @@ function collectRing(object) {
 	placeRing(object);
 }
 
+/////////////
 /////////// GESTIÓN DE EVENTOS DEL NAVEGADOR
 
 function updateAspectRatio() {
@@ -954,8 +978,10 @@ function onKeyUp(event) {
 	}
 }
 
+/////////////
 ////////// INTERFAZ Y AUDIO
 
+// Carga los archivos de audio
 function initAudio(){
 	// Inicializar audio
 	var audioLoader = new THREE.AudioLoader();
@@ -1003,6 +1029,7 @@ function initAudio(){
 	});
 }
 
+// Interrumpe ciertas señales de audio
 function stopAudioLoops() {
 	if(warning_audio.isPlaying)
 		warning_audio.stop();
@@ -1010,6 +1037,7 @@ function stopAudioLoops() {
 		countdown_audio.stop();
 }
 
+// Alterna la advertencia al abandonar de la zona de vuelo
 function toggleWarning() {
 	if(warning_current){
 		console.log("ATENCIÓN: Abandonando el terreno de juego");
@@ -1025,9 +1053,10 @@ function toggleWarning() {
 	}
 }
 
+/////////////
 ////////// ANIMACIÓN
 
-
+// Anima todos los anillos de la escena
 function animateRings() {
 	// Rotar anillos
 	for(i=0; i < list_rings.length; i++){
@@ -1037,15 +1066,21 @@ function animateRings() {
 	}
 }
 
+// Anima la rejilla semitransparente de forma intermitente
 function animateGrid(time) {
 	grid_master_opacity = Math.abs(Math.sin(time / 1000));
 	ground_grid.material.opacity = ground_grid_opacity * grid_master_opacity;
+
+	// Computar transparencia de la esfera límite según la distancia
+	sphere_grid.material.opacity = Math.max(((curr_distance - distance_warn) / (distance_oob - distance_warn)) * sphere_max_opacity * grid_master_opacity, 0);
 }
 
+// Instancia una explosión de partículas
 function instantiateExplosion(position, color, particleCount){
 	parts.push(new particleExplosion(position, color, particleCount));
 }
 
+// Define el objeto de explosión de partículas
 function particleExplosion(position, color, particleCount){
 
 	var geometry = new THREE.Geometry();
@@ -1085,11 +1120,13 @@ function particleExplosion(position, color, particleCount){
   }
 }
 
+// Desplaza todas las partículas de la escena
 function updateParticles(){
 	var pCount = parts.length;
           while(pCount--) { parts[pCount].update(); }
 }
 
+/////////////
 ////////// BUCLE DE RENDERIZADO
 
 function update() {
