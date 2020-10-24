@@ -231,6 +231,7 @@ function loadScene()
 	var disco = new THREE.Mesh(geo_disco, material_madera);
 
 	var rotula = new THREE.Mesh(geo_rotula, material_reflectante);
+	rotula.castShadow = true;
 	var esparrago = new THREE.Mesh(geo_esparrago, material_metal);
 	var eje = new THREE.Mesh(geo_eje, material_metal);
 
