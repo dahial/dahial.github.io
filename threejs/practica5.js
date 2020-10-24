@@ -137,7 +137,7 @@ function loadScene()
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera, side: THREE.DoubleSide });
-	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: textura_habitacion, reflectivity: 1, shininess: 15})
+	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: textura_habitacion, reflectivity: 1, shininess: 15});
 
 	// Geometrías
 	var geo_habitacion = new THREE.BoxGeometry(1000,1000,1000);
@@ -197,7 +197,7 @@ function loadScene()
 
 	// Objetos
 
-	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion):
+	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
