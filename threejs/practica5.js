@@ -278,7 +278,7 @@ function loadScene()
 	scene.add(suelo);
 	scene.add(robot);
 
-	robot.traverse( function (parte) {parte.castShadow = true; parte.receiveShadow = true});
+	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
 	
 	//Coordinates.drawGrid({size:6,scale:1});
 	//Coordinates.drawGrid({size:6,scale:1, orientation:"y"});
