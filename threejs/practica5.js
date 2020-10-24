@@ -115,6 +115,7 @@ function loadScene()
 	const loader = new THREE.TextureLoader();
 	const cubeloader = new THREE.CubeTextureLoader();
 
+	// Cargar habitación
 	var textura_habitacion = cubeloader.load([
       './images/posx.jpg',
       './images/negx.jpg',
@@ -122,7 +123,23 @@ function loadScene()
       './images/negy.jpg',
       './images/posz.jpg',
       './images/negz.jpg',
-    ]);
+    ],
+    // Al acabar la carga, genera la habitacion
+    function(textura){
+    	var shader = THREE.ShaderLib.cube;
+	    shader.uniforms.tCube.value = textura;
+
+	    var material_habitacion = new THREE.ShaderMaterial({
+	       fragmentShader: shader.fragmentShader,
+	       vertexShader: shader.vertexShader,
+	       uniforms: shader.uniforms,
+	       depthWrite: false,
+	       side: THREE.BackSide
+	    });
+
+	    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
+	    scene.add(habitacion);
+    });
 
 	var textura_suelo = loader.load('./images/pisometalico_1024.jpg');
 	var textura_metal = loader.load('./images/metal_128.jpg');
@@ -274,22 +291,6 @@ function loadScene()
 	// Organizacion de la escena
 	scene.add(suelo);
 	scene.add(robot);
-
-	// Añadir habitación
-
-    var shader = THREE.ShaderLib.cube;
-    shader.uniforms.tCube.value = textura_habitacion;
-
-    var material_habitacion = new THREE.ShaderMaterial({
-       fragmentShader: shader.fragmentShader,
-       vertexShader: shader.vertexShader,
-       uniforms: shader.uniforms,
-       depthWrite: false,
-       side: THREE.BackSide
-    });
-
-    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
-    scene.add(habitacion);
 
 	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
 	
