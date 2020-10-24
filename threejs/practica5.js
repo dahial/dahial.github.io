@@ -92,7 +92,7 @@ function loadScene()
 	ambientLight.position.set(-100, 100,-100);
 	scene.add(ambientLight);
 
-	var pointLight = new THREE.pointLight( '0xaaaa00' );
+	var pointLight = new THREE.PointLight( '0xaaaa00' );
 	pointLight.position.set(100, 100, 100);
 	scene.add(pointLight);
 
