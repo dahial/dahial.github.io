@@ -438,11 +438,11 @@ function loadScene() {
     var groundMaterial = new THREE.MeshPhongMaterial( { map: groundTexture, normalMap: groundNormalMap, side: THREE.DoubleSide, shininess: 15, specular: 0x887788 });
 
     //ground = new THREE.Mesh(new THREE.CircleGeometry(scene_radius, 64), groundMaterial);
-    ground = new THREE.Mesh(new THREE.CylinderGeometry(scene_radius, scene_radius, 5, 64), groundMaterial);
-    ground.position.y = -2.5;
+    ground = new THREE.Mesh(new THREE.CylinderGeometry(scene_radius, scene_radius, 20, 64), groundMaterial);
+    ground.position.y = -10;
     ground.name = "SUELO";
     
-    ground.rotation.x = -Math.PI / 2;
+    //ground.rotation.x = -Math.PI / 2;
 	ground.receiveShadow = true;
 
     scene.add(ground);
@@ -494,7 +494,7 @@ function generateBuildings(max_radius) {
 
 	  		building.position.x = r * Math.cos(theta);
 	  		building.position.z = r * Math.sin(theta);
-	  		//building.rotation.y = theta;
+	  		//building.rotation.y = theta; <- No es posible de momento debido a que las BoundingBox están alineadas con los ejes del mundo
   		}
   		while(checkBuildingCollision(building, true, false, false) != null); // Comprobar no-solapamiento de BuildingA entre si
 
@@ -522,7 +522,6 @@ function generateBuildings(max_radius) {
 	  		building.position.z = r * Math.sin(theta);
   		}
   		while(checkBuildingCollision(building, false, true, false) != null); // Comprobar no-solapamiento de BuildingB entre si
-  		//while(false);
 
   		list_buildingB.push(building);
     	scene.add(building);
