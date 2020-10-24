@@ -274,6 +274,7 @@ function loadScene()
 	robot.attach(base);
 
 	// Organizacion de la escena
+	scene.add(habitacion);
 	scene.add(suelo);
 	scene.add(robot);
 
