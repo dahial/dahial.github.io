@@ -88,15 +88,15 @@ function loadScene()
 	// Construir el grafo de escena
 
 	// Luces
-	var ambientLight = new THREE.AmbientLight( 0x606060 );
+	var ambientLight = new THREE.AmbientLight(0x606060);
 	ambientLight.position.set(-100, 100,-100);
 	scene.add(ambientLight);
 
-	var pointLight = new THREE.PointLight( '0xaaaa00', 0.5 );
+	var pointLight = new THREE.PointLight( 0xaaaa00, 0.5 );
 	pointLight.position.set(100, 100, 100);
 	scene.add(pointLight);
 
-	var spotLight = new THREE.SpotLight ('0xcccc88', 0.5);
+	var spotLight = new THREE.SpotLight (0xcccc88, 0.5);
 	spotLight.position.set(-100, 200, 100);
 	spotLight.lookAt(0,0,0);
 
