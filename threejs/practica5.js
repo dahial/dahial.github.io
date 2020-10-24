@@ -140,7 +140,7 @@ function loadScene()
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: textura_habitacion, reflectivity: 1, shininess: 15})
 
 	// Geometrías
-	var geo_habitacion = new THREE:BoxGeometry(1000,1000,1000);
+	var geo_habitacion = new THREE.BoxGeometry(1000,1000,1000);
 	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
 
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
