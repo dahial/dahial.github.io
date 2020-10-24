@@ -106,7 +106,10 @@ function loadScene()
 	spotLight.shadow.camera.far = 1000;
 	spotLight.shadow.camera.fov = 50;
 
-	scene.add(spotLight);
+	var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+
+
+	scene.add(spotLight, spotLightHelper);
 
 	// Texturas
 	const loader = new THREE.TextureLoader();
