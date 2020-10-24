@@ -40,6 +40,7 @@ var player = new THREE.Object3D();
 var playerScale = 0.035;
 var playerRadius = 450;
 var playerHeight = 350;
+var curr_distance = 0;
 
 var playerDirection = new THREE.Vector3(0,0,0);
 var playerSpeed = 5 / 100;
@@ -622,6 +623,8 @@ function placePlayer() {
 
 	camera.position.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
 	camera.lookAt(cameraLookTarget);
+
+	curr_distance = 0;
 }
 
 /////////////
@@ -843,7 +846,7 @@ function checkPlayerInBounds() {
 	if(player.position.y <= 0)
 		playerCrashed(ground);
 
-	var curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
+	curr_distance = player.position.distanceTo(new THREE.Vector3(0,0,0));
 
 	if(warning_current){
 
