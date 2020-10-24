@@ -116,12 +116,12 @@ function loadScene()
 	const cubeloader = new THREE.CubeTextureLoader();
 
 	var textura_habitacion = cubeloader.load([
-      './images/posX.jpg',
-      './images/negX.jpg',
-      './images/posY.jpg',
-      './images/negY.jpg',
-      './images/posZ.jpg',
-      './images/negZ.jpg',
+      './images/posx.jpg',
+      './images/negx.jpg',
+      './images/posy.jpg',
+      './images/negy.jpg',
+      './images/posz.jpg',
+      './images/negz.jpg',
     ]);
 
 	var textura_suelo = loader.load('./images/pisometalico_1024.jpg');
@@ -133,13 +133,14 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
-	var material_habitacion = new THREE.MeshBasicMaterial({ map: textura_habitacion });
+	var material_habitacion = new THREE.MeshBasicMaterial({ map: textura_habitacion, side: THREE.BackSide });
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera, side: THREE.DoubleSide });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0x880000, envMap: textura_habitacion, reflectivity: 1, shininess: 15})
 
 	// Geometrías
+	var geo_habitacion = new THREE:BoxGeometry(1000,1000,1000);
 	var geo_suelo = new THREE.PlaneGeometry(1000,1000,20,20);
 
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
@@ -196,7 +197,7 @@ function loadScene()
 
 	// Objetos
 
-	habitacion = new THREE.Mesh(new THREE.MeshBasicMaterial(), )
+	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion):
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
@@ -224,7 +225,7 @@ function loadScene()
 
 	//// Transformaciones y creación del grafo de escena
 	//// (Diseño bottom-up aprovechando transformaciones de padres)
-	suelo.rotation.x = Math.PI/2;
+	suelo.rotation.x = -Math.PI/2;
 
 	// MANO
 	pinzaIz.position.x = -15;
