@@ -102,7 +102,7 @@ function loadScene()
 	spotLight.shadow.mapSize.width = 2048;
 	spotLight.shadow.mapSize.height = 2048;
 
-	spotLight.angle = Math.PI / 5; 
+	spotLight.angle = Math.PI / 6; 
 	spotLight.shadow.camera.near = 0.1;
 	spotLight.shadow.camera.far = 1000;
 	spotLight.shadow.camera.fov = 50;
