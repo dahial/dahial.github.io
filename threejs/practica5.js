@@ -222,6 +222,7 @@ function loadScene()
 
 	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
+	suelo.receiveShadow = true;
 	robot = new THREE.Object3D();
 
 	var pinzaIz = new THREE.Mesh(geo_pinza, material_metal); pinzaIz.name = "pinzaIz";
