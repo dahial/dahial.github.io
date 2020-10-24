@@ -134,7 +134,7 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
-	var material_habitacion = new THREE.MeshLambertMaterial({ map: envMap, side: THREE.DoubleSide });
+	var material_habitacion = new THREE.MeshLambertMaterial({ map: textura_habitacion, side: THREE.DoubleSide });
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
