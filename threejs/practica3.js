@@ -56,7 +56,7 @@ function loadScene() {
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
 
 	var geo_eje = new THREE.CylinderGeometry(20, 20, 18, 30);
-	var geo_esparrago = new THREE.BoxGeometry(18, 120, 12);
+	var geo_esparrago = new THREE.BoxGeometry(12, 120, 18);
 	var geo_rotula = new THREE.SphereGeometry(20, 15, 15);
 
 	var geo_disco = new THREE.CylinderGeometry(22, 22, 6, 30);

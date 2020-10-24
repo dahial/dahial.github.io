@@ -97,7 +97,7 @@ function loadScene()
 	scene.add(pointLight);
 
 	var spotLight = new THREE.SpotLight (0xcccc88, 0.5);
-	spotLight.position.set(-100, 200, 100);
+	spotLight.position.set(-100, 500, 100);
 	spotLight.lookAt(0,0,0);
 
 	spotLight.castShadow = true;
@@ -133,7 +133,6 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
-	var material_habitacion = new THREE.MeshBasicMaterial({ map: textura_habitacion, side: THREE.BackSide });
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera, side: THREE.DoubleSide });
@@ -146,7 +145,7 @@ function loadScene()
 	var geo_base = new THREE.CylinderGeometry(50, 50, 15, 40);
 
 	var geo_eje = new THREE.CylinderGeometry(20, 20, 18, 30);
-	var geo_esparrago = new THREE.BoxGeometry(18, 120, 12);
+	var geo_esparrago = new THREE.BoxGeometry(12, 120, 18);
 	var geo_rotula = new THREE.SphereGeometry(20, 15, 15);
 
 	var geo_disco = new THREE.CylinderGeometry(22, 22, 6, 30);
@@ -197,7 +196,6 @@ function loadScene()
 
 	// Objetos
 
-	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
 
@@ -274,9 +272,24 @@ function loadScene()
 	robot.attach(base);
 
 	// Organizacion de la escena
-	scene.add(habitacion);
 	scene.add(suelo);
 	scene.add(robot);
+
+	// Añadir habitación
+
+    var shader = THREE.ShaderLib.cube;
+    shader.uniforms.tCube.value = textura_habitacion;
+
+    var material_habitacion = new THREE.ShaderMaterial({
+       fragmentShader: shader.fragmentShader,
+       vertexShader: shader.vertexShader,
+       uniforms: shader.uniforms,
+       depthWrite: false,
+       side: THREE.BackSide
+    });
+
+    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
+    scene.add(habitacion);
 
 	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
 	
@@ -357,8 +370,6 @@ function onKeyDown(event)
 
 	planta.position.x = robot.position.x;
 	planta.position.z = robot.position.z;
-
-
 }
 
 function update()
