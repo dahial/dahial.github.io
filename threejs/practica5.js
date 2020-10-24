@@ -116,7 +116,7 @@ function loadScene()
 	const cubeloader = new THREE.CubeTextureLoader();
 	var path = './images/';
 
-	var textura_habitacion = cubeloader.load([
+	var mapa_entorno = cubeloader.load([
       path + 'posx.jpg',
       path + 'negx.jpg',
       path + 'posy.jpg',
@@ -134,11 +134,10 @@ function loadScene()
     textura_suelo.anisotropy = textura_metal.anisotropy = textura_madera.anisotropy = 16;
 
 	// Materiales
-	var material_habitacion = new THREE.MeshLambertMaterial({ map: textura_habitacion, side: THREE.BackSide });
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
-	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: textura_habitacion, reflectivity: 1, shininess: 15});
+	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: mapa_entorno, reflectivity: 1, shininess: 15});
 
 	// Geometrías
 	var geo_habitacion = new THREE.BoxGeometry(1000,1000,1000);
@@ -280,6 +279,22 @@ function loadScene()
 	scene.add(habitacion);
 	scene.add(suelo);
 	scene.add(robot);
+
+	// Habitación
+    var shader = THREE.ShaderLib.cube;
+    shader.uniforms.tCube.value = mapa_entorno;
+
+	var material_habitacion = new THREE.ShaderMaterial({
+	    fragmentShader: shader.fragmentShader,
+	    vertexShader: shader.vertexShader,
+	    uniforms: shader.uniforms,
+	    depthWrite: false,
+	    side: THREE.BackSide
+	});
+
+    var habitacion = new THREE.Mesh(new THREE.CubeGeometry(1000,1000,1000), material_habitacion);
+    habitacion.position.y = 0;
+    scene.add(habitacion);
 
 	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
 	
