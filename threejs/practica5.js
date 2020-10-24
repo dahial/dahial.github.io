@@ -17,7 +17,42 @@ var planta;
 var init_poi = new THREE.Vector3(0,100,0);
 var velX = velZ = 2;
 
+// Debido a problemas de compatibilidad con Three.js r120, importamos el Shader directamente
+const ShaderLib = {
+	cube: {
 
+		uniforms: mergeUniforms( [
+			UniformsLib.envmap,
+			{
+				opacity: { value: 1.0 }
+			}
+		] ),
+
+		vertexShader: ShaderChunk.cube_vert,
+		fragmentShader: ShaderChunk.cube_frag
+	}
+};
+
+ShaderLib.physical = {
+
+	uniforms: mergeUniforms( [
+		ShaderLib.standard.uniforms,
+		{
+			clearcoat: { value: 0 },
+			clearcoatMap: { value: null },
+			clearcoatRoughness: { value: 0 },
+			clearcoatRoughnessMap: { value: null },
+			clearcoatNormalScale: { value: new Vector2( 1, 1 ) },
+			clearcoatNormalMap: { value: null },
+			sheen: { value: new Color( 0x000000 ) },
+			transmission: { value: 0 },
+			transmissionMap: { value: null },
+		}
+	] ),
+
+	vertexShader: ShaderChunk.meshphysical_vert,
+	fragmentShader: ShaderChunk.meshphysical_frag
+};
 
 // Acciones a realizar
 init();
@@ -280,7 +315,7 @@ function loadScene()
 	scene.add(robot);
 
 	// Habitación
-    var shader = THREE.ShaderLib.cube;
+    var shader = ShaderLib.cube;
     shader.uniforms.tCube.value = mapa_entorno;
 
 	var material_habitacion = new THREE.ShaderMaterial({
