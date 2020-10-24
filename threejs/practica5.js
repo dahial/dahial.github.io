@@ -57,7 +57,6 @@ function init()
 	// Callbacks
 	window.addEventListener('resize', updateAspectRatio );
 	window.addEventListener('keydown', onKeyDown );
-
 }
 
 function setCameras(ar) {
@@ -65,9 +64,9 @@ function setCameras(ar) {
 
 	// Camara ortográfica, ignorando rázón de aspecto ya que siempre será cuadrada
 	planta = new THREE.OrthographicCamera( l, r, t, b, -20, 1000 );
-	planta.position.set(0,500,0);
+	planta.position.set(0, 500, 0);
 	planta.lookAt(init_poi);
-	planta.up = new THREE.Vector3(0,0,-1);
+	planta.up = new THREE.Vector3(0, 0, -1);
 
 	// Camara perspectiva
 	var camaraPerspectiva = new THREE.PerspectiveCamera(50,ar,0.1,2000);
@@ -78,7 +77,6 @@ function setCameras(ar) {
 
 	scene.add(planta);
 	scene.add(camera);
-
 }
 
 function loadScene()
@@ -86,7 +84,7 @@ function loadScene()
 	// Construir el grafo de escena
 
 	// Luces
-	var ambientLight = new THREE.AmbientLight(0x606060);
+	var ambientLight = new THREE.AmbientLight(0x404040);
 	ambientLight.position.set(-100, 100,-100);
 	scene.add(ambientLight);
 
@@ -94,7 +92,7 @@ function loadScene()
 	pointLight.position.set(100, 100, 100);
 	scene.add(pointLight);
 
-	var spotLight = new THREE.SpotLight (0xcccc88, 0.5);
+	var spotLight = new THREE.SpotLight (0xffffaa, 0.5);
 	spotLight.position.set(-100, 500, 100);
 	spotLight.lookAt(0,0,0);
 
@@ -220,8 +218,6 @@ function loadScene()
 	habitacion = new THREE.Mesh(geo_habitacion, material_habitacion);
 	suelo = new THREE.Mesh(geo_suelo, material_suelo);
 	robot = new THREE.Object3D();
-
-	suelo.receiveShadow = true;
 
 	var pinzaIz = new THREE.Mesh(geo_pinza, material_metal); pinzaIz.name = "pinzaIz";
 	var pinzaDe = pinzaIz.clone(); pinzaDe.name = "pinzaDe";
