@@ -86,11 +86,11 @@ function loadScene()
 	// Luces
 	var ambientLight = new THREE.AmbientLight(0x404040);
 	ambientLight.position.set(-100, 100,-100);
-	scene.add(ambientLight);
+	//scene.add(ambientLight);
 
 	var pointLight = new THREE.PointLight( 0xaaaa00, 0.5 );
 	pointLight.position.set(100, 100, 100);
-	scene.add(pointLight);
+	//scene.add(pointLight);
 
 	var spotLight = new THREE.SpotLight (0xffffaa, 0.5);
 	spotLight.position.set(-100, 500, 100);
