@@ -107,11 +107,7 @@ function loadScene()
 	spotLight.shadow.camera.far = 1000;
 	spotLight.shadow.camera.fov = 85;
 
-
-	var spotLightHelper = new THREE.SpotLightHelper(spotLight);
-
-
-	scene.add(spotLight, spotLightHelper);
+	scene.add(spotLight);
 
 	// Texturas
 	const loader = new THREE.TextureLoader();
@@ -238,7 +234,6 @@ function loadScene()
 	var disco = new THREE.Mesh(geo_disco, material_madera);
 
 	var rotula = new THREE.Mesh(geo_rotula, material_reflectante);
-	rotula.castShadow = true;
 	var esparrago = new THREE.Mesh(geo_esparrago, material_metal);
 	var eje = new THREE.Mesh(geo_eje, material_metal);
 
@@ -303,11 +298,6 @@ function loadScene()
 	scene.add(robot);
 
 	robot.traverse( function (pieza) { pieza.castShadow = true; pieza.receiveShadow = true; console.log(pieza.name); });
-	
-	//Coordinates.drawGrid({size:6,scale:1});
-	//Coordinates.drawGrid({size:6,scale:1, orientation:"y"});
-	//Coordinates.drawGrid({size:6,scale:1, orientation:"z"});	
-
 }
 
 function setupGui()
