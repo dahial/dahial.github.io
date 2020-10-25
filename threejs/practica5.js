@@ -97,7 +97,7 @@ function loadScene()
 	spotLight.position.set(-200, 400, 200);
 	spotLight.lookAt(0,0,0);
 	spotLight.angle = Math.PI / 6; 
-   	luzFocal.penumbra = 0.5;
+   	spotLight.penumbra = 0.5;
 
 	spotLight.castShadow = true;
 	spotLight.shadow.mapSize.width = 2048;
