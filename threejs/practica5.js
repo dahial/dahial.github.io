@@ -87,25 +87,26 @@ function loadScene()
 	// Luces
 	var ambientLight = new THREE.AmbientLight(0x404040);
 	ambientLight.position.set(-100, 100,-100);
-	//scene.add(ambientLight);
+	scene.add(ambientLight);
 
 	var pointLight = new THREE.PointLight( 0xaaaa00, 0.5 );
 	pointLight.position.set(100, 100, 100);
-	//scene.add(pointLight);
+	scene.add(pointLight);
 
 	var spotLight = new THREE.SpotLight (0xffffcc, 0.75);
 	spotLight.position.set(-200, 400, 200);
 	spotLight.lookAt(0,0,0);
+	spotLight.angle = Math.PI / 6; 
+   	luzFocal.penumbra = 0.5;
 
 	spotLight.castShadow = true;
-
 	spotLight.shadow.mapSize.width = 2048;
 	spotLight.shadow.mapSize.height = 2048;
 
-	spotLight.angle = Math.PI / 6; 
 	spotLight.shadow.camera.near = 0.1;
 	spotLight.shadow.camera.far = 1000;
 	spotLight.shadow.camera.fov = 50;
+
 
 	var spotLightHelper = new THREE.SpotLightHelper(spotLight);
 
