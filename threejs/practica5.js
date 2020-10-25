@@ -153,8 +153,7 @@ function loadScene()
 	var material_habitacion = [material_posX, material_negX, material_posY, material_negY, material_posZ, material_negZ];
 
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
-	//var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide, shininess: 50 });
-	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
+	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, shininess: 60, specular: 0xffffcc });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: mapa_entorno, reflectivity: 1, shininess: 15});
 
