@@ -30,7 +30,7 @@ function init()
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setClearColor( new THREE.Color(0x000088) );
 	renderer.autoClear = false; 
-   	renderer.shadowMap.enabled = true;
+   	//renderer.shadowMap.enabled = true;
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 	// Crear el grafo de escena
@@ -154,6 +154,7 @@ function loadScene()
 
 	var material_suelo = new THREE.MeshLambertMaterial({ map: textura_suelo });
 	var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide, shininess: 50 });
+	//var material_metal = new THREE.MeshPhongMaterial({ map: textura_metal, side: THREE.DoubleSide });
 	var material_madera = new THREE.MeshLambertMaterial({ map: textura_madera });
 	var material_reflectante = new THREE.MeshPhongMaterial({ color: 0xaa8800, envMap: mapa_entorno, reflectivity: 1, shininess: 15});
 
