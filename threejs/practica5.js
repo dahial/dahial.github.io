@@ -369,8 +369,8 @@ function onKeyDown(event)
 	else if(keyCode == "ArrowDown")
 		robot.position.z += velZ;
 
-	planta.position.x = robot.position.x;
-	planta.position.z = robot.position.z;
+	//planta.position.x = robot.position.x;
+	//planta.position.z = robot.position.z;
 }
 
 function update()
